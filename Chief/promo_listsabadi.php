@@ -1,0 +1,104 @@
+<?php include('../lock_ce.php');?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US" xml:lang="en">
+<link href="../FA.css" rel="stylesheet" type="text/css" />
+<head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+<title><?php echo $title ;?></title>
+    </style>
+
+    <style type="text/css">
+<!--
+.tabel { margin-right:45px }
+.text_r { margin-right:0px }
+.style1 {
+	color: #003366;
+	font-family: Tahoma;
+	font-size: 18px;
+}
+
+-->
+</style>
+<script>
+function close_window() {
+      close();
+ }
+</script>
+</head>
+<body>
+                    <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="#FFFFFF">
+  <tr>
+            <td height="46"><img src="../files/images/header.jpg" width="100%" height="149" /></td>
+          </tr>
+          <tr>
+            <td>
+</td>
+  </tr>
+  <tr>
+    <td><table width="100%" border="0" align="center" cellpadding="0" cellspacing="0"  bgcolor="#FFFFFF" >
+  <tr>
+    <td><p>
+      <?php 
+if (isset($_POST['mor_cod_m']))
+{
+$mor_cod_m = $_POST['mor_cod_m'] ; 
+include('../login/config.php');
+$query = "SELECT * FROM  list_abadi WHERE  mor_cod_m = '$mor_cod_m'"  ;
+$stmt = $dbh->prepare($query);
+$stmt->execute();
+?>
+    </p>
+      <p class="style1">لیست آبادی های تحت پوشش <a name="1" id="1"> </a></p>
+      <p class="style8">نام و نام خانوادگی مروج کشاورزی : <?php echo  $_POST['last_name'].' - '.$_POST['name']  ?> </p>
+      <p><img src="../files/horizontal-line-700x223.png" width="70%" height="19"  alt=""/></p>
+      <table width="85%" height="97" border="1" align="center" cellpadding="0" cellspacing="0" >
+        <tr align="center" class="style8">
+          <td width="19%" height="49" bgcolor="#CCCCCC">آدرس آماری آبادی</td>
+          <td width="14%" bgcolor="#CCCCCC">نام آبادی</td>
+          <td width="15%" bgcolor="#CCCCCC">دهستان</td>
+          <td width="16%" bgcolor="#CCCCCC">بخش</td>
+          <td width="15%" bgcolor="#CCCCCC">شهرستان</td>
+          <td width="14%" bgcolor="#CCCCCC">استان</td>
+          <td width="7%" bgcolor="#CCCCCC">ردیف</td>
+          
+          </tr>
+        <tr>
+          <?php
+$r = 1 ;
+ foreach($stmt as $row){
+$id_mar = $row['id_mar']
+?>
+          <td height="48" class="normalTextSmaller"><?php echo $row['add_abadi'];?></td>
+          <td class="normalTextSmaller"><?php echo $row['abadi'];?></td>
+          <td class="normalTextSmaller"><?php echo $row['deh'];?></td>
+          <td class="normalTextSmaller"><?php echo $row['bakh'];?></td>
+          <td class="normalTextSmaller"><?php echo $row['city'];?></td>
+          <td class="normalTextSmaller"><?php echo $row['ostan'];?></td>
+          <td><?php echo $r;?></td>
+          </tr>
+        <?php
+$r++ ; 
+}
+}
+else 
+{
+	echo '<br>' ; 
+	echo '<p align=center style=color:red> مجوز دسترسی به این صفحه را ندارید </p> ' ;
+	}
+?>
+    </table>
+      <p>
+        <button  id="send" style="width:150px ; height:45px" onclick="close_window()">بازگشت</button>
+      </p>    </td>
+    </tr>
+  <tr>
+    <td  height="109"colspan="2" valign="middle" background="../files/bottom.gif"><?php include('../footer.php')?></td>
+    </tr>
+</table>
+</table>
+</body>
+</html>
+
+
+

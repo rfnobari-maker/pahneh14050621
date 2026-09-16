@@ -1,0 +1,116 @@
+.news{
+   margin: 0px 15px 15px 15px;
+   text-align:right;
+   height:180px; 
+    width:95%;
+   overflow:auto;
+   background-color:#ccb ;
+   color:#06C;
+   scrollbar-base-color:gold;
+   font-family:tahoma;
+   font-size:14px;
+   padding:5px;
+   border-radius: 15px;
+   }
+.login_btn{
+   border: none;
+   cursor: pointer;
+   width: 100%;
+   height: 45px;
+   background: #02c8db;
+   border-radius: 20px;
+   font-family: myfont2;
+   font-size: 18px;
+   color: #ffffff;
+   font-weight: 500;
+   box-shadow: 3px 3px 8px #b1b1b1 , 
+   -3px -3px 8px #ffffff; 
+   transition: all 0.5S;
+}
+.login_btn:hover{
+   background: #50e5b9;
+}
+.browser{
+   margin-top: 22px;
+   font-size: 10px;
+}
+.login_btn{
+   margin-top: 25px;
+   width: 100%;
+}
+.fileds{
+   width: 100%;
+   margin-top: 65px;
+   text-align: center;
+   margin-left: 0;
+   transform: translateX(145px);
+}
+.fileds input{
+   border: none ;
+   background: none ;
+   font-size: 14px;
+   height: 30px;
+  
+   
+}
+
+.cpa_image{
+   transform: translateX(-30px);
+}
+.capcha_png{
+   border-radius: 22px;
+}
+.username,.password,.capcha_text,.cpa_image{
+   display: flex;
+   margin-top: 20px;
+}
+.svg-icon {
+   height: 22px;
+   transform: translateX(-25);
+ }
+.capcha{
+   display: flex; 
+   justify-content: center;
+   align-items: center;
+   margin-top: 25px;
+   }
+#m_text
+{
+	width:85% ; font-size:13px ; color:#666 ; margin-left:5px ; margin-top:-20px ; direction:rtl ; text-align:justify   }
+.com {	font-family:tahoma;
+	font-size:12px;
+	color:#666;
+	direction:rtl;
+	margin-right:15px;
+	margin-left:25px;
+	text-align: justify;
+}
+
+
+.login_form
+{
+   direction: rtl;
+   display: flex;
+   width: 200px;
+   height: 390px;
+   background-color: #ecf0f3;
+   padding: 40px 35px 35px 35px;
+   border-radius: 40px;
+   margin-top: 25px ;
+   margin-left: 45px ;
+   box-shadow: 5px 5px 7px #cbced1 , 
+   -5px -5px 7px #ffffff;
+   
+   
+ }
+ .login_logo{
+   width: 100%;
+   text-align: center;
+   transform:translateX(-30px)
+   
+ }
+ .login_logo img{
+      width: 150px;
+      filter: drop-shadow(13px 13px 20px #757373);
+     
+ }

@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0091)file:///C:/Users/shaham/Desktop/%D8%AA%D9%85%D8%A7%D8%B3%20%D8%A8%D8%A7%20%D9%85%D8%A7.html -->
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://ogp.me/ns/fb#"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" href="./cont_files/custom.css">
+<script type="text/javascript" async="" src="./cont_files/ga.js"></script>
+<script src="./cont_files/jquery.min.js" type="text/javascript"></script>
+</head>
+<body style="zoom: 1;"> 
+<script>
+$(document).ready(function () {
+$("img.ty").click(function() {
+			$(".gift2").css('display', 'block');
+			$("img.ty1").css('display', 'block');
+		$("img.ty").css('display', 'none');
+		});
+
+$("img.ty1").click(function(){
+		$(".gift2").css('display', 'none');
+		$("img.ty1").css('display', 'none');
+		$("img.ty").css('display', 'block');
+		});	
+		$(".gift2").hover(function(){
+		$(this).stop().animate({ right:"0px" });
+		}, function() {
+			$(this).stop().animate({  right: "-150"});
+		});
+	});
+
+$(document).ready(function(){
+    $(window).resize(function() {
+
+        ellipses1 = $("#bc1 :nth-child(2)")
+        if ($("#bc1 a:hidden").length >0) {ellipses1.show()} else {ellipses1.hide()}
+        
+        ellipses2 = $("#bc2 :nth-child(2)")
+        if ($("#bc2 a:hidden").length >0) {ellipses2.show()} else {ellipses2.hide()}
+        
+    })
+    
+});
+</script>
+
+<div class="gift2" style="right: -150px;">
+<a href="#">
+<img src="./cont_files/dsl2.png" alt="اینترنت خودت وصل کن" height="196" width="201">
+</a></div> 
+<img src="./cont_files/arrowaaa.png" width="15" height="25" class="ty" style="position:fixed">
+<img src="./cont_files/arrowaaqa.png" width="15" height="25" class="ty1" style="position:fixed">
+</body></html>

@@ -1,0 +1,208 @@
+/* Template CSS - Design by Alireza Maghari - www.toranjnet.com - info@toranjnet.com  */
+
+
+.UserNameDiv
+{
+	color: #000000;
+	background-color: #FEA5A5;
+	border: 1px solid #FF7979;
+	font-weight: normal;
+	font-size: 14px;
+}
+.TxtSerachStyle
+{
+    border: 1px solid #808080;
+    background-color: #E2E2D3;
+}
+p
+{
+    margin: 0px;
+    padding: 0px;
+    line-height: 16px;
+}
+
+a
+{
+    color: #000000;
+    text-decoration: none;
+}
+
+a:hover
+{
+    color: #cc0000;
+    text-decoration: none;
+}
+
+h1
+{
+    font-family: "Times New Roman" , Times, serif;
+    font-size: 22px;
+    color: #2a6e92;
+    font-weight: bold;
+    padding-bottom: 10px;
+}
+
+h1 a
+{
+    color: #114477;
+    text-decoration: none;
+}
+h1 a:hover
+{
+    color: #cc0000;
+    text-decoration: none;
+}
+
+h2
+{
+    font-family: tahoma;
+    font-size: 12px;
+    font-style: normal;
+    line-height: 16px;
+    font-weight: bold;
+    color: #2a6e92;
+    text-decoration: none;
+    margin: 0px;
+    padding: 0px;
+}
+
+h2 a
+{
+    color: #114477;
+    text-decoration: none;
+}
+h2 a:hover
+{
+    color: #cc0000;
+    text-decoration: none;
+}
+
+h3
+{
+    font-family: tahoma;
+    font-size: 11px;
+    font-style: normal;
+    line-height: 16px;
+    font-weight: bold;
+    color: #666;
+    text-decoration: none;
+    margin: 0px;
+    margin-bottom: 8px;
+    margin-top: 2px;
+}
+
+h3 a
+{
+    color: #999;
+    text-decoration: none;
+}
+h3 a:hover
+{
+    color: #cc0000;
+    text-decoration: none;
+}
+
+
+/* text type */
+
+.tt1
+{
+    font-family: times;
+}
+.tt2
+{
+    font-family: tahoma;
+}
+
+/* text size */
+.ts1
+{
+    font-size: 15px;
+}
+.ts2
+{
+    font-size: 12px;
+}
+.ts3
+{
+    font-size: 11px;
+}
+
+.ts4
+{
+    font-size: 10px;
+}
+
+/* text color 1 */
+.tc1b1
+{
+    color: #CCCCCC;
+}
+.tc1b2
+{
+    color: #747474;
+}
+.tc1b3
+{
+    color: #383838;
+}
+
+/* text color 2 */
+
+.tc2b1
+{
+    color: #FF8400;
+}
+.tc2b2
+{
+    color: #F5440E;
+}
+.tc2b3
+{
+    color: #ae1e23;
+}
+
+/* text color 3 */
+
+.tc3b1
+{
+    color: #5EA3FF;
+}
+.tc3b2
+{
+    color: #0063ea;
+}
+.tc3b3
+{
+	color: #993300;
+	margin-right: 12px;
+}
+
+.RooTitr
+{
+    font-family: tahoma;
+    font-size: 11px;
+    font-style: normal;
+    line-height: 16px;
+    font-weight: bold;
+    color: #C00;
+    text-decoration: none;
+    margin: 0px;
+    margin-bottom: 8px;
+    margin-top: 2px;
+}
+
+
+.RooTitrBlack
+{
+    font-family: tahoma;
+    font-size: 11px;
+    font-style: normal;
+    line-height: 16px;
+    font-weight: bold;
+    color: #000000;
+    text-decoration: none;
+    margin: 0px;
+    margin-bottom: 8px;
+    margin-top: 2px;
+}

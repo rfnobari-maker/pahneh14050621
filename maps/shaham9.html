@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      #map {
+        width: 700px;
+        height: 400px;
+		border-radius:35px;
+		margin:auto ;
+      }
+    </style>
+    <script src="https://maps.googleapis.com/maps/api/js"></script>
+    <script>
+function initMap() {
+  var map = new google.maps.Map(document.getElementById('map'), {
+    zoom: 11,
+    center: {lat: 37.8830814, lng: 47.164707}
+  });
+
+  var ctaLayer = new google.maps.KmlLayer({
+    url: 'http://pahneh.eaj.ir/maps/test4.kml',
+    map: map
+  });
+}
+    </script>
+   <script async defer
+        src="https://maps.googleapis.com/maps/api/js?signed_in=true&callback=initMap">
+    </script>   
+ </head>
+  <body>
+    <div id="map"></div>
+  </body>
+</html>

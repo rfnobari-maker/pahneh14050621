@@ -1,0 +1,19 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Untitled Document</title>
+<script language="javascript">
+var popupWindow = null;
+function positionedPopup(url,winName,w,h,t,l,scroll){
+settings =
+'height='+h+',width='+w+',top='+t+',left='+l+',scrollbars='+scroll+',resizable,location=0,status=0'
+popupWindow = window.open(url,winName,settings)
+}
+</script>
+</head>
+
+<body>
+ <a href="#" onclick="positionedPopup(this.href,'myWindow','650','450','100','200','yes');return false" class="addspeech" rel="#city2">test</a>
+ </body>
+</html>

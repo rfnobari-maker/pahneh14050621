@@ -1,0 +1,103 @@
+/* طراحی کلی صفحه */
+body {
+    font-family: Tahoma, Arial, sans-serif;
+    direction: rtl; /* راست‌چین کردن صفحه */
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 80%;
+    max-width: 900px;
+    margin: 50px auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* استایل عنوان */
+h1 {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* استایل textarea برای درج توضیح */
+textarea {
+    width: 85%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    resize: none;
+    font-size: 14px;
+}
+
+/* استایل دکمه */
+.note_button {
+	margin: 0 auto; /* مرکز قرار دادن دکمه */
+    width: 85%;
+    padding: 12px;
+    background-color: #4CAF50;
+    color: white;
+    font-size: 18px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.note_button:hover {
+    background-color: #45a049;
+}
+
+/* استایل نمایش توضیحات قبلی */
+#previousDescriptions {
+    margin-top: 40px;
+}
+
+.descriptionItem {
+    background-color: #f1f1f1;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    border-left: 5px solid #4CAF50;
+}
+
+.descriptionItem p {
+    margin: 0;
+    font-size: 16px;
+}
+
+.descriptionItem span {
+    display: block;
+    text-align: left;
+    font-size: 14px;
+    color: #777;
+}
+.description-container {
+    margin-bottom: 20px;
+}
+
+.separator {
+    border: 0;
+    border-top: 1px solid #ccc; /* خط افقی با رنگ کم رنگ */
+    margin: 10px 0;
+}
+
+.delete-button {
+    background-color: #ff4d4d; /* رنگ قرمز */
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    cursor: pointer;
+    border-radius: 4px;
+    margin-top: 8px;
+}
+
+.delete-button:hover {
+    background-color: #ff3333; /* تغییر رنگ هنگام هاور */
+}

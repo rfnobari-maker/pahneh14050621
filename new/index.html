@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>صفحه وب با منوی همبرگری</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>هدر صفحه</h1>
+        <div class="menu-icon" onclick="toggleMenu()">&#9776;</div>
+    </header>
+    <nav id="sidebar">
+        <ul>
+            <li>
+                <a href="#" onclick="loadContent('home.html')">خانه</a>
+                <span class="submenu-icon" onclick="toggleSubmenu(event)">+</span>
+                <ul class="submenu">
+                    <li><a href="#" onclick="loadContent('sub-home1.html')">زیر منو 1</a></li>
+                    <li><a href="#" onclick="loadContent('sub-home2.html')">زیر منو 2</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#" onclick="loadContent('about.html')">درباره</a>
+                <span class="submenu-icon" onclick="toggleSubmenu(event)">+</span>
+                <ul class="submenu">
+                    <li><a href="#" onclick="loadContent('sub-about1.html')">زیر منو 1</a></li>
+                    <li><a href="#" onclick="loadContent('sub-about2.html')">زیر منو 2</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#" onclick="loadContent('contact.html')">تماس با ما</a>
+                <span class="submenu-icon" onclick="toggleSubmenu(event)">+</span>
+                <ul class="submenu">
+                    <li><a href="#" onclick="loadContent('sub-contact1.html')">زیر منو 1</a></li>
+                    <li><a href="#" onclick="loadContent('sub-contact2.html')">زیر منو 2</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+    <main id="content">
+        <!-- محتوای اصلی اینجا بارگذاری می‌شود -->
+    </main>
+    <footer>
+        <p>فوتر صفحه</p>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>

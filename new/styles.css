@@ -1,0 +1,114 @@
+body {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+header, footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+}
+
+header {
+    top: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.menu-icon {
+    cursor: pointer;
+    font-size: 24px;
+}
+
+footer {
+    bottom: 0;
+}
+
+nav {
+    position: fixed;
+    top: 50px;
+    right: -250px; /* منوی پیش‌فرض مخفی است */
+    width: 200px;
+    height: calc(100% - 100px);
+    background-color: #444;
+    color: white;
+    padding: 20px;
+    box-sizing: border-box;
+    transition: right 0.3s ease;
+}
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
+    text-align: right; /* راست چین کردن آیتم‌های منو */
+}
+
+nav ul li {
+    margin: 10px 0;
+    position: relative;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+}
+
+nav ul li a:hover {
+    text-decoration: underline;
+}
+
+nav ul li .submenu-icon {
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+nav ul li ul.submenu {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: none; /* زیرمنوها پیش‌فرض مخفی هستند */
+    background-color: #555;
+    max-height: 0; /* شروع با ارتفاع صفر */
+    overflow: hidden; /* مخفی کردن محتوای اضافی */
+    transition: max-height 0.3s ease-out; /* اضافه کردن افکت گذار */
+}
+
+nav ul li ul.submenu.show {
+    display: block; /* نمایش زیرمنو */
+    max-height: 500px; /* تنظیم ارتفاع مناسب */
+}
+
+nav ul li ul.submenu li {
+    margin: 0;
+}
+
+nav ul li ul.submenu li a {
+    padding: 10px;
+    display: block;
+    white-space: nowrap;
+}
+
+nav.open {
+    right: 0; /* منوی باز شده */
+}
+
+main {
+    margin: 70px 20px;
+    padding: 20px;
+    background-color: #f4f4f4;
+    flex-grow: 1;
+    overflow-y: auto;
+    transition: margin-right 0.3s ease;
+}
+
+main.shift {
+    margin-right: 220px; /* تغییر مکان محتوای اصلی وقتی منو باز است */
+}

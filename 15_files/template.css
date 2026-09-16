@@ -1,0 +1,121 @@
+
+/* Template CSS, Design by Alireza Maghari :: Alireza@toranjnet.com :: Toranjnet.com :: Toranjdata.com */
+
+/*#Template { width:770px; margin-left:auto; margin-right:auto; direction:rtl;  } /*Fixed size**/
+/*#Template { width:90%; min-width:780px; margin-left:auto; margin-right:auto; direction:rtl;  } */  /*Scalable*/
+
+#C1 {}
+#C1 .Header { background:url(../images/HeaderBGCnt.gif) repeat-x; height:141px;}
+#C1 .HeaderL{ background:url(../images/HeaderBGL.jpg) no-repeat left; height:141px;}
+#C1 .HeaderR{ background:url(../images/HeaderBGR.jpg) no-repeat right; height:141px;}
+
+#C1 .HeaderTitle { 
+ text-align:center; padding-top:14px;
+}
+#C1 .HeaderTitle img {  _behavior: url(scripts/iepngfix.htc);}
+#C1 .HeaderTitle table { direction:rtl;
+	height: 126px;
+}
+
+
+.HeaderLogo { background:url(../images/HeaderLogo.png) no-repeat right; position:relative; z-index:1; float:right; margin-right:30px; height:141px; width:100px; _behavior: url(scripts/iepngfix.htc); }
+
+#TopBar {margin-left:5px; margin-right:5px; background:#FFF;}
+#C1 .TopBarL { background:url(../images/TopBarBGL.gif) repeat-x; width:220px;}
+#C1 .TopBarCnt{ background:url(../images/TopBarCnt.gif) no-repeat; width:45px; height:40px;
+	direction: ltr;
+}
+#C1 .TopBarR{background:url(../images/TopBarBGR.gif) repeat-x; color:#FFF; padding:0px 20px 12px 10px;}
+
+#C1 .TopBarL img {  _behavior: url(scripts/iepngfix.htc);}
+
+#Main {}
+#Main .MainL { background:url(../images/ShadowL.png) repeat-y left;}
+#Main .MainR { background:url(../images/ShadowR.png) repeat-y right;}
+#Main .Container { margin-left:5px; margin-right:5px; padding:20px; background:#FFF;  min-height:320px; }
+
+.BtmCnt{ background:url(../images/BtmCnt.png) repeat-x; height:25px;  } 
+.BtmL { background:url(../images/BtmL.png) no-repeat left; height:25px; }
+.BtmR {background:url(../images/BtmR.png) no-repeat right; height:25px; }
+
+
+
+#Footer { margin-top:5px;}
+#Footer .Container { text-align:center; padding-bottom:10px;}
+#Footer .Logo { background:url(../images/FooterLogo.png) no-repeat center; width:160px; 
+height:65px; 
+margin:auto;
+}
+
+#Footer .FooterLine { background: url(../images/FooterLine.gif) no-repeat center; padding:5px;}
+
+#Copyright { text-align:center; color:#48768e; margin-top:5px; } 
+#Footer a {
+	color:#F5440E;
+}
+#Footer a:hover {
+	color:#F5440E;
+	border-bottom:1px dotted #F5440E;
+}
+#FooterLinks  { text-align:center; }
+
+#FooterLinks a { color:#2a6e92; padding:2px; padding-top:0px; text-decoration:none;}
+#FooterLinks a:hover {  color:#F5440E; }
+
+#FooterLinks ul {
+	list-style:none;
+	margin: 0px;
+	padding: 0px;
+	height: 16px;
+}
+
+#FooterLinks li {
+	display: inline;
+	margin-right: 0px;
+	margin-left: 0px;
+}
+
+
+/*Frame C1B1 Free size*/
+
+.FrameC1B1 { background-color:#ffffff;
+	direction: ltr;
+}
+.FrameC1B1 table { height: 6px;
+	width: 100%;
+}
+.FrameC1B1 .FrameTR { background-image:url(../images/BoxC1B1TR.png); width:5px; height:5px; font-size:0px;}
+.FrameC1B1 .FrameTC { background-image:url(../images/BoxC1B1TC.png); height:5px; font-size:0px;}
+.FrameC1B1 .FrameTL { background-image:url(../images/BoxC1B1TL.png); width:5px; height:5px; font-size:0px;}
+.FrameC1B1 .FrameCR { background:url(../images/BoxC1B1CR.png) repeat-y right; padding-right:7px;}
+.FrameC1B1 .FrameCC { }
+.FrameC1B1 .FrameCL { background:url(../images/BoxC1B1CL.png) repeat-y left; padding-left:5px;}
+.FrameC1B1 .FrameBR { background-image:url(../images/BoxC1B1BR.png); width:5px; height:5px;  font-size:0px;}
+.FrameC1B1 .FrameBC { background-image:url(../images/BoxC1B1BC.png); height:5px; font-size:0px;}
+.FrameC1B1 .FrameBL { background-image:url(../images/BoxC1B1BL.png); width:5px; height:5px;  font-size:0px;}
+.FrameC1B1 .FrameContainer { padding:10px 5px 10px 5px; overflow:hidden;}
+
+.FrameC1B1 .Tab {
+	background:url(../images/TabC1BG.png) top left no-repeat ; /* imp for english version*/
+	
+	}
+
+.FrameC1B1 .Tab table {direction:rtl}
+
+.FrameC1B1 .Tab div.TabContainer {
+	background:url('../images/TabC1L.png') no-repeat left top; /* imp for english version*/
+	padding-left:41px; /* imp for english version*/
+	height:24px;
+	width: 212px;
+}
+.FrameC1B1 .Tab .TabContainer div.TabText {
+	background:url('../images/TabC1R.png') no-repeat right top; /* imp for english version*/
+	padding-right:8px; /* imp for english version*/
+	margin-right:0px; /* imp for english version*/
+	padding-top:4px;
+	height:20px;
+	color:#FFF;
+	width: 207px;
+}
+
+

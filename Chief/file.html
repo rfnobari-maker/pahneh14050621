@@ -1,0 +1,30 @@
+<html>
+<body>
+
+<form action="upload.php" method="post"
+enctype="multipart/form-data">
+  <p>
+  <label for="file">upload form <br>
+    <br>
+    Filename:</label>
+  <input type="file" name="file" id="file">
+  </p>
+  <p><br>
+    <input type="submit" name="submit" value="Submit">
+  </p>
+</form>
+<p style="font-size: 18px; color: #F00;">مشکل : </p>
+<p style="color: #F00; font-size: 18px;">با استفاده از فرم نمیشه فایل آپلود کرد بعنوان مثال فرم با لا را ملاحضه فرمایید  . این فرم در سایر هاست ها به خوبی کار میکنه مشکلی نداره </p>
+<p style="color: #F00; font-size: 18px;">-----------------------------------------------------------------------</p>
+<p style="font-size: 18px; color: #033;">اقدامات انجام شده </p>
+<pre>
+<span style="font-size: 16px">the php.ini </span>
+  <span style="font-size: 16px">file_uploads = On
+  post_max_size = 100M
+  upload_max_filesize = 100M
+</span>   /tmp    ----&gt; 777
+
+-------------------------------------------------------------</pre>
+<p style="font-size: 24px; color: #069;">مسیر فایل های آپلود شده : /var/www/html/test/newupload/ </p>
+</body>
+</html>

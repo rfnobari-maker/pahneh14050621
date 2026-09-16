@@ -1,0 +1,33 @@
+    <style>
+      #map {
+        width: 800px;
+        height: 450px;
+		border-radius:35px;
+		margin:auto ;
+		box-shadow:10px 10px 5px #CCCCCC ; 
+      }
+    </style>
+    <script src="https://maps.googleapis.com/maps/api/js"></script>
+    <script>
+function initMap() {
+  var map = new google.maps.Map(document.getElementById('map'), {
+    zoom: 11,
+<!-- نمایش به صورت sattlite  
+<!--   mapTypeId: google.maps.MapTypeId.SATELLITE,
+   <!--  پایان نمایش به صورت sattlite-->
+
+    center: {lat: 37.8830814, lng: 47.164707}
+   });
+  var ctaLayer = new google.maps.KmlLayer({
+    url: 'http://pahneh.eaj.ir/maps/test_city.kml'+"?dummy="+(new Date()).getTime(),
+    map: map
+  });
+}
+    </script>
+   <script async defer
+        src="https://maps.googleapis.com/maps/api/js?signed_in=false&callback=initMap">
+    </script>   
+ </head>
+  <body>
+    <div id="map"></div>
+  

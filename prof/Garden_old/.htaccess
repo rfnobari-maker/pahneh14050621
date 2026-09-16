@@ -1,0 +1,2 @@
+php_flag  log_errors Off
+php_value error_log /var/www/html/prof/Garden/php_error.log

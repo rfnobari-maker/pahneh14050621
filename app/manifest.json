@@ -1,0 +1,20 @@
+{
+  "name": "سیستم کشاورزی",
+  "short_name": "کشاورزی",
+  "start_url": "/index.html",
+  "display": "standalone", // حالت نمایش مانند برنامه nativ
+  "background_color": "#4CAF50",
+  "theme_color": "#4CAF50",
+  "icons": [
+    {
+      "src": "1.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "2.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

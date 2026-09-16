@@ -1,0 +1,34 @@
+<script type="text/javascript">
+$(function() {
+    $("[name=toggler]").click(function(){
+            $('.toHide').hide();
+            $("#blk-"+$(this).val()).show('slow');
+    });
+ });
+</script>
+</head>
+<body>
+<label><input id="rdb1" type="radio" name="toggler" value="1" />Book</label>
+<label><input id="rdb2" type="radio" name="toggler" value="2" />Non-Book</label>
+
+<div id="blk-1" class="toHide" style="display:none">
+
+    <form action="success1.html">
+
+        Name1:<input type="text" name="name">
+             <input type="submit" name="submit">
+
+    </form>
+
+</div>
+<div id="blk-2" class="toHide" style="display:none">
+
+    <form action="success1.html">
+
+        Name2:<input type="text" name="name">
+             <input type="submit" name="submit">
+
+    </form>
+</div>
+Share
+Improve this 

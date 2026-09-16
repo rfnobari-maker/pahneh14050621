@@ -1,0 +1,450 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سیستم کشاورزی</title>
+    <link rel="manifest" href="/manifest.json">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+        }
+
+        .container {
+            max-width: 480px;
+            margin: 0 auto;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Login Page */
+        .login-page {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            height: 100vh;
+        }
+
+        .logo {
+            width: 80px;
+            height: 80px;
+            background-color: #4CAF50;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 30px;
+            color: white;
+            font-size: 24px;
+        }
+
+        .form-group {
+            width: 100%;
+            margin-bottom: 15px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+
+        .btn:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        /* Main App */
+        .app-header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px 20px;
+            text-align: center;
+        }
+
+        .user-info {
+            padding: 20px;
+            background-color: white;
+            margin: 10px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .menu-nav {
+            display: flex;
+            justify-content: space-around;
+            background-color: white;
+            padding: 10px 0;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            box-shadow: 0 -2px 4px rgba(0,0,0,0.1);
+        }
+
+        .menu-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            padding: 5px 0;
+        }
+
+        .menu-icon {
+            width: 40px;
+            height: 40px;
+            background-color: #e0e0e0;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 5px;
+        }
+
+        .menu-text {
+            font-size: 12px;
+        }
+
+        .content-area {
+            flex: 1;
+            padding: 20px 10px 70px;
+        }
+
+        .category-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #4CAF50;
+        }
+
+        .expert-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .expert-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .expert-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            cursor: pointer;
+        }
+
+        .expert-info {
+            margin-left: 15px;
+        }
+
+        .expert-name {
+            font-weight: bold;
+        }
+
+        .expert-date {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 20% auto;
+            padding: 20px;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 300px;
+        }
+
+        .close {
+            float: right;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .message-input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Login Page -->
+        <div id="loginPage" class="login-page">
+            <div class="logo">🌱</div>
+            <h2 style="margin-bottom: 30px;">ورود به سیستم</h2>
+            <div class="form-group">
+                <input type="text" id="nationalCode" placeholder="کد ملی خود را وارد کنید">
+            </div>
+            <button class="btn" onclick="sendVerification()">ارسال کد تایید</button>
+            
+            <div id="verificationSection" style="display: none; margin-top: 20px;">
+                <div class="form-group">
+                    <input type="text" id="verificationCode" placeholder="کد تایید دریافتی">
+                </div>
+                <button class="btn" onclick="verifyCode()">تایید کد</button>
+            </div>
+        </div>
+
+        <!-- Main App -->
+        <div id="mainApp" style="display: none;">
+            <div class="app-header">
+                <h1>سیستم کشاورزی</h1>
+            </div>
+            
+            <div class="user-info">
+                <p><strong>نام کاربری:</strong> احمدرضا محمدی</p>
+                <p><strong>کد ملی:</strong> 1234567890</p>
+                <p><strong>شماره همراه:</strong> 09123456789</p>
+            </div>
+            
+            <div class="content-area">
+                <div id="categoryContent"></div>
+            </div>
+            
+            <div class="menu-nav">
+                <div class="menu-item" onclick="showCategory('agriculture')">
+                    <div class="menu-icon">🌾</div>
+                    <span class="menu-text">زراعی</span>
+                </div>
+                <div class="menu-item" onclick="showCategory('vegetables')">
+                    <div class="menu-icon">🥬</div>
+                    <span class="menu-text">صیفی</span>
+                </div>
+                <div class="menu-item" onclick="showCategory('orchard')">
+                    <div class="menu-icon">🍎</div>
+                    <span class="menu-text">باغ</span>
+                </div>
+                <div class="menu-item" onclick="showCategory('greenhouse')">
+                    <div class="menu-icon">🌿</div>
+                    <span class="menu-text">گلخانه</span>
+                </div>
+                <div class="menu-item" onclick="showCategory('mushroom')">
+                    <div class="menu-icon">🍄</div>
+                    <span class="menu-text">قارچ</span>
+                </div>
+                <div class="menu-item" onclick="showCategory('livestock')">
+                    <div class="menu-icon">🐄</div>
+                    <span class="menu-text">دام</span>
+                </div>
+                <div class="menu-item" onclick="showCategory('fishery')">
+                    <div class="menu-icon">🐟</div>
+                    <span class="menu-text">شیلات</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Message Modal -->
+        <div id="messageModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h3>ارسال پیام به کارشناس</h3>
+                <textarea class="message-input" rows="4" placeholder="پیام خود را وارد کنید..."></textarea>
+                <button class="btn" onclick="sendMessage()">ارسال پیام</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentExpert = null;
+        let countdownTimer = null;
+        
+        function sendVerification() {
+            const nationalCode = document.getElementById('nationalCode').value.trim();
+            if (!nationalCode) {
+                alert('لطفاً کد ملی خود را وارد کنید.');
+                return;
+            }
+            
+            // Simulate sending verification code
+            document.getElementById('verificationSection').style.display = 'block';
+            startCountdown();
+        }
+        
+        function startCountdown() {
+            let timeLeft = 60;
+            const btn = document.querySelector('button[onclick="sendVerification()"]');
+            btn.disabled = true;
+            btn.textContent = `ارسال مجدد (${timeLeft}s)`;
+            
+            countdownTimer = setInterval(() => {
+                timeLeft--;
+                btn.textContent = `ارسال مجدد (${timeLeft}s)`;
+                
+                if (timeLeft <= 0) {
+                    clearInterval(countdownTimer);
+                    btn.disabled = false;
+                    btn.textContent = 'ارسال کد تایید';
+                }
+            }, 1000);
+        }
+        
+        function verifyCode() {
+            const verificationCode = document.getElementById('verificationCode').value.trim();
+            if (!verificationCode) {
+                alert('لطفاً کد تایید را وارد کنید.');
+                return;
+            }
+            
+            // Simulate verification
+            document.getElementById('loginPage').style.display = 'none';
+            document.getElementById('mainApp').style.display = 'block';
+            showCategory('agriculture');
+        }
+        
+        function showCategory(category) {
+            const contentArea = document.getElementById('categoryContent');
+            contentArea.innerHTML = `<h2 class="category-title">${getCategoryName(category)}</h2>`;
+            
+            // Sample data for each category
+            const expertsData = getExpertsByCategory(category);
+            
+            expertsData.forEach(expert => {
+                const expertCard = document.createElement('div');
+                expertCard.className = 'expert-card';
+                expertCard.innerHTML = `
+                    <div class="expert-header">
+                        <img src="${expert.avatar}" alt="عکس کارشناس" class="expert-avatar" onclick="openMessageModal('${expert.name}', '${expert.id}')">
+                        <div class="expert-info">
+                            <div class="expert-name">${expert.name}</div>
+                            <div class="expert-date">ثبت شده در ${expert.date}</div>
+                        </div>
+                    </div>
+                    <p>${expert.description}</p>
+                `;
+                contentArea.appendChild(expertCard);
+            });
+        }
+        
+        function getCategoryName(category) {
+            const names = {
+                agriculture: 'زراعی',
+                vegetables: 'صیفی',
+                orchard: 'باغ',
+                greenhouse: 'گلخانه',
+                mushroom: 'قارچ',
+                livestock: 'دام',
+                fishery: 'شیلات'
+            };
+            return names[category] || 'دسته بندی';
+        }
+        
+        function getExpertsByCategory(category) {
+            const experts = {
+                agriculture: [
+                    { id: 1, name: 'دکتر علی رضایی', avatar: 'https://picsum.photos/seed/expert1/100/100.jpg', date: '1402/05/15', description: 'مشاور در زمینه کاشت گندم و جو' },
+                    { id: 2, name: 'مهندس فاطمه کریمی', avatar: 'https://picsum.photos/seed/expert2/100/100.jpg', date: '1402/06/02', description: 'متخصص آبیاری تحت فشار' }
+                ],
+                vegetables: [
+                    { id: 3, name: 'دکتر محسن پورمحمدی', avatar: 'https://picsum.photos/seed/expert3/100/100.jpg', date: '1402/04/20', description: 'مشاور در زمینه کاشت سبزیجات' },
+                    { id: 4, name: 'مهندس سیده زینب حسینی', avatar: 'https://picsum.photos/seed/expert4/100/100.jpg', date: '1402/03/10', description: 'متخصص کاشت خیار و گوجه فرنگی' }
+                ],
+                orchard: [
+                    { id: 5, name: 'دکتر حمیدرضا صادقی', avatar: 'https://picsum.photos/seed/expert5/100/100.jpg', date: '1402/07/01', description: 'مشاور در زمینه باغداری میوه های هسته دار' },
+                    { id: 6, name: 'مهندس مریم میرزایی', avatar: 'https://picsum.photos/seed/expert6/100/100.jpg', date: '1402/02/15', description: 'متخصص کاشت انار و انجیر' }
+                ],
+                greenhouse: [
+                    { id: 7, name: 'دکتر علیرضا خلیل پور', avatar: 'https://picsum.photos/seed/expert7/100/100.jpg', date: '1402/08/05', description: 'مشاور در زمینه گلخانه های مدرن' },
+                    { id: 8, name: 'مهندس نسترن رضایی', avatar: 'https://picsum.photos/seed/expert8/100/100.jpg', date: '1402/01/22', description: 'متخصص سیستم های آبیاری در گلخانه' }
+                ],
+                mushroom: [
+                    { id: 9, name: 'دکتر وحید شریفی', avatar: 'https://picsum.photos/seed/expert9/100/100.jpg', date: '1402/09/10', description: 'مشاور در زمینه کاشت قارچ خوراکی' },
+                    { id: 10, name: 'مهندس الهام یزدانی', avatar: 'https://picsum.photos/seed/expert10/100/100.jpg', date: '1402/11/05', description: 'متخصص سیستم های تولید قارچ' }
+                ],
+                livestock: [
+                    { id: 11, name: 'دکتر محمدجواد امیری', avatar: 'https://picsum.photos/seed/expert11/100/100.jpg', date: '1402/10/12', description: 'مشاور در زمینه پرورش دام' },
+                    { id: 12, name: 'مهندس فهیمه رضوانی', avatar: 'https://picsum.photos/seed/expert12/100/100.jpg', date: '1402/12/01', description: 'متخصص تغذیه دام و طیور' }
+                ],
+                fishery: [
+                    { id: 13, name: 'دکتر محمدرضا حیدری', avatar: 'https://picsum.photos/seed/expert13/100/100.jpg', date: '1402/06/25', description: 'مشاور در زمینه پرورش ماهیان آب sweet' },
+                    { id: 14, name: 'مهندس ناهید قاسم پور', avatar: 'https://picsum.photos/seed/expert14/100/100.jpg', date: '1402/05/30', description: 'متخصص سیستم های پرورش ماهی در قفس' }
+                ]
+            };
+            return experts[category] || [];
+        }
+        
+        function openMessageModal(expertName, expertId) {
+            currentExpert = { name: expertName, id: expertId };
+            document.getElementById('messageModal').style.display = 'block';
+        }
+        
+        function sendMessage() {
+            const messageText = document.querySelector('.message-input').value.trim();
+            if (!messageText) {
+                alert('لطفاً پیام خود را وارد کنید.');
+                return;
+            }
+            
+            // Simulate sending message
+            alert(`پیام شما به ${currentExpert.name} ارسال شد.`);
+            closeMessageModal();
+        }
+        
+        function closeMessageModal() {
+            document.getElementById('messageModal').style.display = 'none';
+            document.querySelector('.message-input').value = '';
+        }
+        
+        // Close modal when clicking outside or on close button
+        window.onclick = function(event) {
+            const modal = document.getElementById('messageModal');
+            if (event.target === modal) {
+                closeMessageModal();
+            }
+        }
+        
+        document.querySelector('.close').addEventListener('click', closeMessageModal);
+    </script>
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/service-worker.js')
+      .then(registration => console.log('Service Worker ثبت شد'))
+      .catch(error => console.error('خطا در ثبت Service Worker:', error));
+  }
+</script>
+</body>
+</html>

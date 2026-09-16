@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Show/hide DIV based on Radio Button click</title>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function(){
+		   $('#div_list').hide();
+		   $('#b_yes').show();
+     	   $('#b_no').hide();
+
+        $('#yes').click(function()
+		{
+          $('#div_list').show();
+          $('#b_no').show();
+         $('#b_yes').hide();
+        });
+        $('#no').click(function()
+		{
+          $('#div_list').hide();
+    	   $('#b_yes').show();		  
+     	   $('#b_no').hide();		   
+        });
+      });
+    </script>
+  </head>
+  <body>
+
+    <div id="b_yes" >   <input id="yes" type="radio" name="color" value="green"> yes </div>
+    <div id="b_no" >    <input id='no'  type="radio" name="color" value="green"> no </div>
+
+    <div id="div_list" >You have selected Green</div>
+  </body>
+</html>

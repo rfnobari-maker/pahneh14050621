@@ -1,0 +1,611 @@
+/* CSS - Design by Alireza Maghari - www.toranjnet.com - info@toranjnet.com  */
+
+*
+{
+	padding: 0px;
+	margin-left: 0px;
+	margin-right: 0px;
+	margin-top: 0px;
+}
+
+body
+{
+	margin: 0px;
+	padding: 0px;
+	text-align: right; /* imp for english version*/
+	font-family: tahoma, Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #474747;
+}
+
+.Farsi
+{
+}
+.English
+{
+}
+
+table
+{
+	direction: rtl; /* imp for english version*/
+}
+
+.Title
+{
+	font-family: tahoma;
+	font-size: 11px;
+	font-style: normal;
+	line-height: 16px;
+	font-weight: bold;
+	color: #C00;
+	text-decoration: none;
+	margin: 0px;
+	margin-bottom: 8px;
+	margin-top: 2px;
+	background-color: #DFDDE1;
+}
+
+.print
+{
+	background-color: #EBFFD9;
+	color: #666666;
+}
+
+.TableBorder
+{
+	border: #39F 1px solid;
+}
+
+.TableBorderRed
+{
+	border: 1px solid #FF00FF;
+}
+
+img, img:link, img:visited
+{
+	border: 0px;
+	_behavior: url(iepngfix.htc);
+}
+
+img.PngFix
+{
+	_behavior: url(iepngfix.htc);
+}
+
+.Float
+{
+	float: right; /* imp for english version*/
+}
+.FloatAlt
+{
+	float: left; /* imp for english version*/
+}
+
+.PicFloat
+{
+	float: right;
+	margin-right: -7px;
+}
+.PicFloatAlt
+{
+	float: left;
+	margin-left: -7px;
+}
+
+.Dir
+{
+	direction: rtl;
+}
+.DirAlt
+{
+	direction: ltr;
+}
+
+.Align
+{
+	text-align: right;
+}
+/* imp for english version*/
+.AlignAlt
+{
+	text-align: left;
+}
+/* imp for english version*/
+.Center
+{
+	text-align: center;
+}
+
+.Clear
+{
+	clear: both;
+	line-height: 0px;
+	font-size: 0px;
+	margin: 0px;
+	padding: 0px;
+	height: 0px;
+}
+
+.Clear2
+{
+	clear: both;
+}
+
+
+.Hide
+{
+	display: none;
+}
+.Visible
+{
+	display: block;
+}
+
+.Vspacer3
+{
+	padding-top: 3px;
+	padding-bottom: 3px;
+}
+.Vspacer5
+{
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+.Vspacer8
+{
+	padding-top: 8px;
+	padding-bottom: 8px;
+}
+
+.Vspacer10
+{
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+.Vspacer15
+{
+	padding-top: 15px;
+	padding-bottom: 15px;
+}
+
+
+.Hspacer1
+{
+	padding-right: 1px;
+	padding-left: 0px;
+}
+
+.Hspacer3
+{
+	padding-right: 3px;
+	padding-left: 3px;
+}
+.Hspacer5
+{
+	padding-right: 5px;
+	padding-left: 5px;
+}
+.Hspacer8
+{
+	padding-right: 8px;
+	padding-left: 8px;
+}
+
+.HRspacer2
+{
+	padding-right: 2px; /* imp for english version*/
+	padding-left: 0px; /* imp for english version*/
+}
+
+.HLspacer2
+{
+	padding-left: 2px; /* imp for english version*/
+	padding-right: 0px; /* imp for english version*/
+}
+
+.HRspacer8
+{
+	padding-right: 8px; /* imp for english version*/
+	padding-left: 0px; /* imp for english version*/
+}
+
+.HLspacer8
+{
+	padding-left: 8px; /* imp for english version*/
+	padding-right: 0px; /* imp for english version*/
+}
+
+.HRspacer12
+{
+	padding-right: 12px; /* imp for english version*/
+	padding-left: 0px; /* imp for english version*/
+}
+
+
+.HRspacer30
+{
+	padding-right: 30px; /* imp for english version*/
+	padding-left: 0px; /* imp for english version*/
+}
+
+
+.ImageFloat
+{
+	float: right; /* imp for english version*/
+	margin-left: 5px; /* imp for english version*/
+}
+
+.ImageFloatAlt
+{
+	float: left; /* imp for english version*/
+	margin-right: 5px; /* imp for english version*/
+}
+
+.ImageCnt
+{
+	margin-left: 5px;
+	margin-right: 5px;
+}
+
+.ImageBorder
+{
+	border: solid 1px #cccccc;
+}
+
+
+.ImageTumb50, .ImageTumb60, .ImageTumb80, .ImageTumb100
+{
+	margin-top: 3px;
+	padding: 1px;
+	clear: right;
+}
+
+.ImageTumb50 img
+{
+	max-height: 50px;
+	max-width: 50px;
+	_width: 50px;
+}
+
+.ImageTumb60 img
+{
+	max-height: 60px;
+	max-width: 60px;
+	_width: 60px;
+}
+
+.ImageTumb80 img
+{
+	max-height: 80px;
+	max-width: 80px;
+	_width: 80px;
+}
+
+.ImageTumb100 img
+{
+	max-height: 100px;
+	max-width: 100px;
+	_width: 100px;
+}
+
+.BorderT1
+{
+	background: #FFFFFF;
+	padding: 5px;
+	border: solid 1px #bababa;
+}
+.BorderT2
+{
+	background: #EFEFEF;
+	padding: 5px;
+	border: dotted 1px #bababa;
+}
+.BorderT3
+{
+	background: #ffffff;
+	padding: 5px;
+	border: dotted 1px #bababa;
+}
+
+
+input[type="text"], input[type="submit"], input[type="file"], input[type="password"], input[type="select"], select, textarea, .TextField
+{
+	font-size: 11px;
+	color: #333333;
+	font-family: Tahoma;
+	border: #999999 solid 1px;
+	padding: 2px;
+	width: 156px;
+}
+
+input[type="checkbox"]
+{
+	border: none;
+}
+
+
+.GridButton
+{
+	width: 70px;
+	font-size: 11px;
+	font-family: Tahoma;
+	color: #333333;
+	border: #999999 solid 1px;
+	margin-bottom: 1px;
+	height: 19px;
+}
+
+.Button
+{
+	width: 110px;
+	font-size: 11px;
+	font-family: Tahoma;
+	color: #333333;
+	border: #999999 solid 1px;
+	height: 19px;
+}
+
+
+.LinkButton
+{
+	width: 350px;
+	font-size: 11px;
+	font-family: Tahoma;
+	color: #333333;
+	border: #999999 solid 1px;
+	margin-bottom: 1px;
+	height: 19px;
+	background-color: #f0f0f0;
+}
+
+.Grid
+{
+	border: 1px solid black;
+	border-collapse: separate;
+	border-spacing: 2px;
+	text-align: right;
+	width: 770px;
+}
+
+.Grid td
+{
+	color : Black;
+	padding: 5px;
+	border: 1px solid black;
+	border-collapse: separate;
+	border-spacing: 2px; /*text-align:right;*/
+}
+.Grid th
+{
+	color : Black;
+	padding: 5px;
+	border: 1px solid black;
+	border-collapse: separate;
+	border-spacing: 2px; /*text-align:right;*/
+}
+
+
+.GridHeader
+{
+	color: #ffffff;
+	background-color: #9fb8d7;
+	border-left: 1px solid #DDD;
+	border-bottom: 1px solid #DDD;
+	height: auto;
+	min-height: 20px;
+	padding: 5px;
+	font-weight: bold;
+	text-align: center;
+	border: 1px solid #000000;
+}
+
+.GridRow
+{
+	color : Black;
+	border: 1px outset black;
+	border-collapse: separate;
+	border-spacing: 2px;
+	padding: 5px;
+	background-color: #ffffff;
+}
+
+.GridAltRow
+{
+	color : Black;
+	border: 1px outset black;
+	border-collapse: separate;
+	border-spacing: 2px;
+	padding: 5px;
+	background-color: #CDCDCD;
+}
+
+tr.GridRow:hover
+{
+	border-bottom: 1px solid #999999;
+	padding: 5px;
+	background-color: #7EEA7B;
+}
+
+tr.GridAltRow:hover
+{
+	border-bottom: 1px solid #999999;
+	padding: 5px;
+	background-color: #7EEA7B;
+}	
+ 
+	
+.GridFooter 
+{
+	color: #ffffff;
+	background-color: #9fb8d7;
+	border-left: 1px solid #DDD;
+	border-bottom: 1px solid #DDD;
+	height: auto;
+	min-height: 20px;
+	padding: 5px;
+	font-weight: bold;
+	text-align: center;
+	border: 1px solid #000000;
+}
+
+.GridPager
+{
+	border : none;
+	min-height : 20;
+	max-height : 30;
+	text-align :center;
+}
+.GridPager  td
+{
+	border : none;
+	min-height : 20;
+	max-height : 30;
+	text-align :center;
+}
+
+.GridPager  th
+{
+	border : none;
+	min-height : 20;
+	max-height : 30;
+	text-align :center;
+}
+
+.Td
+{
+	color: Red;
+}
+
+.TdGreen
+{
+	color: Green;
+}
+
+.TdStyle
+{
+	background-color: #F3E18D;
+	font-weight: bold;
+	border: 1px solid #B35412;
+}
+
+.TdPersoneli
+{
+	background-color: rgb(210,230,180);
+	font-weight: bold;
+	border: solid 1px rgb(70,115,25);
+	margin: 5px;
+	padding: 5px;
+}
+
+.TdBlue
+{
+	background-color: rgb(185,205,227);
+	font-weight: bold;
+	border: solid 1px rgb(35,100,115);
+	margin: 5px;
+	padding: 5px;
+}
+
+.VBorder
+{
+	border-right: #bbbbbb 1px solid;
+	border-left: none;
+}
+/* imp for english version*/
+.VBorderAlt
+{
+	border-left: #bbbbbb 1px solid;
+	border-right: none;
+}
+/* imp for english version*/
+
+.VBorderDotted
+{
+	border-right: #bbbbbb 1px dashed;
+	border-left: none;
+}
+/* imp for english version*/
+.VBorderDottedAlt
+{
+	border-left: #bbbbbb 1px dashed;
+	border-right: none;
+}
+/* imp for english version*/
+
+
+.Item
+{
+	background: #F5F5F5;
+	border-bottom: #FFF 1px solid;
+}
+.ItemAlt
+{
+	background: #EFEFEF;
+	border-bottom: #FFF 1px solid;
+}
+
+.TreeView
+{
+	padding: 0px;
+}
+
+.Arrow_1
+{
+	background: url(../images/Arrow_1.gif) no-repeat right center;
+	padding-right: 8px;
+	width: 249px;
+	height: 19px;
+	direction: ltr;
+}
+
+
+.TblLink td
+{
+	background:url("../images/block_header.jpg") no-repeat;
+	width:143px;
+	height:170px;
+	border:none;
+	
+}
+
+.TblLink td:hover
+{
+	background:url("../images/block_header_hover.png") no-repeat;
+	width:143px;
+	height:170px;
+	/*border:solid 1px Red;
+	opacity:0.4;
+	filter:alpha(opacity=40);*/
+}
+
+.TblLink img
+{
+	float:right;
+	margin-top:5px;
+	margin-right:13px;
+}
+
+.TblLinkImg
+{
+	float:right;
+	margin-top:5px;
+	margin-right:13px;
+}
+
+.TblLink p
+{
+	float:right;
+	width:100%;
+	margin-top:25px;
+	text-align:center;
+	height: 20px;
+}
+
+
+.TblLinkImg1
+{
+	float:right;
+	margin-top:5px;
+	margin-right:200px;
+}

@@ -1,0 +1,76 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+@font-face {
+    font-family: myfont;
+    src: url(../assets/fonts/Yekan-Bakh-Fa-En-03-Light.woff);
+}
+body {
+}
+.logo{
+    width: 100vw;
+    height: 149px;
+    margin: 0;
+}
+.logo img {
+    width: 100vw;
+    height: 149px;
+  
+}
+.header{
+    
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    align-items: center;
+    width: 100vw;
+    margin: auto;
+     background-color: #0099cc;
+}
+.ul_class{
+    display: flex;
+    flex-direction: row-reverse;
+    list-style: none;
+    
+}
+#user{
+    font-family: myfont2, Geneva, Tahoma, sans-serif;
+    font-size: 14px;
+    font-weight: 200;
+    margin:15px 0 0 ; 
+}
+.ul_class li{
+    font-family: myfont, Geneva, Tahoma, sans-serif;
+    font-size: 0.75rem;
+    color: aliceblue;
+    margin: 0 35px 0  ;
+    
+}
+.ul_class li a{
+    cursor: pointer;
+    text-decoration: none;
+    color: aliceblue;
+}
+.img {
+    width: 25;
+    height: 25;
+    margin: 2px 5px 0;
+}
+.menup{
+    width: 100%;
+    background-color: bisque;
+    }
+.items{
+    display: flex;
+    background-color: #FFFFFF;
+    width: 100vw;
+    height: 500px;
+    justify-content: space-between;
+}
+
+.main{
+    background-color: #FFFFFF;
+    height: 500px;
+    width: 100vw;
+}

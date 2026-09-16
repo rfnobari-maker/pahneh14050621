@@ -1,0 +1,40 @@
+#box
+{ width:484px ; 
+height:256px ;
+  margin:auto ;
+  overflow:hidden ;
+   
+ }
+ 
+ #slider
+ {
+	 width:3388px ;
+	 animation:slider 40s infinite ;
+	 }
+	 @keyframes slider
+	 {
+		0%{margin-left:0;} 
+    	10%{margin-left:0;} 
+    	20%{margin-left:-484;} 
+ 		30%{margin-left:-968px;} 
+	    40%{margin-left:-1451px;} 
+		50%{margin-left:-1936px;} 
+        60%{margin-left:-2420px;} 
+    	70%{margin-left:-2904px;} 
+ 		80%{margin-left:-3388px;} 
+	    90%{margin-left:0;} 
+        90%{margin-left:0;} 
+	 }
+	
+	 .img
+	 {
+		 opacity:.6 ;
+	 	 border-radius:50px ;
+		 padding-left:1px
+
+			 }
+	 .img:hover
+	 {
+		 opacity:1 ;
+	 	 border-radius:50px ;
+		 }

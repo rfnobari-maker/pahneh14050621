@@ -1,0 +1,19 @@
+﻿
+input:focus
+{
+	border: 1px dotted black;
+	border-color: Red;
+	background-color: #FFD9D9;
+}
+
+input.error
+{
+    /*border: 1px dotted;
+    border-color: Red;
+    background-color: #FFFFCC;
+    vertical-align: top;
+    cursor: pointer;*/
+}
+
+
+

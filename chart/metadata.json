@@ -1,0 +1,5 @@
+{
+  "name": "Dynamic Chart Dashboard",
+  "description": "A stylish and modern dashboard application for visualizing data with a variety of interactive charts. Built with React, TypeScript, and Tailwind CSS.",
+  "requestFramePermissions": []
+}

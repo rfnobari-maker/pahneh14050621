@@ -1,0 +1,2 @@
+php_flag  log_errors On
+php_value error_log /var/www/html/prof/Agri/php_error.log

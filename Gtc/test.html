@@ -1,0 +1,83 @@
+<body style="text-align: center">test test<br>
+<table border="1" align="center" width="80%" style="margin-top:-50px">
+  <tr>
+    <?php  if ($no_bah=='1') { ?>
+    <td height="22" colspan="5" align="right" bgcolor="#CCCCCC"><div style="margin-right:40px" align="right"><strong>مشخصات بهره بردار حقیقی</strong></div></td>
+  </tr>
+  <tr>
+    <td width="298" height="30"><div align="right"> <?php echo city_name1($id_city,$id_ostan) ?> </div></td>
+    <td width="190"><div align="right">:شهرستان</div></td>
+    <td>&nbsp;</td>
+    <td width="154"><div align="right"><?php echo ostan_name($id_ostan) ; ?></div></td>
+    <td width="299"><div style="margin-right:30px" align="right">: استان</div></td>
+  </tr>
+  <tr>
+    <td height="30"><div align="right"> <?php echo abadi_name($add_abadi),shahr_name($add_city); ?></div></td>
+    <td><div align="right">: آبادی / شهر</div></td>
+    <td>&nbsp;</td>
+    <td><div align="right"> <?php echo mar_name($id_mar) ; ?></div></td>
+    <td><div style="margin-right:30px" align="right">: مرکز جهاد کشاورزی</div></td>
+  </tr>
+  <tr>
+    <td height="30"><div align="right"><?php echo $last_name ; ?></div></td>
+    <td><div align="right">:نام خانوادگی</div></td>
+    <td>&nbsp;</td>
+    <td><div align="right"><?php echo $bah_name ; ?></div></td>
+    <td><div style="margin-right:30px" align="right">: نام</div></td>
+  </tr>
+  <tr>
+    <td height="30"><div align="right"><?php echo $sh_sh ; ?></div></td>
+    <td><div align="right">:شماره شناسنامه</div></td>
+    <td width="47">&nbsp;</td>
+    <td><div align="right"><?php echo $bah_cod_m ; ?></div></td>
+    <td><div style="margin-right:30px" align="right" >:کد ملی</div></td>
+  </tr>
+  <tr>
+    <td height="30"><div align="right"><?php echo $tel_m ; ?></div></td>
+    <td><div align="right">:شماره همراه</div></td>
+    <td width="47">&nbsp;</td>
+    <td><div align="right"><?php echo $tel_s ; ?></div></td>
+    <td><div style="margin-right:30px" align="right" >:شماره تلفن ثابت</div></td>
+  </tr>
+  <tr>
+    <?php }  if ($no_bah=='2') { ?>
+    <p class="one" >&nbsp;</p>
+    <td height="22" colspan="5" bgcolor="#CCCCCC"  align="right" ><div style="margin-right:40px" align="right"><strong>مشخصات بهره بردار حقوقی</strong></div></td>
+  </tr>
+  <tr>
+    <td width="298" height="30"><div align="right"> <?php echo city_name1($id_city,$id_ostan) ?></div></td>
+    <td width="190"><div align="right">:شهرستان</div></td>
+    <td>&nbsp;</td>
+    <td width="154"><div align="right"><?php echo ostan_name($id_ostan) ; ?></div></td>
+    <td><div style="margin-right:30px" align="right">: استان</div></td>
+  </tr>
+  <tr>
+    <td height="30"><div align="right"> <?php echo abadi_name($add_abadi),shahr_name($add_city); ?></div></td>
+    <td><div align="right">: آبادی / شهر</div></td>
+    <td>&nbsp;</td>
+    <td><div align="right"> <?php echo mar_name($id_mar) ; ?></div></td>
+    <td><div style="margin-right:30px" align="right">: مرکز جهاد کشاورزی</div></td>
+  </tr>
+  <tr>
+    <td height="30"><div align="right"><?php echo $bah_cod_m ; ?></div></td>
+    <td><div align="right">:کدملی مدیر عامل</div></td>
+    <td>&nbsp;</td>
+    <td><div align="right"><?php echo $co_name ; ?></div></td>
+    <td><div style="margin-right:30px" align="right">: نام شرکت</div></td>
+  </tr>
+  <tr>
+    <td height="30"><div align="right"><?php echo $last_name ; ?></div></td>
+    <td><div align="right">: نام خانوادگی مدیرعامل</div></td>
+    <td>&nbsp;</td>
+    <td><div align="right"><?php echo $name ; ?></div></td>
+    <td><div style="margin-right:30px" align="right">: نام مدیرعامل</div></td>
+  </tr>
+  <tr>
+    <td height="30"><div align="right"><?php echo $tel_m ; ?></div></td>
+    <td><div align="right">:شماره همراه</div></td>
+    <td>&nbsp;</td>
+    <td><div align="right"><?php echo $tel_s ; ?></div></td>
+    <td><div style="margin-right:30px" align="right" >: تلفن ثابت</div></td>
+  </tr>
+  <?php  }?>
+</table>

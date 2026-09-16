@@ -1,0 +1,77 @@
+/* Shared agri1 palettes. html[data-theme] overrides page :root. */
+html,
+html[data-theme="farm"] {
+    --color-primary: #15803D;
+    --color-on-primary: #FFFFFF;
+    --color-secondary: #166534;
+    --color-accent: #A16207;
+    --color-on-accent: #FFFFFF;
+    --color-background: #F0FDF4;
+    --color-foreground: #14532D;
+    --color-card: #FFFFFF;
+    --color-card-foreground: #14532D;
+    --color-muted: #E8F0F1;
+    --color-muted-foreground: #475569;
+    --color-border: #86C9A0;
+    --color-destructive: #DC2626;
+    --color-on-destructive: #FFFFFF;
+    --color-ring: #15803D;
+    --color-warning-bg: #FEF2F2;
+}
+
+html[data-theme="calm"] {
+    --color-primary: #15803D;
+    --color-on-primary: #FFFFFF;
+    --color-secondary: #166534;
+    --color-accent: #A16207;
+    --color-on-accent: #FFFFFF;
+    --color-background: #F7F8F5;
+    --color-foreground: #1F2937;
+    --color-card: #FFFFFF;
+    --color-card-foreground: #1F2937;
+    --color-muted: #EEF0ED;
+    --color-muted-foreground: #4B5563;
+    --color-border: #D1D5DB;
+    --color-destructive: #DC2626;
+    --color-on-destructive: #FFFFFF;
+    --color-ring: #15803D;
+    --color-warning-bg: #FEF2F2;
+}
+
+html[data-theme="paper"] {
+    --color-primary: #15803D;
+    --color-on-primary: #FFFFFF;
+    --color-secondary: #166534;
+    --color-accent: #A16207;
+    --color-on-accent: #FFFFFF;
+    --color-background: #F7F3EB;
+    --color-foreground: #1C1917;
+    --color-card: #FFFDF8;
+    --color-card-foreground: #1C1917;
+    --color-muted: #F1EBE1;
+    --color-muted-foreground: #57534E;
+    --color-border: #E7E0D4;
+    --color-destructive: #DC2626;
+    --color-on-destructive: #FFFFFF;
+    --color-ring: #15803D;
+    --color-warning-bg: #FEF2F2;
+}
+
+html[data-theme="contrast"] {
+    --color-primary: #15803D;
+    --color-on-primary: #FFFFFF;
+    --color-secondary: #166534;
+    --color-accent: #A16207;
+    --color-on-accent: #FFFFFF;
+    --color-background: #FFFFFF;
+    --color-foreground: #111827;
+    --color-card: #FFFFFF;
+    --color-card-foreground: #111827;
+    --color-muted: #F3F4F6;
+    --color-muted-foreground: #374151;
+    --color-border: #9CA3AF;
+    --color-destructive: #B91C1C;
+    --color-on-destructive: #FFFFFF;
+    --color-ring: #15803D;
+    --color-warning-bg: #FEF2F2;
+}
