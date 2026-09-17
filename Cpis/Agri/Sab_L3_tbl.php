@@ -1,7 +1,6 @@
 <?php
-require_once("../../lock_ce.php");
-include('../../login/config.php');
-
+//require_once("../../lock_ce.php");
+include(__DIR__ . '/../../login/config.php');
 // سال ثابت
 $z_sal = '1404-1405';
 
