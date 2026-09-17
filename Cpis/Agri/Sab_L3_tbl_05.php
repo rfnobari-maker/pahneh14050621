@@ -1,4 +1,5 @@
 <?php
+
 require_once("../../lock_cp.php");
 include('../../login/config.php');
 
