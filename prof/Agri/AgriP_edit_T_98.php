@@ -557,7 +557,7 @@ $mah_name  = isset($_POST['mah_name']) ? $_POST['mah_name'] : '';
                             <?php $id_ostan1 = $id_ostan; ?>
                             <option value="-1">انتخاب استان</option>
                             <?php
-                            $query = "SELECT id_ostan,ostan FROM `ostanname`  ORDER BY BINARY ostan ASC";
+                            $query = "SELECT id_ostan,ostan FROM `ostanname` ORDER BY BINARY ostan ASC";
                             $stmt = $dbh->prepare($query);
                             $stmt->execute();
                             foreach ($stmt as $row) {
@@ -587,7 +587,7 @@ $mah_name  = isset($_POST['mah_name']) ? $_POST['mah_name'] : '';
                         <select name="id_city5" disabled="disabled" class="style8" id="id_city" dir="rtl">
                             <option value="0">کل استان</option>
                             <?php
-                            $query = "SELECT  id_city,city FROM `cityname` WHERE  `id_ostan` = '$id_ostan1' ORDER BY BINARY city ASC";
+                            $query = "SELECT id_city,city FROM `cityname` WHERE `id_ostan` = '$id_ostan1' ORDER BY BINARY city ASC";
                             $stmt = $dbh->prepare($query);
                             $stmt->execute();
                             foreach ($stmt as $row) {
@@ -623,7 +623,7 @@ $mah_name  = isset($_POST['mah_name']) ? $_POST['mah_name'] : '';
                             <option value="">انتخاب کنید</option>
                             <?php
                             if (isset($mah_qroup) && $mah_qroup !== '') {
-                                $query = "SELECT DISTINCT product_cod,product_name FROM `product_z` WHERE  `group_cod` = $mah_qroup";
+                                $query = "SELECT DISTINCT product_cod,product_name FROM `product_z` WHERE `group_cod` = $mah_qroup";
                                 $stmt = $dbh->prepare($query);
                                 $stmt->execute();
                                 foreach ($stmt as $row) {
@@ -643,10 +643,10 @@ $mah_name  = isset($_POST['mah_name']) ? $_POST['mah_name'] : '';
                             <option value="0">نام مرکز</option>
                             <?php
                             if ($id_ostan1 !== '' && $id_ostan1 !== '-1' && $id_city !== '' && $id_city !== '0') {
-                            $query = "SELECT  id_mar,mar FROM `mar` WHERE  `id_ostan` = $id_ostan1 and `id_city` = $id_city";
-                            $stmt = $dbh->prepare($query);
-                            $stmt->execute();
-                            foreach ($stmt as $row) {
+                                $query = "SELECT id_mar,mar FROM `mar` WHERE `id_ostan` = $id_ostan1 and `id_city` = $id_city";
+                                $stmt = $dbh->prepare($query);
+                                $stmt->execute();
+                                foreach ($stmt as $row) {
                             ?>
                             <option value="<?php echo agri2_h($row['id_mar']); ?>"
                                 <?php if ($row['id_mar'] == $id_mar) echo 'selected="selected"'; ?>> <?php echo agri2_h($row['mar']); ?></option>
@@ -669,7 +669,7 @@ $mah_name  = isset($_POST['mah_name']) ? $_POST['mah_name'] : '';
                             <?php
                             $id_city = isset($_SESSION['id_city']) ? $_SESSION['id_city'] : $id_city;
                             $id_mar  = isset($_SESSION['id_mar']) ? $_SESSION['id_mar'] : $id_mar;
-                            $query = "SELECT  add_abadi,abadi FROM `list_abadi` WHERE  `id_ostan` = '$id_ostan' and `id_city` = '$id_city' and `id_mar` = '$id_mar' and `mor_cod_m` = '$login_session' ORDER BY BINARY abadi";
+                            $query = "SELECT add_abadi,abadi FROM `list_abadi` WHERE `id_ostan` = '$id_ostan' and `id_city` = '$id_city' and `id_mar` = '$id_mar' and `mor_cod_m` = '$login_session' ORDER BY BINARY abadi";
                             $stmt = $dbh->prepare($query);
                             $stmt->execute();
                             foreach ($stmt as $row) {
@@ -684,7 +684,7 @@ $mah_name  = isset($_POST['mah_name']) ? $_POST['mah_name'] : '';
                         <select name="add_city" class="input_text" id="add_city" tabindex="7" dir="rtl">
                             <option value="0">انتخاب کنید</option>
                             <?php
-                            $query = "SELECT  add_city,shahr FROM `list_city` WHERE  `id_ostan` = '$id_ostan' and `id_city` = '$id_city' and `id_mar` = '$id_mar' and `mor_cod_m` = '$login_session' ORDER BY BINARY shahr";
+                            $query = "SELECT add_city,shahr FROM `list_city` WHERE `id_ostan` = '$id_ostan' and `id_city` = '$id_city' and `id_mar` = '$id_mar' and `mor_cod_m` = '$login_session' ORDER BY BINARY shahr";
                             $stmt = $dbh->prepare($query);
                             $stmt->execute();
                             foreach ($stmt as $row) {
@@ -772,7 +772,7 @@ $mah_name  = isset($_POST['mah_name']) ? $_POST['mah_name'] : '';
             if ($dis == '1') {
                 $v_dis = 1;
             } else {
-                $v_dis = "mah_tol = 0 and mah_kh !='1'  ";
+                $v_dis = "mah_tol = 0 and mah_kh !='1' ";
             }
 
             $start = 0;
@@ -780,8 +780,8 @@ $mah_name  = isset($_POST['mah_name']) ? $_POST['mah_name'] : '';
             $id = isset($_GET['id']) ? (int)$_GET['id'] : 1;
             if ($id < 1) $id = 1;
             $start = ($id - 1) * $limit;
-            $query = "SELECT  id,bah_cod_m,sh_gat,no_kesh,cod_mah,zer_kesht_a,zer_kesht_b,mah_tolp,s_bar_a,s_bar_b,mah_tol,add_abadi,mah_kh from $Agri_prod_table where $v_id_ostan  and $v_id_city and  $v_id_mar and $f_add_abadi and $f_add_city and $f_no_kesh  and $v_mor_cod_m and $v_bah_cod_m and  $v_z_sal and  $v_cod_mah and  $v_dis ORDER BY bah_cod_m,sh_gat ASC LIMIT $start, $limit ";
-            $query1 = "SELECT  count(*) from $Agri_prod_table where $v_id_ostan  and $v_id_city and  $v_id_mar and $f_add_abadi and $f_add_city and $f_no_kesh  and $v_mor_cod_m and $v_bah_cod_m and  $v_z_sal and  $v_cod_mah and  $v_dis   ";
+            $query = "SELECT id,bah_cod_m,sh_gat,no_kesh,cod_mah,zer_kesht_a,zer_kesht_b,mah_tolp,s_bar_a,s_bar_b,mah_tol,add_abadi,mah_kh from $Agri_prod_table where $v_id_ostan and $v_id_city and $v_id_mar and $f_add_abadi and $f_add_city and $f_no_kesh and $v_mor_cod_m and $v_bah_cod_m and $v_z_sal and $v_cod_mah and $v_dis ORDER BY bah_cod_m,sh_gat ASC LIMIT $start, $limit ";
+            $query1 = "SELECT count(*) from $Agri_prod_table where $v_id_ostan and $v_id_city and $v_id_mar and $f_add_abadi and $f_add_city and $f_no_kesh and $v_mor_cod_m and $v_bah_cod_m and $v_z_sal and $v_cod_mah and $v_dis ";
             $stmt = $dbh->prepare($query);
             $stmt->execute();
             $t_row = $stmt->rowCount();
@@ -845,7 +845,7 @@ $mah_name  = isset($_POST['mah_name']) ? $_POST['mah_name'] : '';
                                 <form name="form<?php echo $t_r; ?>" id="row-form-<?php echo $t_r; ?>">
                                     <input type="hidden" id="id<?php echo $t_r; ?>" name="id" value="<?php echo agri2_h($row['id']); ?>"/>
                                     <input type="hidden" id="add_city<?php echo $t_r; ?>" name="add_city" value="<?php echo agri2_h($add_city); ?>"/>
-                                    <input type="hidden" id="z_sal" name="z_sal" value="<?php echo agri2_h($z_sal); ?>"/>
+                                    <input type="hidden" id="z_sal<?php echo $t_r; ?>" name="z_sal" value="<?php echo agri2_h($z_sal); ?>"/>
                                     <input type="hidden" id="bah_cod_m<?php echo $t_r; ?>" name="bah_cod_m" value="<?php echo agri2_h($row['bah_cod_m']); ?>"/>
                                     <input type="hidden" id="add_abadi<?php echo $t_r; ?>" name="add_abadi" value="<?php echo agri2_h($row['add_abadi']); ?>"/>
                                     <input type="hidden" id="sh_gat<?php echo $t_r; ?>" name="sh_gat" value="<?php echo agri2_h($row['sh_gat']); ?>"/>
@@ -1061,6 +1061,33 @@ $no = isset($t_row) ? $t_row : 0;
 while ($no > 0) {
 ?>
 <script>
+// ===== کنترل سطح برداشت اول =====
+$('.s_bar_a<?php echo $no; ?>').on('input', function () {
+    var sba = parseFloat($(this).val()) || 0;
+    var sbb = parseFloat($('#s_bar_b<?php echo $no; ?>').val()) || 0;
+    var zka = parseFloat($('#zer_kesht_a<?php echo $no; ?>').val()) || 0;
+    var zkb = parseFloat($('#zer_kesht_b<?php echo $no; ?>').val()) || 0;
+
+    if (sba > 0 && sbb > 0) {
+        $(this).val('');
+        alert('سطح برداشت اول و دوم نمی‌توانند همزمان مقدار داشته باشند.');
+        this.focus();
+        return;
+    }
+    if (zkb > 0 && zka <= 0 && sba > 0) {
+        $(this).val('');
+        alert('با توجه به سطح زیر کشت دوم، فقط سطح برداشت دوم مجاز است.');
+        this.focus();
+        return;
+    }
+    if (zka <= 0 && sba > 0) {
+        $(this).val('');
+        alert('سطح زیر کشت اول صفر است، ثبت سطح برداشت اول مجاز نیست.');
+        this.focus();
+    }
+});
+</script>
+<script>
 $('.s_bar_a<?php echo $no; ?>').keyup(function () {
     var zka = document.getElementById("zer_kesht_a<?php echo $no; ?>").value;
     var sba = document.getElementById("s_bar_a<?php echo $no; ?>").value;
@@ -1074,6 +1101,34 @@ $('.s_bar_a<?php echo $no; ?>').keyup(function () {
 <script>
 $('.s_bar_a<?php echo $no; ?>').change(function () {
     $('#mah_tol<?php echo $no; ?>').val('');
+});
+</script>
+
+<script>
+// ===== کنترل سطح برداشت دوم =====
+$('.s_bar_b<?php echo $no; ?>').on('input', function () {
+    var sbb = parseFloat($(this).val()) || 0;
+    var sba = parseFloat($('#s_bar_a<?php echo $no; ?>').val()) || 0;
+    var zka = parseFloat($('#zer_kesht_a<?php echo $no; ?>').val()) || 0;
+    var zkb = parseFloat($('#zer_kesht_b<?php echo $no; ?>').val()) || 0;
+
+    if (sba > 0 && sbb > 0) {
+        $(this).val('');
+        alert('سطح برداشت اول و دوم نمی‌توانند همزمان مقدار داشته باشند.');
+        this.focus();
+        return;
+    }
+    if (zka > 0 && zkb <= 0 && sbb > 0) {
+        $(this).val('');
+        alert('با توجه به سطح زیر کشت اول، فقط سطح برداشت اول مجاز است.');
+        this.focus();
+        return;
+    }
+    if (zkb <= 0 && sbb > 0) {
+        $(this).val('');
+        alert('سطح زیر کشت دوم صفر است، ثبت سطح برداشت دوم مجاز نیست.');
+        this.focus();
+    }
 });
 </script>
 <script>
@@ -1092,6 +1147,7 @@ $('.s_bar_b<?php echo $no; ?>').change(function () {
     $('#mah_tol<?php echo $no; ?>').val('');
 });
 </script>
+
 <script>
 $('.mah_tol<?php echo $no; ?>').keyup(function () {
     var mcod = document.getElementById("cod_mah<?php echo $no; ?>").value;
@@ -1099,7 +1155,6 @@ $('.mah_tol<?php echo $no; ?>').keyup(function () {
     var sbb = document.getElementById("s_bar_b<?php echo $no; ?>").value;
     var mtol = document.getElementById("mah_tol<?php echo $no; ?>").value;
     var no_kesh = document.getElementById("no_kesh<?php echo $no; ?>").value;
-    no_kesh
     $.ajax({
         url: "aj.php",
         type: "POST",
@@ -1109,7 +1164,7 @@ $('.mah_tol<?php echo $no; ?>').keyup(function () {
                 document.getElementById("submit<?php echo $no; ?>").disabled = true;
                 $('#mah_tol<?php echo $no; ?>').val('');
                 document.getElementById("mah_tol<?php echo $no; ?>").focus();
-                alert(' خطا  \n \n  میزان تولید وارد شده از محدود مجاز ، بیشتر هست / میزان سطح برداشت را بررسی کنید ');
+                alert(' خطا \n \n میزان تولید وارد شده از محدود مجاز ، بیشتر هست / میزان سطح برداشت را بررسی کنید ');
             } else {
                 document.getElementById("submit<?php echo $no; ?>").disabled = false;
             }
@@ -1127,7 +1182,7 @@ $('.mah_tol<?php echo $no; ?>').change(function () {
     if (parseFloat(sb) > 0 && parseFloat(mtol) <= 0) {
         $('#mah_tol<?php echo $no; ?>').val('');
         document.getElementById("mah_tol<?php echo $no; ?>").focus();
-        alert("با توجه به سطح برداشت  ، تولید قطعی نادرست است");
+        alert("با توجه به سطح برداشت ، تولید قطعی نادرست است");
     }
 });
 </script>
@@ -1142,27 +1197,85 @@ $(function () {
         var id = $("#id<?php echo $no; ?>").val();
         var bah_cod_m = $("#bah_cod_m<?php echo $no; ?>").val();
         var add_abadi = $("#add_abadi<?php echo $no; ?>").val();
-        var z_sal = $("#z_sal").val();
+        var z_sal = $("#z_sal<?php echo $no; ?>").val();
         var sh_gat = $("#sh_gat<?php echo $no; ?>").val();
-        var sb = s_bar_a + s_bar_b;
+        var zka = parseFloat($("#zer_kesht_a<?php echo $no; ?>").val()) || 0;
+        var zkb = parseFloat($("#zer_kesht_b<?php echo $no; ?>").val()) || 0;
+        var sba_num = parseFloat(s_bar_a) || 0;
+        var sbb_num = parseFloat(s_bar_b) || 0;
+        var sb = sba_num + sbb_num;
+
         var dataString = 's_bar_a=' + s_bar_a + '&s_bar_b=' + s_bar_b + '&mah_tol=' + mah_tol + '&id=' + id
             + '&bah_cod_m=' + bah_cod_m + '&add_abadi=' + add_abadi + '&z_sal=' + z_sal + '&sh_gat=' + sh_gat + '&mah_kh=' + mah_kh;
-        if (s_bar_a == '' || s_bar_b == '' || mah_tol == '' || (parseFloat(sb) > 0 && parseFloat(mah_tol) <= 0)
-            || (parseFloat(sb) <= 0 && parseFloat(mah_tol) > 0)
-            || mah_kh == '') {
+
+        // ===== اعتبارسنجی نهایی قبل از ارسال =====
+        if (s_bar_a == '' || s_bar_b == '' || mah_tol == '' || mah_kh == '') {
             $('.success<?php echo $no; ?>').fadeOut(200).hide();
-            $('.error<?php echo $no; ?>').fadeOut(200).show();
-        } else {
-            $.ajax({
-                type: "POST",
-                url: "post98.php",
-                data: dataString,
-                success: function () {
+            $('.error<?php echo $no; ?>').text('همه فیلدها الزامی هستند.').fadeIn(200).show();
+            return false;
+        }
+        if (sb > 0 && parseFloat(mah_tol) <= 0) {
+            $('.success<?php echo $no; ?>').fadeOut(200).hide();
+            $('.error<?php echo $no; ?>').text('با سطح برداشت موجود، تولید قطعی باید بزرگتر از صفر باشد.').fadeIn(200).show();
+            return false;
+        }
+        if (sb <= 0 && parseFloat(mah_tol) > 0) {
+            $('.success<?php echo $no; ?>').fadeOut(200).hide();
+            $('.error<?php echo $no; ?>').text('بدون سطح برداشت، تولید قطعی نباید مقدار داشته باشد.').fadeIn(200).show();
+            return false;
+        }
+        if (sba_num > 0 && sbb_num > 0) {
+            $('.success<?php echo $no; ?>').fadeOut(200).hide();
+            $('.error<?php echo $no; ?>').text('هر دو سطح برداشت همزمان مجاز نیست.').fadeIn(200).show();
+            return false;
+        }
+        if (zka > 0 && sbb_num > 0) {
+            $('.success<?php echo $no; ?>').fadeOut(200).hide();
+            $('.error<?php echo $no; ?>').text('با سطح زیر کشت اول، فقط برداشت اول مجاز است.').fadeIn(200).show();
+            return false;
+        }
+        if (zkb > 0 && sba_num > 0) {
+            $('.success<?php echo $no; ?>').fadeOut(200).hide();
+            $('.error<?php echo $no; ?>').text('با سطح زیر کشت دوم، فقط برداشت دوم مجاز است.').fadeIn(200).show();
+            return false;
+        }
+        if (sba_num > 0 && zka <= 0) {
+            $('.success<?php echo $no; ?>').fadeOut(200).hide();
+            $('.error<?php echo $no; ?>').text('سطح زیر کشت اول صفر است.').fadeIn(200).show();
+            return false;
+        }
+        if (sbb_num > 0 && zkb <= 0) {
+            $('.success<?php echo $no; ?>').fadeOut(200).hide();
+            $('.error<?php echo $no; ?>').text('سطح زیر کشت دوم صفر است.').fadeIn(200).show();
+            return false;
+        }
+
+        // ===== ارسال به سرور =====
+        $.ajax({
+            type: "POST",
+            url: "post98.php",
+            data: dataString,
+            success: function (response) {
+                if (response.indexOf('error') === 0) {
+                    var msg = 'ثبت نشد.';
+                    if (response === 'error:both_harvest') msg = 'هر دو سطح برداشت همزمان مجاز نیست.';
+                    else if (response === 'error:invalid_harvest_a') msg = 'با سطح زیر کشت دوم، سطح برداشت اول مجاز نیست.';
+                    else if (response === 'error:invalid_harvest_b') msg = 'با سطح زیر کشت اول، سطح برداشت دوم مجاز نیست.';
+                    else if (response === 'error:no_zer_kesht_a') msg = 'سطح زیر کشت اول صفر است.';
+                    else if (response === 'error:no_zer_kesht_b') msg = 'سطح زیر کشت دوم صفر است.';
+                    else if (response === 'error:record_not_found') msg = 'رکورد یافت نشد.';
+                    $('.error<?php echo $no; ?>').text(msg).fadeIn(200).show();
+                    $('.success<?php echo $no; ?>').fadeOut(200).hide();
+                } else {
                     $('.success<?php echo $no; ?>').fadeIn(200).show();
                     $('.error<?php echo $no; ?>').fadeOut(200).hide();
                 }
-            });
-        }
+            },
+            error: function () {
+                $('.error<?php echo $no; ?>').text('خطا در ارتباط با سرور').fadeIn(200).show();
+                $('.success<?php echo $no; ?>').fadeOut(200).hide();
+            }
+        });
         return false;
     });
 });

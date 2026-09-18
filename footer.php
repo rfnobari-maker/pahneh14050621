@@ -213,7 +213,6 @@ if (!empty($messages)) {
 </style>
 
 <p class="agri1-footer-copy MenuItemRight">کلیه حقوق مادی و معنوی این سامانه متعلق به مرکز فناوری اطلاعات و ارتباطات وزارت جهاد کشاورزی می باشد</p>
-
 <?php if (!empty($messages)) { ?>
 <div class="agri1-sysmsg" dir="rtl" lang="fa" role="region" aria-label="پیام‌های سامانه">
     <?php
