@@ -3,55 +3,86 @@ include('../../lock_p1.php');
 include('../../event.php');
 include('../../date_con.php');
 require_once('../../Jalali.php');
-include('../../login/config.php');
-if  (isset($_POST['bah_cod_m']))
-{
-date_default_timezone_set('Asia/Tehran') ;
+require_once('../../login/config.php');
+
+date_default_timezone_set('Asia/Tehran');
 $date_edit = jdate("Y/m/d");
-$time = date('H:i:s') ;
-$date_s = date_con(jdate("Y/m/d"));
-$add_abadi = $_POST["add_abadi"]; 
-$add_city = $_POST["add_city"]; 
-$bah_cod_m = $_POST['bah_cod_m'];
-$no_zan = $_POST['no_bee'];
-$m_zan = $_POST['m_zan'];
-$num_bah = $_POST['num_bah'];
+$time      = date('H:i:s');
+$date_s    = $date_edit;
 
-if ($m_zan=='abadi') {
- $query = "SELECT add_abadi,id_ostan,id_city,id_mar from list_abadi where add_abadi = :add_abadi"; 
- $stmt = $dbh->prepare($query);
- $stmt->execute(array(':add_abadi'=>$add_abadi));
- $found = $stmt -> rowCount();
- $row = $stmt->fetch(PDO::FETCH_ASSOC);
- $add_abadi = $row["add_abadi"]; 
- $add_city = '-'; 
- $id_ostan = $row["id_ostan"]; 
- $id_city = $row["id_city"]; 
- $id_mar = $row["id_mar"]; 
-}
-if  ($m_zan=='shahr') {
+/* ------------------------------------------------------------------
+ | مقداردهی اولیه متغیرها (قبل از رندر HTML) — سازگار با PHP 5.3
+ * ------------------------------------------------------------------ */
+$bah_cod_m  = isset($_POST['bah_cod_m']) ? $_POST['bah_cod_m'] : '';
+$no_zan     = isset($_POST['no_zan'])    ? $_POST['no_zan']
+            : (isset($_POST['no_bee'])   ? $_POST['no_bee'] : '');
+$num_bah    = isset($_POST['num_bah'])   ? $_POST['num_bah']   : '';
+$add_abadi  = isset($_POST['add_abadi']) ? $_POST['add_abadi'] : '';
+$add_city   = isset($_POST['add_city'])  ? $_POST['add_city']  : '';
 
- $query = "SELECT add_city,id_ostan,id_mar,id_city from list_city where add_city = :add_city"; 
- $stmt = $dbh->prepare($query);
- $stmt->execute(array(':add_city'=>$add_city));
- $found = $stmt -> rowCount();
- $row = $stmt->fetch(PDO::FETCH_ASSOC);
- $add_city = $row["add_city"]; 
- $add_abadi = '-'; 
- $id_ostan = $row["id_ostan"]; 
- $id_city = $row["id_city"]; 
- $id_mar = $row["id_mar"]; 
-}
- ?> 
+$lat       = isset($_POST['lat'])       ? $_POST['lat']       : '';
+$lng       = isset($_POST['lng'])       ? $_POST['lng']       : '';
+$t_sha     = isset($_POST['t_sha'])     ? $_POST['t_sha']     : '';
+$vaz_zan   = isset($_POST['vaz_zan'])   ? $_POST['vaz_zan']   : '';
+$bem_kand  = isset($_POST['bem_kand'])  ? $_POST['bem_kand']  : '';
+$bem_zan   = isset($_POST['bem_zan'])   ? $_POST['bem_zan']   : '';
+$sh_zan    = isset($_POST['sh_zan'])    ? $_POST['sh_zan']    : '';
+$oz_tav    = isset($_POST['oz_tav'])    ? $_POST['oz_tav']    : '';
+$g_ostan   = isset($_POST['g_ostan'])   ? $_POST['g_ostan']   : '';
+$e_ostan   = isset($_POST['e_ostan'])   ? $_POST['e_ostan']   : '';
+$m_ostan   = isset($_POST['m_ostan'])   ? $_POST['m_ostan']   : '';
+$m_city    = isset($_POST['m_city'])    ? $_POST['m_city']    : '';
+$no_mo     = isset($_POST['no_mo'])     ? $_POST['no_mo']     : '';
+$tm_arz    = isset($_POST['tm_arz'])    ? $_POST['tm_arz']    : '';
+$tm_kh     = isset($_POST['tm_kh'])     ? $_POST['tm_kh']     : '';
+$m_shaker  = isset($_POST['m_shaker'])  ? $_POST['m_shaker']  : '';
+
+$tk_bo     = isset($_POST['tk_bo'])     ? $_POST['tk_bo']     : '';
+$tk_mo     = isset($_POST['tk_mo'])     ? $_POST['tk_mo']     : '';
+$to_bo     = isset($_POST['to_bo'])     ? $_POST['to_bo']     : '';
+$to_mo     = isset($_POST['to_mo'])     ? $_POST['to_mo']     : '';
+
+$t_bar     = isset($_POST['t_bar'])     ? $_POST['t_bar']     : '';
+$t_gar     = isset($_POST['t_gar'])     ? $_POST['t_gar']     : '';
+$t_zah     = isset($_POST['t_zah'])     ? $_POST['t_zah']     : '';
+$t_mom     = isset($_POST['t_mom'])     ? $_POST['t_mom']     : '';
+$t_jel     = isset($_POST['t_jel'])     ? $_POST['t_jel']     : '';
+$t_nan     = isset($_POST['t_nan'])     ? $_POST['t_nan']     : '';
+$t_k_jel   = isset($_POST['t_k_jel'])   ? $_POST['t_k_jel']   : '';
+$t_k_nan   = isset($_POST['t_k_nan'])   ? $_POST['t_k_nan']   : '';
+
+$tal_h_sel = isset($_POST['tal_h_sel']) ? $_POST['tal_h_sel'] : '';
+$tal_h_sam = isset($_POST['tal_h_sam']) ? $_POST['tal_h_sam'] : '';
+$tal_h_kh  = isset($_POST['tal_h_kh'])  ? $_POST['tal_h_kh']  : '';
+$tal_h_hv  = isset($_POST['tal_h_hv'])  ? $_POST['tal_h_hv']  : '';
+$tal_h_s   = isset($_POST['tal_h_s'])   ? $_POST['tal_h_s']   : '';
+
+$tal_b_noz = isset($_POST['tal_b_noz']) ? $_POST['tal_b_noz'] : '';
+$tal_b_var = isset($_POST['tal_b_var']) ? $_POST['tal_b_var'] : '';
+$tal_b_ccd = isset($_POST['tal_b_ccd']) ? $_POST['tal_b_ccd'] : '';
+$tal_b_lav = isset($_POST['tal_b_lav']) ? $_POST['tal_b_lav'] : '';
+$tal_b_s   = isset($_POST['tal_b_s'])   ? $_POST['tal_b_s']   : '';
+
+$tmk_nejad1 = isset($_POST['tmk_nejad1']) ? $_POST['tmk_nejad1'] : '';
+$tmk_nejad2 = isset($_POST['tmk_nejad2']) ? $_POST['tmk_nejad2'] : '';
+$tmk_nejad3 = isset($_POST['tmk_nejad3']) ? $_POST['tmk_nejad3'] : '';
+$tmk_nejad4 = isset($_POST['tmk_nejad4']) ? $_POST['tmk_nejad4'] : '';
+$tmk_nejad5 = isset($_POST['tmk_nejad5']) ? $_POST['tmk_nejad5'] : '';
+
+if (isset($_POST['bah_cod_m']))
+{
+    /* id_ostan, id_city, id_mar از lock_p1 (session) می‌آیند.
+       $add_abadi / $add_city و تعیین '-' در bee.php انجام شده است. */
+    ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US" xml:lang="en">
 <link href="../../FA.css" rel="stylesheet" type="text/css" />
 <link href="../radio.css" rel="stylesheet" type="text/css" />
-<style >
+<style>
 .style10 {color: #FF0000}
-.style11 {font-size: 14px} 
-input { border-radius:5px } 
-select { border-radius:5px } 
+.style11 {font-size: 14px}
+input { border-radius:5px }
+select { border-radius:5px }
 </style>
 <head>
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -86,7 +117,6 @@ select { border-radius:5px }
                 });
             });
         </script>
-
 </head>
 <body>
      <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="#FFFFFF">
@@ -130,13 +160,13 @@ select { border-radius:5px }
         </tr>
         <tr>
           <td height="55"><div align="right"> <span class="style2">درجه اعشار</span>
-            <input name="lat" type="text" class="required number input_text" id="lat" style="width:150px; height:30px ; " tabindex="2" dir="rtl" lang="fa" value="<?php if(isset($lat)) echo $lat ; ?>" maxlength="11" xml:lang="fa"/>
+            <input name="lat" type="text" class="required number input_text" id="lat" style="width:150px; height:30px ; " tabindex="2" dir="rtl" lang="fa" value="<?php echo $lat ; ?>" maxlength="11" xml:lang="fa"/>
             <br />
             <span class="style8">37.010521: مثال</span></div></td>
           <td><div align="right">:Y عرض جغرافیایی</div></td>
           <td>&nbsp;</td>
           <td><div align="right"><span class="style2">درجه اعشار</span>
-            <input name="lng" type="text" class="required number input_text" id="lng" style="width:150px; height:30px ; " tabindex="1" dir="rtl" lang="fa" value="<?php if(isset($lng)) echo $lng ; ?>" maxlength="11" xml:lang="fa"/>
+            <input name="lng" type="text" class="required number input_text" id="lng" style="width:150px; height:30px ; " tabindex="1" dir="rtl" lang="fa" value="<?php echo $lng ; ?>" maxlength="11" xml:lang="fa"/>
             <br />
             <span class="style8">46.212486: مثال</span></div></td>
           <td><div style="margin-right:30px" align="right" >:X طول جغرافیایی </div></td>
@@ -161,8 +191,8 @@ select { border-radius:5px }
           <td height="40" bgcolor="#FFFFFF"><div align="right">
             <select name="bem_kand" class="input_text  required" id="bem_kand"  style="height:40px ; width:120px ; direction:rtl" tabindex="6">
               <option value="">انتخاب کنید</option>
-              <option value="1">دارد</option>
-              <option value="2">ندارد</option>
+              <option value="1" <?php if($bem_kand=="1") echo "selected='selected'"?>>دارد</option>
+              <option value="2" <?php if($bem_kand=="2") echo "selected='selected'"?>>ندارد</option>
             </select>
           </div></td>
           <td bgcolor="#FFFFFF"><div align="right">:وضعیت بیمه کندوها<br />
@@ -171,9 +201,9 @@ select { border-radius:5px }
           <td bgcolor="#FFFFFF"><div align="right">
             <select name="bem_zan" class="input_text  required" id="bem_zan"  style="height:40px ; width:120px ; direction:rtl" tabindex="5">
               <option value="">انتخاب کنید</option>
-              <option value="1">بیمه زنبورداری</option>
-              <option value="2">سایر بیمه ها</option>
-              <option value="3">ندارد</option>
+              <option value="1" <?php if($bem_zan=="1") echo "selected='selected'"?>>بیمه زنبورداری</option>
+              <option value="2" <?php if($bem_zan=="2") echo "selected='selected'"?>>سایر بیمه ها</option>
+              <option value="3" <?php if($bem_zan=="3") echo "selected='selected'"?>>ندارد</option>
             </select>
           </div></td>
           <td bgcolor="#FFFFFF"><div style="margin-right:30px" align="right">: نوع بیمه زنبوردار</div></td>
@@ -189,8 +219,8 @@ select { border-radius:5px }
           <td bgcolor="#FFFFFF"><div align="right">
             <select name="oz_tav" class="input_text  required" id="oz_tav"  style="height:40px ; width:120px ; direction:rtl" tabindex="7">
               <option value="">انتخاب کنید</option>
-              <option value="1">بلی</option>
-              <option value="2">خیر</option>
+              <option value="1" <?php if($oz_tav=="1") echo "selected='selected'"?>>بلی</option>
+              <option value="2" <?php if($oz_tav=="2") echo "selected='selected'"?>>خیر</option>
               </select>
             </div></td>
           <td bgcolor="#FFFFFF"><div style="margin-right:30px" align="right" >: عضویت در تعاونی</div></td>
@@ -211,7 +241,7 @@ foreach($stmt as $row){
 ?>
               <option value="<?php echo $row['id_ostan'] ;?>"
    <?php if ($row['id_ostan']==$g_ostan) echo 'selected=selected'?>> <?php echo $row['ostan'] ;?></option>
-              <?php 
+              <?php
 		   }?>
             </select>
           </div></td>
@@ -228,7 +258,7 @@ foreach($stmt as $row){
 ?>
               <option value="<?php echo $row['id_ostan'] ;?>"
    <?php if ($row['id_ostan']==$e_ostan) echo 'selected=selected'?>> <?php echo $row['ostan'] ;?></option>
-              <?php 
+              <?php
 		   }?>
             </select>
           </div></td>
@@ -256,7 +286,7 @@ foreach($stmt as $row){
 ?>
               <option value="<?php echo $row['id_ostan'] ;?>"
    <?php if ($row['id_ostan']==$m_ostan) echo 'selected=selected'?>> <?php echo $row['ostan'] ;?></option>
-              <?php 
+              <?php
 		   }?>
             </select>
           </div></td>
@@ -281,7 +311,7 @@ foreach($stmt as $row){
           <div><input name="m_nejad3" type="checkbox" tabindex="16" value="1" />قفقازی</div>
           <div><input name="m_nejad4" type="checkbox" tabindex="17" value="1" />ایتالیایی</div>
           <div><input name="m_nejad5" type="checkbox" tabindex="18" value="1" />سایر</div>
-     </div>     
+     </div>
           </td>
           <td><div style="margin-right:30px" align="right" >:نژاد ملکه </div></td>
         </tr>
@@ -310,21 +340,21 @@ foreach($stmt as $row){
           <div><input name="mk_nejad3" type="checkbox" id="mk_nejad3" tabindex="23" onclick="Fun_nejad3()"  value="1" />قفقازی</div>
           <div><input name="mk_nejad4" type="checkbox" id="mk_nejad4" tabindex="24" onclick="Fun_nejad4()"  value="1" />ایتالیایی</div>
           <div><input name="mk_nejad5" type="checkbox" id="mk_nejad5" tabindex="25" onclick="Fun_nejad5()"  value="1" />سایر</div>
-     </div>     
-          
+     </div>
+
           </td>
           <td><div style="margin-right:30px" align="right" >: نژاد ملکه </div></td>
           </tr>
         <tr>
           <td dir="rtl" colspan="4">
           <div style=" margin-left:65px ;  width:85% ; display: flex;  flex-direction: row ; justify-content:space-between ">
-          <div><input class="input_text digits" maxlength="4" id="tmk_nejad1" type="text" value="<?php $tmk_nejad1 ;?>"name="tmk_nejad1" placeholder="تعداد" style="width:45px ; height:25px ;  display:none" tabindex="18" /></div>
-          <div><input class="input_text digits" maxlength="4" id="tmk_nejad2" type="text" value="<?php $tmk_nejad2 ;?>"name="tmk_nejad2" placeholder="تعداد" style="width:45px ; height:25px ; display:none"  tabindex="20" /></div>
-          <div><input class="input_text digits" maxlength="4" id="tmk_nejad3" type="text" value="<?php $tmk_nejad3 ;?>"name="tmk_nejad3" placeholder="تعداد" style="width:45px ; height:25px ; display:none"  tabindex="22" /></div>
-          <div><input class="input_text digits" maxlength="4" id="tmk_nejad4" type="text" value="<?php $tmk_nejad4 ;?>"name="tmk_nejad4" placeholder="تعداد" style="width:45px ; height:25px ; display:none"  tabindex="24"/></div>
-          <div><input class="input_text digits" maxlength="4" id="tmk_nejad5" type="text" value="<?php $tmk_nejad5 ;?>"name="tmk_nejad5" placeholder="تعداد" style="width:45px ; height:25px ; display:none"  tabindex="26"/></div>
+          <div><input class="input_text digits" maxlength="4" id="tmk_nejad1" type="text" value="<?php echo $tmk_nejad1 ;?>" name="tmk_nejad1" placeholder="تعداد" style="width:45px ; height:25px ;  display:none" tabindex="18" /></div>
+          <div><input class="input_text digits" maxlength="4" id="tmk_nejad2" type="text" value="<?php echo $tmk_nejad2 ;?>" name="tmk_nejad2" placeholder="تعداد" style="width:45px ; height:25px ; display:none"  tabindex="20" /></div>
+          <div><input class="input_text digits" maxlength="4" id="tmk_nejad3" type="text" value="<?php echo $tmk_nejad3 ;?>" name="tmk_nejad3" placeholder="تعداد" style="width:45px ; height:25px ; display:none"  tabindex="22" /></div>
+          <div><input class="input_text digits" maxlength="4" id="tmk_nejad4" type="text" value="<?php echo $tmk_nejad4 ;?>" name="tmk_nejad4" placeholder="تعداد" style="width:45px ; height:25px ; display:none"  tabindex="24"/></div>
+          <div><input class="input_text digits" maxlength="4" id="tmk_nejad5" type="text" value="<?php echo $tmk_nejad5 ;?>" name="tmk_nejad5" placeholder="تعداد" style="width:45px ; height:25px ; display:none"  tabindex="26"/></div>
      </div>
-          
+
           </td>
           <td height="36"></td>
         </tr>
@@ -410,12 +440,12 @@ foreach($stmt as $row){
         </tr>
         <tr>
           <td height="47" bgcolor="#FFFFFF"><div align="right"><span class="style2">کیلوگرم</span>
-            <input name="t_nan" type="text" class="tonan input_text  required number" id="t_nan" style="width:100px; height:30px ; " tabindex="39" dir="rtl" lang="fa" value="<?php echo $t_jel ; ?>" maxlength="11" xml:lang="fa"/>
+            <input name="t_nan" type="text" class="tonan input_text  required number" id="t_nan" style="width:100px; height:30px ; " tabindex="39" dir="rtl" lang="fa" value="<?php echo $t_nan ; ?>" maxlength="11" xml:lang="fa"/>
             </div></td>
           <td height="47" bgcolor="#FFFFFF"><div align="right">: نان زنبور</div></td>
           <td>&nbsp;</td>
           <td><div align="right">
-            <input name="t_k_nan" type="text" class="tknan input_text  required digits" id="t_k_nan" style="width:100px; height:30px ; " tabindex="38" dir="rtl" lang="fa" value="<?php echo $t_k_jel ; ?>" maxlength="11" xml:lang="fa"/>
+            <input name="t_k_nan" type="text" class="tknan input_text  required digits" id="t_k_nan" style="width:100px; height:30px ; " tabindex="38" dir="rtl" lang="fa" value="<?php echo $t_k_nan ; ?>" maxlength="11" xml:lang="fa"/>
             </div></td>
           <td><div style="margin-right:30px; font-size:12px" align="right" >:تعداد کلنی تولید کننده نان زنبور</div></td>
         </tr>
@@ -467,7 +497,7 @@ foreach($stmt as $row){
         </tr>
         <tr>
           <td height="47" bgcolor="#FFFFFF"><div align="right">
-            <input name="tal_b_lav" type="text" class="input_text  required digits" id="tal_b_lav" style="width:100px; height:30px ; " tabindex="48" dir="rtl" lang="fa" value="<?php echo $tal_b_s ; ?>" maxlength="4" xml:lang="fa"/>
+            <input name="tal_b_lav" type="text" class="input_text  required digits" id="tal_b_lav" style="width:100px; height:30px ; " tabindex="48" dir="rtl" lang="fa" value="<?php echo $tal_b_lav ; ?>" maxlength="4" xml:lang="fa"/>
           </div></td>
           <td height="47" bgcolor="#FFFFFF"><div align="right">: لارو میری</div></td>
           <td height="47" bgcolor="#FFFFFF">&nbsp;</td>
@@ -486,21 +516,21 @@ foreach($stmt as $row){
         </table>
       <div align="center">
    <p>
-     <input type="hidden" name="no_zan" value=<?php echo $no_zan; ?> />
-     <input type="hidden" name="bah_cod_m" value=<?php echo $bah_cod_m; ?> />
-     <input type="hidden" name="id_ostan" value=<?php echo $id_ostan; ?> />
-     <input type="hidden" name="id_city" value=<?php echo $id_city; ?> />
-     <input type="hidden" name="add_abadi" value=<?php echo $add_abadi; ?> />
-     <input type="hidden" name="add_city" value=<?php echo $add_city; ?> />
-     <input type="hidden" name="id_mar" value=<?php echo $id_mar; ?> />
-     <input type="hidden" name="num_bah" value=<?php echo $num_bah; ?> />
+     <input type="hidden" name="no_zan" value="<?php echo $no_zan; ?>" />
+     <input type="hidden" name="bah_cod_m" value="<?php echo $bah_cod_m; ?>" />
+     <input type="hidden" name="id_ostan" value="<?php echo $id_ostan; ?>" />
+     <input type="hidden" name="id_city" value="<?php echo $id_city; ?>" />
+     <input type="hidden" name="add_abadi" value="<?php echo $add_abadi; ?>" />
+     <input type="hidden" name="add_city" value="<?php echo $add_city; ?>" />
+     <input type="hidden" name="id_mar" value="<?php echo $id_mar; ?>" />
+     <input type="hidden" name="num_bah" value="<?php echo $num_bah; ?>" />
           <a href="bee.php">
              <input class="buttonhover" type="button" name="btn1" value="انصراف" style="width:150px ; height:45px" tabindex="51" /></a>
      <input class="button" type="submit" name="action" value=" ادامه" style="width:150px ; height:45px" tabindex="50" />
 </p>
 </div>
 <p align="center" >&nbsp;</p>
-</form> 
+</form>
   </td>
   </tr>
 <?php
@@ -527,161 +557,209 @@ else
 </body>
 </html>
 <?php
- if (isset($_POST['action'])) 
- {  
-include('../../login/config.php');
- $date_s = $date_edit ;
- $sal = '1404';
- $mor_cod_m = $login_session ;
- $bah_cod_m = $_POST['bah_cod_m']; 
- $add_city  = $_POST['add_city'] ;
- $add_abadi = $_POST['add_abadi'] ;
- $id_ostan  = $_POST['id_ostan'] ;
- $id_city   = $_POST['id_city'] ;
- $id_mar    = $_POST['id_mar'] ;
- $lng       = $_POST['lng'] ;
- $lat       = $_POST['lat'] ;
+if (isset($_POST['action']))
+{
+    /* ------------------------------------------------------------------
+     |  دریافت مقادیر و درج در بانک — سازگار با PHP 5.3
+     * ------------------------------------------------------------------ */
+    $date_s    = $date_edit;
+    $sal       = '1405';                 // طبق درخواست دست‌نخورده ماند
+    $mor_cod_m = $login_session;
 
- $e_ostan    = $_POST['e_ostan'] ;
- $g_ostan    = $_POST['g_ostan'] ;
- $vaz_zan    = $_POST['vaz_zan'] ;
- $m_shaker   = $_POST['m_shaker'] ;
- $t_k_jel    = $_POST['t_k_jel'] ;
- $t_k_nan    = $_POST['t_k_nan'] ;
+    $bah_cod_m = isset($_POST['bah_cod_m']) ? $_POST['bah_cod_m'] : '';
+    $add_city  = isset($_POST['add_city'])  ? $_POST['add_city']  : '';
+    $add_abadi = isset($_POST['add_abadi']) ? $_POST['add_abadi'] : '';
+    $id_ostan  = isset($_POST['id_ostan'])  ? $_POST['id_ostan']  : '';
+    $id_city   = isset($_POST['id_city'])   ? $_POST['id_city']   : '';
+    $id_mar    = isset($_POST['id_mar'])    ? $_POST['id_mar']    : '';
+    $lng       = isset($_POST['lng'])       ? $_POST['lng']       : '';
+    $lat       = isset($_POST['lat'])       ? $_POST['lat']       : '';
 
- $m_nejad1     = $_POST['m_nejad1'] ;
- $m_nejad2     = $_POST['m_nejad2'] ;
- $m_nejad3     = $_POST['m_nejad3'] ;
- $m_nejad4     = $_POST['m_nejad4'] ;
- $m_nejad5     = $_POST['m_nejad5'] ;
+    $e_ostan   = isset($_POST['e_ostan'])   ? $_POST['e_ostan']   : '-';
+    $g_ostan   = isset($_POST['g_ostan'])   ? $_POST['g_ostan']   : '-';
+    $vaz_zan   = isset($_POST['vaz_zan'])   ? $_POST['vaz_zan']   : '';
+    $m_shaker  = isset($_POST['m_shaker'])  ? $_POST['m_shaker']  : '';
+    $t_k_jel   = isset($_POST['t_k_jel'])   ? $_POST['t_k_jel']   : '';
+    $t_k_nan   = isset($_POST['t_k_nan'])   ? $_POST['t_k_nan']   : '';
 
-if( $m_nejad1 =='')  $m_nejad1 = '0' ; 
-if( $m_nejad2 =='')  $m_nejad2 = '0' ; 
-if( $m_nejad3 =='')  $m_nejad3 = '0' ; 
-if( $m_nejad4 =='')  $m_nejad4 = '0' ; 
-if( $m_nejad5 =='')  $m_nejad5 = '0' ; 
+    /* -------- چک‌باکس‌های ملکه موجود -------- */
+    $m_nejad1 = isset($_POST['m_nejad1']) ? $_POST['m_nejad1'] : '0';
+    $m_nejad2 = isset($_POST['m_nejad2']) ? $_POST['m_nejad2'] : '0';
+    $m_nejad3 = isset($_POST['m_nejad3']) ? $_POST['m_nejad3'] : '0';
+    $m_nejad4 = isset($_POST['m_nejad4']) ? $_POST['m_nejad4'] : '0';
+    $m_nejad5 = isset($_POST['m_nejad5']) ? $_POST['m_nejad5'] : '0';
 
- $oz_tav    = $_POST['oz_tav'] ; 
- $no_zan    = $_POST['no_zan'] ;
- $bem_zan   = $_POST['bem_zan'] ;
- $bem_kand  = $_POST['bem_kand'] ;
- $sh_zan    = $_POST['sh_zan'] ;
- $m_ostan   = $_POST['m_ostan'] ;
- $m_city    = $_POST['m_city'] ;
- $no_mo     = $_POST['no_mo'] ;
- $t_sha     = $_POST['t_sha'] ;
- $tm_kh    = $_POST['tm_kh'] ;
- $tm_arz    = $_POST['tm_arz'] ;
+    /* -------- چک‌باکس‌های ملکه خریداری شده + تعداد -------- */
+    $mk_nejad1 = isset($_POST['mk_nejad1']) ? $_POST['mk_nejad1'] : '0';
+    $mk_nejad2 = isset($_POST['mk_nejad2']) ? $_POST['mk_nejad2'] : '0';
+    $mk_nejad3 = isset($_POST['mk_nejad3']) ? $_POST['mk_nejad3'] : '0';
+    $mk_nejad4 = isset($_POST['mk_nejad4']) ? $_POST['mk_nejad4'] : '0';
+    $mk_nejad5 = isset($_POST['mk_nejad5']) ? $_POST['mk_nejad5'] : '0';
 
- $mk_nejad1     = $_POST['mk_nejad1'] ;
- $mk_nejad2     = $_POST['mk_nejad2'] ;
- $mk_nejad3     = $_POST['mk_nejad3'] ;
- $mk_nejad4     = $_POST['mk_nejad4'] ;
- $mk_nejad5     = $_POST['mk_nejad5'] ;
+    $tmk_nejad1 = ($mk_nejad1 == '1') ? (isset($_POST['tmk_nejad1']) ? $_POST['tmk_nejad1'] : '0') : '0';
+    $tmk_nejad2 = ($mk_nejad2 == '1') ? (isset($_POST['tmk_nejad2']) ? $_POST['tmk_nejad2'] : '0') : '0';
+    $tmk_nejad3 = ($mk_nejad3 == '1') ? (isset($_POST['tmk_nejad3']) ? $_POST['tmk_nejad3'] : '0') : '0';
+    $tmk_nejad4 = ($mk_nejad4 == '1') ? (isset($_POST['tmk_nejad4']) ? $_POST['tmk_nejad4'] : '0') : '0';
+    $tmk_nejad5 = ($mk_nejad5 == '1') ? (isset($_POST['tmk_nejad5']) ? $_POST['tmk_nejad5'] : '0') : '0';
 
-if($mk_nejad1 =='') { $mk_nejad1 = '0' ; $tmk_nejad1 = 0 ; }
-if($mk_nejad2 =='') { $mk_nejad2 = '0' ; $tmk_nejad2 = 0 ; }
-if($mk_nejad3 =='') { $mk_nejad3 = '0' ; $tmk_nejad3 = 0 ; }
-if($mk_nejad4 =='') { $mk_nejad4 = '0' ; $tmk_nejad4 = 0 ; }
-if($mk_nejad5 =='') { $mk_nejad5 = '0' ; $tmk_nejad5 = 0 ; }
+    $oz_tav    = isset($_POST['oz_tav'])    ? $_POST['oz_tav']    : '';
+    $no_zan    = isset($_POST['no_zan'])    ? $_POST['no_zan']    : '';
+    $bem_zan   = isset($_POST['bem_zan'])   ? $_POST['bem_zan']   : '';
+    $bem_kand  = isset($_POST['bem_kand'])  ? $_POST['bem_kand']  : '';
+    $sh_zan    = isset($_POST['sh_zan'])    ? $_POST['sh_zan']    : '';
+    $m_ostan   = isset($_POST['m_ostan'])   ? $_POST['m_ostan']   : '-';
+    $m_city    = isset($_POST['m_city'])    ? $_POST['m_city']    : '-';
+    $no_mo     = isset($_POST['no_mo'])     ? $_POST['no_mo']     : '-';
+    $t_sha     = isset($_POST['t_sha'])     ? $_POST['t_sha']     : '';
+    $tm_kh     = isset($_POST['tm_kh'])     ? $_POST['tm_kh']     : '';
+    $tm_arz    = isset($_POST['tm_arz'])    ? $_POST['tm_arz']    : '';
 
- $tmk_nejad1     = $_POST['tmk_nejad1'] ;
- $tmk_nejad2     = $_POST['tmk_nejad2'] ;
- $tmk_nejad3     = $_POST['tmk_nejad3'] ;
- $tmk_nejad4     = $_POST['tmk_nejad4'] ;
- $tmk_nejad5     = $_POST['tmk_nejad5'] ;
+    $tk_mo     = isset($_POST['tk_mo'])     ? $_POST['tk_mo']     : '';
+    $tk_bo     = isset($_POST['tk_bo'])     ? $_POST['tk_bo']     : '';
+    $to_mo     = isset($_POST['to_mo'])     ? $_POST['to_mo']     : '';
+    $to_bo     = isset($_POST['to_bo'])     ? $_POST['to_bo']     : '';
+    $t_jel     = isset($_POST['t_jel'])     ? $_POST['t_jel']     : '';
+    $t_nan     = isset($_POST['t_nan'])     ? $_POST['t_nan']     : '';
+    $t_mom     = isset($_POST['t_mom'])     ? $_POST['t_mom']     : '';
+    $t_bar     = isset($_POST['t_bar'])     ? $_POST['t_bar']     : '';
+    $t_gar     = isset($_POST['t_gar'])     ? $_POST['t_gar']     : '';
+    $t_zah     = isset($_POST['t_zah'])     ? $_POST['t_zah']     : '';
+    $num_bah   = isset($_POST['num_bah'])   ? $_POST['num_bah']   : '';
 
- $tk_mo     = $_POST['tk_mo'] ;
- $tk_bo     = $_POST['tk_bo'] ;
- $to_mo     = $_POST['to_mo'] ;
- $to_bo = $_POST['to_bo'] ;
- $t_jel = $_POST['t_jel'] ;
- $t_nan = $_POST['t_nan'] ;
- $t_mom = $_POST['t_mom'] ;
- $t_bar = $_POST['t_bar'] ;
- $t_gar = $_POST['t_gar'] ;
- $t_zah = $_POST['t_zah'] ;
- $num_bah = $_POST['num_bah'] ;
- 
- $tal_h_sam = $_POST['tal_h_sam'] ;
- $tal_h_sel = $_POST['tal_h_sel'] ;
- $tal_h_hv = $_POST['tal_h_hv'] ;
- $tal_h_kh = $_POST['tal_h_kh'] ;
- $tal_h_s = $_POST['tal_h_s'] ;
- 
-$tal_b_var = $_POST['tal_b_var'] ;
-$tal_b_noz = $_POST['tal_b_noz'] ;
-$tal_b_ccd = $_POST['tal_b_ccd'] ;
-$tal_b_lav = $_POST['tal_b_lav'] ;
-$tal_b_s = $_POST['tal_b_s'] ;
- 
- // تعریف متغیرهای که هنگام لود فرم خالی رد میشن
-if ($no_zan=='1') {$m_ostan = '-' ; $m_city='-'; $no_mo='-';}
-if ($no_zan=='2') {$e_ostan= '-' ; $g_ostan='-' ; }
+    $tal_h_sam = isset($_POST['tal_h_sam']) ? $_POST['tal_h_sam'] : '';
+    $tal_h_sel = isset($_POST['tal_h_sel']) ? $_POST['tal_h_sel'] : '';
+    $tal_h_hv  = isset($_POST['tal_h_hv'])  ? $_POST['tal_h_hv']  : '';
+    $tal_h_kh  = isset($_POST['tal_h_kh'])  ? $_POST['tal_h_kh']  : '';
+    $tal_h_s   = isset($_POST['tal_h_s'])   ? $_POST['tal_h_s']   : '';
 
+    $tal_b_var = isset($_POST['tal_b_var']) ? $_POST['tal_b_var'] : '';
+    $tal_b_noz = isset($_POST['tal_b_noz']) ? $_POST['tal_b_noz'] : '';
+    $tal_b_ccd = isset($_POST['tal_b_ccd']) ? $_POST['tal_b_ccd'] : '';
+    $tal_b_lav = isset($_POST['tal_b_lav']) ? $_POST['tal_b_lav'] : '';
+    $tal_b_s   = isset($_POST['tal_b_s'])   ? $_POST['tal_b_s']   : '';
 
-function generate_uuid() {
-    return sprintf( '%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
-        mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff ),
-        mt_rand( 0, 0xffff ),
-        mt_rand( 0, 0x0fff ) | 0x4000,
-        mt_rand( 0, 0x3fff ) | 0x8000,
-        mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff )
-    );
+    /* -------- در حالت‌های خاص، فیلدهای نامربوط خالی می‌شوند -------- */
+    if ($no_zan == '1') { $m_ostan = '-'; $m_city = '-'; $no_mo = '-'; }
+    if ($no_zan == '2') { $e_ostan = '-'; $g_ostan = '-'; }
+
+    /* -------- تولید UUID -------- */
+    if (!function_exists('generate_uuid')) {
+        function generate_uuid() {
+            return sprintf( '%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
+                mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff ),
+                mt_rand( 0, 0xffff ),
+                mt_rand( 0, 0x0fff ) | 0x4000,
+                mt_rand( 0, 0x3fff ) | 0x8000,
+                mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff )
+            );
+        }
+    }
+    $unique_id = generate_uuid();
+
+    $query = "INSERT INTO bee (
+        unique_id,oz_tav,date_s,sal,mor_cod_m,no_zan,bem_zan,bem_kand,bah_cod_m,id_ostan,id_city,
+        id_mar,lng,lat,sh_zan,t_sha,m_ostan,m_city,no_mo,tm_kh,tm_arz,tk_mo,tk_bo,to_mo,to_bo,t_gar,t_bar,t_mom,t_jel,t_nan,
+        t_zah,add_abadi,add_city,num_bah,e_ostan,g_ostan,vaz_zan,m_shaker,t_k_jel,t_k_nan,
+        m_nejad1,m_nejad2,m_nejad3,m_nejad4,m_nejad5,
+        mk_nejad1,mk_nejad2,mk_nejad3,mk_nejad4,mk_nejad5,
+        tmk_nejad1,tmk_nejad2,tmk_nejad3,tmk_nejad4,tmk_nejad5,
+        tal_h_sam,tal_h_sel,tal_h_hv,tal_h_kh,tal_h_s,tal_b_var,tal_b_noz,tal_b_ccd,tal_b_s,tal_b_lav
+    ) VALUES (
+        :unique_id,:oz_tav,:date_s,:sal,:mor_cod_m,:no_zan,:bem_zan,:bem_kand,:bah_cod_m,:id_ostan,:id_city,:id_mar,:lng,:lat,
+        :sh_zan,:t_sha,:m_ostan,:m_city,:no_mo,:tm_kh,:tm_arz,:tk_mo,:tk_bo,:to_mo,:to_bo,:t_gar,:t_bar,:t_mom,
+        :t_jel,:t_nan,:t_zah,:add_abadi,:add_city,:num_bah,:e_ostan,:g_ostan,:vaz_zan,:m_shaker,:t_k_jel,:t_k_nan,
+        :m_nejad1,:m_nejad2,:m_nejad3,:m_nejad4,:m_nejad5,
+        :mk_nejad1,:mk_nejad2,:mk_nejad3,:mk_nejad4,:mk_nejad5,
+        :tmk_nejad1,:tmk_nejad2,:tmk_nejad3,:tmk_nejad4,:tmk_nejad5,
+        :tal_h_sam,:tal_h_sel,:tal_h_hv,:tal_h_kh,:tal_h_s,:tal_b_var,:tal_b_noz,:tal_b_ccd,:tal_b_s,:tal_b_lav
+    )";
+
+    $q = $dbh->prepare($query);
+    $q->execute(array(
+        ':unique_id'   => $unique_id,
+        ':oz_tav'      => $oz_tav,
+        ':date_s'      => $date_s,
+        ':sal'         => $sal,
+        ':mor_cod_m'   => $mor_cod_m,
+        ':no_zan'      => $no_zan,
+        ':bem_zan'     => $bem_zan,
+        ':bem_kand'    => $bem_kand,
+        ':bah_cod_m'   => $bah_cod_m,
+        ':id_ostan'    => $id_ostan,
+        ':id_city'     => $id_city,
+        ':id_mar'      => $id_mar,
+        ':lng'         => $lng,
+        ':lat'         => $lat,
+        ':sh_zan'      => $sh_zan,
+        ':t_sha'       => $t_sha,
+        ':m_ostan'     => $m_ostan,
+        ':m_city'      => $m_city,
+        ':no_mo'       => $no_mo,
+        ':tm_kh'       => $tm_kh,
+        ':tm_arz'      => $tm_arz,
+        ':tk_mo'       => $tk_mo,
+        ':tk_bo'       => $tk_bo,
+        ':to_mo'       => $to_mo,
+        ':to_bo'       => $to_bo,
+        ':t_gar'       => $t_gar,
+        ':t_bar'       => $t_bar,
+        ':t_mom'       => $t_mom,
+        ':t_jel'       => $t_jel,
+        ':t_nan'       => $t_nan,
+        ':t_zah'       => $t_zah,
+        ':add_abadi'   => $add_abadi,
+        ':add_city'    => $add_city,
+        ':num_bah'     => $num_bah,
+        ':e_ostan'     => $e_ostan,
+        ':g_ostan'     => $g_ostan,
+        ':vaz_zan'     => $vaz_zan,
+        ':m_shaker'    => $m_shaker,
+        ':t_k_jel'     => $t_k_jel,
+        ':t_k_nan'     => $t_k_nan,
+        ':m_nejad1'    => $m_nejad1,
+        ':m_nejad2'    => $m_nejad2,
+        ':m_nejad3'    => $m_nejad3,
+        ':m_nejad4'    => $m_nejad4,
+        ':m_nejad5'    => $m_nejad5,
+        ':mk_nejad1'   => $mk_nejad1,
+        ':mk_nejad2'   => $mk_nejad2,
+        ':mk_nejad3'   => $mk_nejad3,
+        ':mk_nejad4'   => $mk_nejad4,
+        ':mk_nejad5'   => $mk_nejad5,
+        ':tmk_nejad1'  => $tmk_nejad1,
+        ':tmk_nejad2'  => $tmk_nejad2,
+        ':tmk_nejad3'  => $tmk_nejad3,
+        ':tmk_nejad4'  => $tmk_nejad4,
+        ':tmk_nejad5'  => $tmk_nejad5,
+        ':tal_h_sam'   => $tal_h_sam,
+        ':tal_h_sel'   => $tal_h_sel,
+        ':tal_h_hv'    => $tal_h_hv,
+        ':tal_h_kh'    => $tal_h_kh,
+        ':tal_h_s'     => $tal_h_s,
+        ':tal_b_var'   => $tal_b_var,
+        ':tal_b_noz'   => $tal_b_noz,
+        ':tal_b_ccd'   => $tal_b_ccd,
+        ':tal_b_s'     => $tal_b_s,
+        ':tal_b_lav'   => $tal_b_lav,
+    ));
+
+    /* -------- ثبت در بانک پیگیری -------- */
+    sabt_event($login_session, getUserIP_1(), $date_edit, $time, $add_abadi,
+               'ثبت اطلاعات زنبورستان - ' . $bah_cod_m, $id_ostan);
+
+    alert('اطلاعات زنبورستان با موفقیت ثبت شد');
+    ?>
+    <form  name="myform" class="myform" method="post" action="bee_data_equipment.php">
+        <input type="hidden" name="bah_cod_m" value="<?php echo $bah_cod_m ;?>" />
+        <input type="hidden" name="no_zan"    value="<?php echo $no_zan ;?>" />
+        <input type="hidden" name="add_city"  value="<?php echo $add_city ;?>" />
+        <input type="hidden" name="add_abadi" value="<?php echo $add_abadi ;?>" />
+        <input type="hidden" name="num_bah"   value="<?php echo $num_bah ;?>" />
+        <input type="hidden" name="unique_id" value="<?php echo $unique_id ;?>" />
+    </form>
+    <script type="text/javascript">document.myform.submit();</script>
+    <?php
 }
-$unique_id = generate_uuid() ; 
-
-$query = "INSERT INTO bee (unique_id,oz_tav,date_s,sal,mor_cod_m,no_zan,bem_zan,bem_kand,bah_cod_m,id_ostan,id_city,
-id_mar,lng,lat,sh_zan,t_sha,m_ostan,m_city,no_mo,tm_kh,tm_arz,tk_mo,tk_bo,to_mo,to_bo,t_gar,t_bar,t_mom,t_jel,t_nan,
-t_zah,add_abadi,add_city,num_bah,e_ostan,g_ostan,vaz_zan,m_shaker,t_k_jel,t_k_nan,
-m_nejad1,m_nejad2,m_nejad3,m_nejad4,m_nejad5
-,mk_nejad1,mk_nejad2,mk_nejad3,mk_nejad4,mk_nejad5
-,tmk_nejad1,tmk_nejad2,tmk_nejad3,tmk_nejad4,tmk_nejad5
-,tal_h_sam,tal_h_sel,tal_h_hv,tal_h_kh,tal_h_s,tal_b_var,tal_b_noz,tal_b_ccd,tal_b_s,tal_b_lav)
- VALUES(:unique_id,:oz_tav,:date_s,:sal,:mor_cod_m,:no_zan,:bem_zan,:bem_kand,:bah_cod_m,:id_ostan,:id_city,:id_mar,:lng,:lat
- ,:sh_zan,:t_sha,:m_ostan,:m_city,:no_mo,:tm_kh,:tm_arz,:tk_mo,:tk_bo,:to_mo,:to_bo,:t_gar,:t_bar,:t_mom
- ,:t_jel,:t_nan,:t_zah,:add_abadi,:add_city,:num_bah,:e_ostan,:g_ostan,:vaz_zan,:m_shaker,:t_k_jel,:t_k_nan
-,:m_nejad1,:m_nejad2,:m_nejad3,:m_nejad4,:m_nejad5
-,:mk_nejad1,:mk_nejad2,:mk_nejad3,:mk_nejad4,:mk_nejad5
-,:tmk_nejad1,:tmk_nejad2,:tmk_nejad3,:tmk_nejad4,:tmk_nejad5
-,:tal_h_sam,:tal_h_sel,:tal_h_hv,:tal_h_kh,:tal_h_s,:tal_b_var,:tal_b_noz,:tal_b_ccd,:tal_b_s,:tal_b_lav )";
-$q = $dbh->prepare($query);
-$q->execute(array(':unique_id'=>$unique_id,':oz_tav'=>$oz_tav,':date_s'=>$date_s,':sal'=>$sal,':mor_cod_m'=>$mor_cod_m,':no_zan'=>$no_zan
-,':bem_zan'=>$bem_zan,':bem_kand'=>$bem_kand,':bah_cod_m'=>$bah_cod_m,':id_ostan'=>$id_ostan
-,':id_city'=>$id_city,':id_mar'=>$id_mar,':lng'=>$lng,':lat'=>$lat,':sh_zan'=>$sh_zan,':t_sha'=>$t_sha,':m_ostan'=>$m_ostan
-,':m_city'=>$m_city,':no_mo'=>$no_mo,':tm_kh'=>$tm_kh,':tm_arz'=>$tm_arz,':tk_mo'=>$tk_mo,':tk_bo'=>$tk_bo
-,':to_mo'=>$to_mo,':to_bo'=>$to_bo,':t_gar'=>$t_gar,':t_bar'=>$t_bar,':t_mom'=>$t_mom,':t_jel'=>$t_jel,':t_nan'=>$t_nan
-,':t_zah'=>$t_zah
-,':add_abadi'=>$add_abadi,':add_city'=>$add_city,':num_bah'=>$num_bah
-,':e_ostan'=>$e_ostan
-,':g_ostan'=>$g_ostan
-,':vaz_zan'=>$vaz_zan
-,':m_shaker'=>$m_shaker
-,':t_k_jel'=>$t_k_jel
-,':t_k_nan'=>$t_k_nan
-,':m_nejad1'=>$m_nejad1,':m_nejad2'=>$m_nejad2,':m_nejad3'=>$m_nejad3,':m_nejad4'=>$m_nejad4,':m_nejad5'=>$m_nejad5
-,':mk_nejad1'=>$mk_nejad1,':mk_nejad2'=>$mk_nejad2,':mk_nejad3'=>$mk_nejad3,':mk_nejad4'=>$mk_nejad4,':mk_nejad5'=>$mk_nejad5
-,':tmk_nejad1'=>$tmk_nejad1,':tmk_nejad2'=>$tmk_nejad2,':tmk_nejad3'=>$tmk_nejad3,':tmk_nejad4'=>$tmk_nejad4,':tmk_nejad5'=>$tmk_nejad5
-,':tal_h_sam'=>$tal_h_sam, ':tal_h_sel'=>$tal_h_sel, ':tal_h_hv'=>$tal_h_hv, ':tal_h_kh'=>$tal_h_kh, ':tal_h_s'=>$tal_h_s
-,':tal_b_var'=>$tal_b_var, ':tal_b_noz'=>$tal_b_noz, ':tal_b_ccd'=>$tal_b_ccd, ':tal_b_s'=>$tal_b_s, ':tal_b_lav'=>$tal_b_lav
-));
- // ثبت در بانک پیگیری
-sabt_event($login_session,getUserIP_1(),$date_edit,$time,$add_abadi,'ثبت اطلاعات زنبورستان - '.$bah_cod_m
-,$id_ostan) ; 
-alert ('اطلاعات زنبورستان با موفقیت ثبت شد ') ;
-?>
-<form  name="myform" class="myform" method="post" action="bee_data_equipment.php">
-           <input type="hidden" name="bah_cod_m" value="<?php echo $bah_cod_m ;?>" />
-           <input type="hidden" name="no_zan" value="<?php echo $no_zan ;?>" />
-           <input type="hidden" name="add_city" value="<?php echo $add_city ;?>" />
-           <input type="hidden" name="add_abadi" value="<?php echo $add_abadi ;?>" />
-           <input type="hidden" name="num_bah" value="<?php echo $num_bah ;?>" />
-          <input type="hidden" name="unique_id" value="<?php echo $unique_id ;?>" />
-
-</form>
-<script type="text/javascript">document.myform.submit();</script>
-<?php
-} 
 ?>
     <script>
         $( ".t_km" ).change(function() {
@@ -692,8 +770,6 @@ alert ('اطلاعات زنبورستان با موفقیت ثبت شد ') ;
      	   $('#t_zah').val('');
        	   $('#t_k_jel').val('');
        	   $('#t_jel').val('');
-
-            var tkm = document.getElementById("tk_mo").value;
         });
 
         $( ".t_kb" ).change(function() {
@@ -704,7 +780,6 @@ alert ('اطلاعات زنبورستان با موفقیت ثبت شد ') ;
        	   $('#t_zah').val('');
        	   $('#t_k_jel').val('');
        	   $('#t_jel').val('');
-           var tkm = document.getElementById("tk_mo").value;
         });
 
         $( ".tokm" ).keyup(function() {
@@ -714,7 +789,6 @@ alert ('اطلاعات زنبورستان با موفقیت ثبت شد ') ;
             if(parseFloat(tokm) > parseFloat(mojaz) )
             {
                 alert("خطا :  \n \n  میزان تولید کندوی مدرن بیشتر از حد مجاز میباشد ، تعداد و میزان تولید کندوی مدرن را کنترل کنید  ");
-                // پاک کردن سطح برداشت 1
                 $('#to_mo').val('');
                 document.getElementById("to_mo").focus();
             }
@@ -727,7 +801,6 @@ alert ('اطلاعات زنبورستان با موفقیت ثبت شد ') ;
             if(parseFloat(tokb) > parseFloat(mojaz) )
             {
                 alert("خطا :  \n \n  میزان تولید کندوی بومی بیشتر از حد مجاز میباشد ، تعداد و میزان تولید کندوی بومی را کنترل کنید  ");
-                // پاک کردن سطح برداشت 1
                 $('#to_bo').val('');
                 document.getElementById("to_bo").focus();
             }
@@ -741,7 +814,6 @@ alert ('اطلاعات زنبورستان با موفقیت ثبت شد ') ;
             if(parseFloat(togar) > parseFloat(mojaz) )
             {
                 alert("خطا :  \n \n  میزان تولید گرده بیشتر از حد مجاز میباشد ، تعداد کندوی مدرن و میزان تولید گرده را کنترل کنید  ");
-                // پاک کردن سطح برداشت 1
                 $('#t_gar').val('');
                 document.getElementById("t_gar").focus();
             }
@@ -755,7 +827,6 @@ alert ('اطلاعات زنبورستان با موفقیت ثبت شد ') ;
             if(parseFloat(tobar) > parseFloat(mojaz) )
             {
                 alert("خطا :  \n \n  میزان تولید بره موم بیشتر از حد مجاز میباشد ، تعداد کندو و میزان تولید برموم را کنترل کنید  ");
-                // پاک کردن سطح برداشت 1
                 $('#t_bar').val('');
                 document.getElementById("t_bar").focus();
             }
@@ -769,7 +840,6 @@ alert ('اطلاعات زنبورستان با موفقیت ثبت شد ') ;
             if(parseFloat(tomom) > parseFloat(mojaz) )
             {
                 alert("خطا :  \n \n  میزان تولید موم بیشتر از حد مجاز میباشد ، تعداد کندو و میزان تولید موم را کنترل کنید  ");
-                // پاک کردن سطح برداشت 1
                 $('#t_mom').val('');
                 document.getElementById("t_mom").focus();
             }
@@ -782,12 +852,10 @@ alert ('اطلاعات زنبورستان با موفقیت ثبت شد ') ;
             if(parseFloat(tojel) > parseFloat(mojaz) )
             {
                 alert("خطا :  \n \n  میزان تولید  ژل رویال بیشتر از حد مجاز میباشد !! تعداد کلنی تولید کننده ژل رویال و یا میزان تولید ژل رویال را کنترل کنید  ");
-                // پاک کردن سطح برداشت 1
                 $('#t_jel').val('');
                 document.getElementById("t_jel").focus();
             }
         });
-
 
         $( ".tonan" ).keyup(function() {
             var tkm = document.getElementById("t_k_nan").value;
@@ -796,13 +864,10 @@ alert ('اطلاعات زنبورستان با موفقیت ثبت شد ') ;
             if(parseFloat(tonan) > parseFloat(mojaz) )
             {
                 alert("خطا :  \n \n  میزان تولید نان زنبور بیشتر از حد مجاز میباشد !! تعداد کلنی تولید کننده نان زنبور و یا میزان تولید نان زنبور را کنترل کنید  ");
-                // پاک کردن سطح برداشت 1
                 $('#t_nan').val('');
                 document.getElementById("t_nan").focus();
             }
         });
-
-
 
         $( ".tozah" ).keyup(function() {
             var tkm = document.getElementById("tk_mo").value;
@@ -812,12 +877,11 @@ alert ('اطلاعات زنبورستان با موفقیت ثبت شد ') ;
             if(parseFloat(tozah) > parseFloat(mojaz) )
             {
                 alert("خطا :  \n \n  میزان تولید زهر بیشتر از حد مجاز میباشد ، تعداد کندو و میزان زهر را کنترل کنید  ");
-                // پاک کردن سطح برداشت 1
                 $('#t_zah').val('');
                 document.getElementById("t_zah").focus();
             }
         });
-     
+
 	    $( ".tkjel" ).keyup(function() {
                 $('#t_jel').val('');
             var tkm = document.getElementById("tk_mo").value;
@@ -827,13 +891,10 @@ alert ('اطلاعات زنبورستان با موفقیت ثبت شد ') ;
             if(parseFloat(tkjel) > parseFloat(mojaz) )
             {
                 alert("خطا :  \n \n  تعداد کلنی تولید کننده ژل رویال از تعداد کل کندوی مدرن بیشتر است ");
-                // پاک کردن سطح برداشت 1
                 $('#t_k_jel').val('');
                 document.getElementById("t_k_jel").focus();
             }
         });
-
-
 
 	    $( ".tknan" ).keyup(function() {
                 $('#t_nan').val('');
@@ -844,14 +905,10 @@ alert ('اطلاعات زنبورستان با موفقیت ثبت شد ') ;
             if(parseFloat(tknan) > parseFloat(mojaz) )
             {
                 alert("خطا :  \n \n  تعداد کلنی تولید کننده از تعداد کل کندوی مدرن بیشتر است ");
-                // پاک کردن سطح برداشت 1
                 $('#t_k_nan').val('');
                 document.getElementById("t_k_nan").focus();
             }
         });
-
-
-
 
   function Fun_nejad1() {
   var checkBox = document.getElementById("mk_nejad1");
@@ -861,7 +918,7 @@ alert ('اطلاعات زنبورستان با موفقیت ثبت شد ') ;
 	tmk_nejad1.classList.add("required");
   } else {
      tmk_nejad1.style.display = "none";
-     tmk_nejad1.classList.remove("required");	 
+     tmk_nejad1.classList.remove("required");
   }
 }
 
@@ -873,7 +930,7 @@ alert ('اطلاعات زنبورستان با موفقیت ثبت شد ') ;
 	tmk_nejad2.classList.add("required");
   } else {
      tmk_nejad2.style.display = "none";
-     tmk_nejad2.classList.remove("required");	 
+     tmk_nejad2.classList.remove("required");
   }
 }
 
@@ -885,7 +942,7 @@ alert ('اطلاعات زنبورستان با موفقیت ثبت شد ') ;
 	tmk_nejad3.classList.add("required");
   } else {
      tmk_nejad3.style.display = "none";
-     tmk_nejad3.classList.remove("required");	 
+     tmk_nejad3.classList.remove("required");
   }
 }
 
@@ -897,7 +954,7 @@ alert ('اطلاعات زنبورستان با موفقیت ثبت شد ') ;
 	tmk_nejad4.classList.add("required");
   } else {
      tmk_nejad4.style.display = "none";
-     tmk_nejad4.classList.remove("required");	 
+     tmk_nejad4.classList.remove("required");
   }
 }
 
@@ -909,7 +966,7 @@ alert ('اطلاعات زنبورستان با موفقیت ثبت شد ') ;
 	tmk_nejad5.classList.add("required");
   } else {
      tmk_nejad5.style.display = "none";
-     tmk_nejad5.classList.remove("required");	 
+     tmk_nejad5.classList.remove("required");
   }
 }
  </script>

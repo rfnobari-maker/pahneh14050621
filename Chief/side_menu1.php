@@ -138,8 +138,12 @@ $base = $httpProtocol.'://'.$_SERVER['HTTP_HOST'].'/Chief/';
                 <a href="#" class="dropdown1-toggle"> پروفایل </a>
                 <ul class="dropdown1-submenu">
 <?php if($login_session =='1380066174' or $login_session =='0061741787'){ ?>
-                    <li><a href="<?php echo $base; ?>Add_user_Garden">تعریف کاربر جدید</a></li>
+                    <li><a href="<?php echo $base; ?>Add_user_Garden">تعریف کاربر جدید باغبانی</a></li>
 <?php }?>
+<?php if($login_session =='1380066174' or $login_session =='5279520748'){ ?>
+                    <li><a href="<?php echo $base; ?>Add_user_Agri">تعریف کاربر جدید زراعت</a></li>
+<?php }?>
+
                     <li><a href="<?php echo $base; ?>profile">ویرایش اطلاعات کاربری</a></li>
                     <li><a href="<?php echo $base; ?>change-password">تغییر کلمه عبور</a></li>
                     <li><a href="<?php echo $root; ?>login/logout">خروج از سیستم</a></li>

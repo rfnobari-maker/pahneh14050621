@@ -653,6 +653,7 @@ $mah_name = isset($_POST['mah_name']) ? $_POST['mah_name'] : '';
                     <div class="agri1-field">
                         <label class="agri1-label" for="z_sal">سال زراعی</label>
                         <select name="z_sal" class="input_text required" id="z_sal" tabindex="1">
+                            <option value="1405" <?php if ($z_sal == '1405') echo 'selected="selected"'; ?>>1405</option>
                             <option value="1404" <?php if ($z_sal == '1404') echo 'selected="selected"'; ?>>1404</option>
                             <option value="1403" <?php if ($z_sal == '1403') echo 'selected="selected"'; ?>>1403</option>
                             <option value="1402" <?php if ($z_sal == '1402') echo 'selected="selected"'; ?>>1402</option>
@@ -801,7 +802,7 @@ $mah_name = isset($_POST['mah_name']) ? $_POST['mah_name'] : '';
                     </div>
                     <div class="agri1-field">
                         <label class="agri1-label" for="mor_cod_m">کد ملی مروج</label>
-                        <input name="mor_cod_m" id="mor_cod_m" type="text" dir="ltr" inputmode="numeric" value="<?php echo agri2_h($login_session); ?>" readonly="readonly"/>
+                        <input name="mor_cod_m" id="mor_cod_m" type="text" dir="ltr" inputmode="numeric" value="<?php echo agri2_h($login_session); ?>" readonly/>
                     </div>
                 </div>
                 <div class="agri1-actions">

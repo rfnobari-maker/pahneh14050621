@@ -185,18 +185,19 @@ class CropValidationService {
             $current_total = isset($row['total']) ? (float)$row['total'] : 0.0;
             $overall_total = $current_total + $current_batch_total + $new_area;
 
-            if ($no_kesh === '1' && $overall_total > $allocated_irrigated) {
-                return array(
-                    'isValid' => false,
-                    'message' => 'خطا: مجموع سطح زیر کشت آبی این محصول در مرکز (' . $overall_total . ' هکتار) بیش از میزان ابلاغی آبی (' . $allocated_irrigated . ' هکتار) است.'
-                );
-            }
-            if ($no_kesh === '2' && $overall_total > $allocated_dry) {
-                return array(
-                    'isValid' => false,
-                    'message' => 'خطا: مجموع سطح زیر کشت دیم این محصول در مرکز (' . $overall_total . ' هکتار) بیش از میزان ابلاغی دیم (' . $allocated_dry . ' هکتار) است.'
-                );
-            }
+    if ($no_kesh === '1' && ($overall_total - $allocated_irrigated) > 0.0001) {
+       return array(
+        'isValid' => false,
+        'message' => 'خطا: مجموع سطح زیر کشت آبی این محصول در مرکز (' . $overall_total . ' هکتار) بیش از میزان ابلاغی آبی (' . $allocated_irrigated . ' هکتار) است.'
+       );
+     }
+
+   if ($no_kesh === '2' && ($overall_total - $allocated_dry) > 0.0001) {
+    return array(
+        'isValid' => false,
+        'message' => 'خطا: مجموع سطح زیر کشت دیم این محصول در مرکز (' . $overall_total . ' هکتار) بیش از میزان ابلاغی دیم (' . $allocated_dry . ' هکتار) است.'
+     );
+     }
 
             return array('isValid' => true, 'message' => '');
         } catch (PDOException $e) {

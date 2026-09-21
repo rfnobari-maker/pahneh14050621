@@ -60,14 +60,13 @@ if (isset($_POST['action'])) {
             $site_salt = "subinsblogsalt";
             $salted_hash = hash('sha256', $password . $site_salt . $p_salt);
             
-            $perm_value = 'p1p2p3p4d3d4d5d9';
+            $perm_value = 'p1p2p3p4d1d2d8d9';
             
             // ==============================================
             // همه فیلدهای عددی که NULL بودن رو به '' تبدیل کردم
             // ==============================================
             
-            // ثبت رکورد اول - S_access = 20
-            $sql1 = $dbh->prepare("INSERT INTO users (username, password, psalt, id_ostan, ostan, city, id_city, markaz, id_mar, name, Last_name, tel_m, Access, S_access, cod_m, perm, expert_unit, acc_chief, acc_cpis,acc_dash,chief ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)");
+            $sql1 = $dbh->prepare("INSERT INTO users (username, password, psalt, id_ostan, ostan, city, id_city, markaz, id_mar, name, Last_name, tel_m, Access, S_access, cod_m, perm, expert_unit, acc_chief, acc_cpis,acc_dash,chief ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?) ");
             
             $result1 = $sql1->execute(array(
                 $cod_m,
@@ -90,7 +89,7 @@ if (isset($_POST['action'])) {
 				1,
 				1,
 				1,
-    			'31'
+				'32'
             ));
             
             if (!$result1) {
@@ -203,7 +202,7 @@ if (isset($_POST['action'])) {
                 <div class="form-container">
                     
                     <div class="form-title">
-                    📋 ثبت کاربر جدید معاونت باغبانی</div>
+                    📋 ثبت کاربر جدید معاونت زراعت</div>
                     
                     <?php if (!empty($message)): ?>
                         <div class="message-box <?php echo $message_type; ?>">

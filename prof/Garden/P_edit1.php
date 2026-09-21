@@ -536,7 +536,7 @@ input.m_tolp {
 
 <div id="last_year_block" class="bg-gray-50 rounded-lg p-4 mb-4 border border-gray-200 hidden">
     <h2 class="text-lg font-semibold text-gray-700 mb-2 pb-2 border-b border-gray-300 text-right">محصولات سال قبل</h2>
-    <p class="text-sm text-gray-600 mb-3 text-right">ردیف‌های مجاز با یک کلیک به لیست پایین اضافه می‌شوند. مقدار «پیش‌بینی تولید» باید توسط شما وارد شود و تولید و خسارت کپی نمی‌شود.</p>
+    <p class="text-sm text-gray-600 mb-3 text-right">ردیف‌های مجاز با یک کلیک به لیست پایین اضافه می‌شوند. در صورت نیاز می‌توانید مقدار پیش‌بینی تولید را ویرایش کنید. تولید قطعی و خسارت کپی نمی‌شود.</p>
     <p class="table-h-hint">برای مشاهده همه ستون‌ها جدول را افقی بکشید.</p>
     <div class="table-responsive last-year-scroll" tabindex="0" aria-label="فهرست محصولات سال قبل">
         <table id="last_year_table">
@@ -793,7 +793,7 @@ function calculate_traz() {
         if (!anyExistingRowHasUnsavedChanges()) {
             $('#save1').prop('disabled', false);
         }
-        // ✅ بررسی پیش‌بینی تولید
+        // ✅ بررسی هوشمند پیش‌بینی تولید
         updateSaveButtonState();
     }
 }
@@ -817,23 +817,34 @@ function hideCustomAlert() {
     }
 }
 
-// ✅ تابع جدید: بررسی اینکه آیا همه ردیف‌های temp_row مقدار پیش‌بینی معتبر دارند
+// ✅ تابع جدید: بررسی هوشمند پیش‌بینی تولید
+// فقط ردیف‌هایی که سطح بارور > 0 یا درخت بارور > 0 دارند، پیش‌بینی الزامی است
 function updateSaveButtonState() {
     var hasInvalidPrediction = false;
     var hasTempRow = false;
+    var invalidRowNum = -1;
 
-    $('#crud_table1 tbody tr.temp_row').each(function() {
+    $('#crud_table1 tbody tr.temp_row').each(function(index) {
         hasTempRow = true;
-        var mah_tolp = parseFloat($(this).find('.mah_tolp').val()) || 0;
-        if (mah_tolp <= 0) {
+
+        var row = $(this);
+        var s_barvar = parseFloat(row.find('.s_barvar').val()) || 0;
+        var t_barvar = parseFloat(row.find('.t_barvar').val()) || 0;
+        var mah_tolp = parseFloat(row.find('.mah_tolp').val()) || 0;
+
+        // ✅ فقط اگر سطح بارور یا درخت بارور > 0 باشد، پیش‌بینی الزامی است
+        var needsPrediction = (s_barvar > 0 || t_barvar > 0);
+
+        if (needsPrediction && mah_tolp <= 0) {
             hasInvalidPrediction = true;
+            invalidRowNum = index + 1;
             return false;
         }
     });
 
     if (hasTempRow && hasInvalidPrediction) {
         $('#save1').prop('disabled', true);
-        $('#save1').attr('title', 'برای ثبت نهایی، مقدار پیش‌بینی تولید باید بزرگتر از صفر باشد.');
+        $('#save1').attr('title', 'ردیف ' + invalidRowNum + ': چون سطح بارور یا درخت بارور دارد، مقدار پیش‌بینی تولید باید بزرگتر از صفر باشد.');
     } else {
         if (!anyExistingRowHasUnsavedChanges()) {
             $('#save1').prop('disabled', false);
@@ -1001,12 +1012,16 @@ function initializeEventListeners() {
         var row = $input.closest('tr');
         var s_barvar = parseFloat(row.find('.s_barvar').val()) || 0;
         var t_barvar = parseFloat($input.val()) || 0;
-        if (NAH_KESH === '3') return;
+        if (NAH_KESH === '3') {
+            updateSaveButtonState();
+            return;
+        }
         if (s_barvar <= 0 && t_barvar > 0) {
             showCustomAlert('امکان ثبت تعداد درخت بارور بدون ثبت سطح کشت بارور وجود ندارد.');
             $input.val(0);
             $input.focus();
         }
+        updateSaveButtonState();
     });
 
     // بررسی تعداد درخت غیربارور
@@ -1031,6 +1046,8 @@ function initializeEventListeners() {
         row.find('.mah_tolp').val('');
         row.find('.mah_tol').val('');
         row.find('.mah_bem').val('');
+        // ✅ به‌روزرسانی وضعیت دکمه ثبت
+        updateSaveButtonState();
     });
 
     // وقتی سطح کشت غیربارور تغییر کرد
@@ -1268,7 +1285,7 @@ $(document).on('keyup change', '.mah_tol', function() {
 
     function loadLastYearProducts() {
         $.ajax({
-            url: 'last_year_products2.php',
+            url: 'last_year_products.php',
             method: 'POST',
             dataType: 'json',
             data: { op: 'list', garden_id: <?php echo (int)$id; ?> },
@@ -1376,15 +1393,19 @@ $(document).on('keyup change', '.mah_tol', function() {
                 productOptions += `<option value="${item.cod_mah}" selected>${item.product_name || ''}</option>`;
             }
 
+            // ✅ استفاده از مقدار پیش‌بینی سال قبل (اگر وجود داشت)
+            var oldPrediction = (item.old_mah_tolp !== undefined && item.old_mah_tolp !== null && item.old_mah_tolp !== '') ? item.old_mah_tolp : '';
+            var oldMahBem = (item.old_mah_bem === '1') ? '1' : '2';
+
             var new_row = `<tr class="temp_row editing-row" data-from-last-year="1">
                 <td><select class="cod_q" id="cod_qroup${currentRowNum}">${groupOptions}</select></td>
                 <td><select class="cod_m" id="cod_mah${currentRowNum}">${productOptions}</select></td>
                 ${cultivation_cols}
                 <td><input type="text" class="t_barvar" id="t_barvar${currentRowNum}" value="${item.tree_b || 0}" /></td>
                 <td><input type="text" class="t_gheir_barvar" id="t_gheir_barvar${currentRowNum}" value="${item.tree_gb || 0}" /></td>
-                <td><input type="text" class="mah_tolp" id="mah_tolp${currentRowNum}" value="" placeholder="الزامی - بزرگتر از صفر" /></td>
+                <td><input type="text" class="mah_tolp" id="mah_tolp${currentRowNum}" value="${oldPrediction}" placeholder="پیش‌بینی تولید" /></td>
                 ${production_cols}
-                <td><select class="mah_bem" id="mah_bem${currentRowNum}"><option value="">انتخاب</option><option value="1">بلی</option><option value="2" selected>خیر</option></select></td>
+                <td><select class="mah_bem" id="mah_bem${currentRowNum}"><option value="">انتخاب</option><option value="1" ${oldMahBem === '1' ? 'selected' : ''}>بلی</option><option value="2" ${oldMahBem === '2' ? 'selected' : ''}>خیر</option></select></td>
                 <td></td>
                 <td><button type="button" class="remove">-</button></td>
             </tr>`;
@@ -1401,7 +1422,7 @@ $(document).on('keyup change', '.mah_tol', function() {
             if (skippedCount > 0) {
                 msg += '\n' + skippedCount + ' محصول تکراری نادیده گرفته شد.';
             }
-            msg += '\n\n⚠️ ضمن بررسی بقیه آیتم ها ، لطفاً مقدار «پیش‌بینی تولید» را برای هر ردیف وارد کنید.';
+            msg += '\n\n⚠️ در صورت نیاز مقدار «پیش‌بینی تولید» را ویرایش کنید. سپس دکمه «ثبت محصولات جدید» را بزنید.';
             showCustomAlert(msg);
         } else {
             showCustomAlert('هیچ محصولی اضافه نشد. ممکن است همه تکراری باشند.');
@@ -1515,17 +1536,24 @@ $('#save1').click(function() {
         return;
     }
 
-    // ✅ بررسی پیش‌بینی تولید برای همه ردیف‌های جدید
+    // ✅ بررسی هوشمند پیش‌بینی تولید
+    // فقط ردیف‌هایی که سطح بارور > 0 یا درخت بارور > 0 دارند، پیش‌بینی الزامی است
     var invalidPredictionRow = -1;
     $('#crud_table1 tbody tr.temp_row').each(function(index) {
-        var mah_tolp = parseFloat($(this).find('.mah_tolp').val()) || 0;
-        if (mah_tolp <= 0) {
+        var row = $(this);
+        var s_barvar = parseFloat(row.find('.s_barvar').val()) || 0;
+        var t_barvar = parseFloat(row.find('.t_barvar').val()) || 0;
+        var mah_tolp = parseFloat(row.find('.mah_tolp').val()) || 0;
+
+        var needsPrediction = (s_barvar > 0 || t_barvar > 0);
+
+        if (needsPrediction && mah_tolp <= 0) {
             invalidPredictionRow = index + 1;
             return false;
         }
     });
     if (invalidPredictionRow > 0) {
-        showCustomAlert('مقدار «پیش‌بینی تولید» در ردیف ' + invalidPredictionRow + ' باید بزرگتر از صفر باشد.');
+        showCustomAlert('در ردیف ' + invalidPredictionRow + '، چون سطح بارور یا درخت بارور وجود دارد، مقدار «پیش‌بینی تولید» باید بزرگتر از صفر باشد.');
         return;
     }
 
