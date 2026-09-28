@@ -16,6 +16,7 @@ $id = isset($_GET['id']) ? intval($_GET['id']) : 1;
 $start = ($id - 1) * 10;
 $limit = 10;
 
+// گرفتن لیست استان‌ها
 $stmt = $dbh->query("SELECT id_ostan, ostan FROM ostanname ORDER BY BINARY ostan ASC");
 $ostans = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
@@ -36,7 +37,7 @@ $ostans = $stmt->fetchAll(PDO::FETCH_ASSOC);
             var markaz = document.getElementById("markaz").value;
             if (markaz === "") {
                 alert("لطفاً ابتدا نام مرکز را انتخاب کنید.");
-                return false;
+                return false; 
             }
             return true;
         }
@@ -45,66 +46,170 @@ $ostans = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <style type="text/css">
         .tabel { margin-right:45px }
         .text_r { margin-right:0px }
-        .style1 { color: #003366; font-family: Tahoma; font-size: 18px; }
-        .style8 { font-family: Tahoma; font-size: 14px; }
-        #content { width: 900px; margin: 0 auto; font-family: Arial, Helvetica, sans-serif; }
-        .page { float: right; margin: 0; padding: 0; }
-        .page li { list-style: none; display: inline-block; }
-        .page li a, .current { display: block; padding: 5px; text-decoration: none; color: #8A8A8A; }
-        .current { font-weight: bold; color: #000; }
-        .button { padding: 5px 15px; text-decoration: none; background: #333; color: #F3F3F3; font-size: 13PX; border-radius: 2PX; margin: 0 4PX; display: block; float: left; }
-        .column { float: left; width: 12.25%; padding: 5px; }
-        .row { width: 100% }
-        .row::after { content: ""; clear: both; display: table; }
+        .style1 {
+            color: #003366;
+            font-family: Tahoma;
+            font-size: 18px;
+        }
+        .style8 {
+            font-family: Tahoma;
+            font-size: 14px;
+        }
 
+        #content {
+            width: 900px;
+            margin: 0 auto;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        .page {
+            float: right;
+            margin: 0;
+            padding: 0;
+        }
+        .page li {
+            list-style: none;
+            display: inline-block;
+        }
+        .page li a, .current {
+            display: block;
+            padding: 5px;
+            text-decoration: none;
+            color: #8A8A8A;
+        }
+        .current {
+            font-weight: bold;
+            color: #000;
+        }
+        .button {
+            padding: 5px 15px;
+            text-decoration: none;
+            background: #333;
+            color: #F3F3F3;
+            font-size: 13PX;
+            border-radius: 2PX;
+            margin: 0 4PX;
+            display: block;
+            float: left;
+        }
+        .column {
+            float: left;
+            width: 12.25%;
+            padding: 5px;
+        }
+        .row {
+            width: 100%
+        }
+        .row::after {
+            content: "";
+            clear: both;
+            display: table;
+        }
+
+        /* جدول نتایج مدرن و واکنش‌گرا */
         .agri-table {
-            width: 98%; margin: 24px auto; border-collapse: collapse;
-            font-family: Tahoma, Arial, sans-serif; font-size: 15px;
-            background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.07);
-            border-radius: 12px; overflow: hidden;
+            width: 98%;
+            margin: 24px auto;
+            border-collapse: collapse;
+            font-family: Tahoma, Arial, sans-serif;
+            font-size: 15px;
+            background: #fff;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+            border-radius: 12px;
+            overflow: hidden;
         }
         .agri-table th, .agri-table td {
-            padding: 10px 8px; text-align: center;
-            border-bottom: 1px solid #e0e0e0; border-right: 1px solid #e0e0e0;
+            padding: 10px 8px;
+            text-align: center;
+            border-bottom: 1px solid #e0e0e0;
+            border-right: 1px solid #e0e0e0;
         }
-        .agri-table th:last-child, .agri-table td:last-child { border-right: none; }
-        .agri-table th { background: #006699; color: #fff; font-weight: bold; font-size: 16px; }
-        .agri-table tr:nth-child(even) { background: #f9f9f9; }
-        .agri-table tr:nth-child(odd) { background: #fff; }
-        .agri-table tr:hover { background: #e6f2ff; }
+        .agri-table th:last-child, .agri-table td:last-child {
+            border-right: none;
+        }
+        .agri-table th {
+            background: #006699;
+            color: #fff;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        .agri-table tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+        .agri-table tr:nth-child(odd) {
+            background: #fff;
+        }
+        .agri-table tr:hover {
+            background: #e6f2ff;
+        }
 
+        /* استایل برای نمایش موجودی */
         .balance-info {
-            font-size: 11px; padding: 3px 6px; margin-top: 2px;
-            border-radius: 3px; text-align: right; line-height: 1.6;
-            direction: rtl; font-family: Tahoma;
+            font-size: 11px;
+            padding: 3px 6px;
+            margin-top: 2px;
+            border-radius: 3px;
+            text-align: right;
+            line-height: 1.6;
+            direction: rtl;
+            font-family: Tahoma;
         }
         .balance-valid { background: #e8f5e9; color: #2e7d32; }
         .balance-warning { background: #fff3e0; color: #e65100; }
         .balance-error { background: #ffebee; color: #c62828; }
 
         .input-field {
-            width: 80px; height: 30px; font-family: Tahoma;
-            font-size: 14px; text-align: center;
+            width: 80px;
+            height: 30px;
+            font-family: Tahoma;
+            font-size: 14px;
+            text-align: center;
         }
         .input-field:focus { border-color: #006699; box-shadow: 0 0 5px rgba(0,102,153,0.3); }
         .input-field.error { border-color: #c62828; background: #ffebee; }
         .input-field.success { border-color: #2e7d32; background: #e8f5e9; }
 
         .submit-btn {
-            width: 40px; height: 35px; font-size: 14px; color: #900;
-            font-family: tahoma; text-align: center;
-            border: 1px solid #ccc; border-radius: 4px;
-            cursor: pointer; background: #fff;
+            width: 40px;
+            height: 35px;
+            font-size: 14px;
+            color: #900;
+            font-family: tahoma;
+            text-align: center;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            cursor: pointer;
+            background: #fff;
         }
         .submit-btn:hover:not(:disabled) { background: #006699; color: #fff; }
         .submit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
         .pagination-container { text-align: center; margin: 20px auto; }
-        .pagination { display: flex; list-style: none; justify-content: center; flex-wrap: wrap; gap: 5px; padding: 0; }
-        .pagination .page-btn { padding: 6px 10px; border: 1px solid #ccc; border-radius: 4px; background: #f8f8f8; color: #999; cursor: pointer; }
+        .pagination {
+            display: flex;
+            list-style: none;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 5px;
+            padding: 0;
+        }
+        .pagination .page-btn {
+            padding: 6px 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background: #f8f8f8;
+            color: #999;
+            cursor: pointer;
+        }
         .pagination .page-btn:hover { background: #e0e0e0; }
         .pagination .page-btn.active { background: #4CAF50; color: white; border-color: #4CAF50; }
-        .pagination .nav-btn { background: #4CAF50; color: white; padding: 8px 12px; border: none; border-radius: 4px; cursor: pointer; }
+        .pagination .nav-btn {
+            background: #4CAF50;
+            color: white;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
         .pagination .nav-btn:hover { background: #388E3C; }
 
         @media (max-width: 900px) {
@@ -116,8 +221,12 @@ $ostans = $stmt->fetchAll(PDO::FETCH_ASSOC);
 </head>
 <body>
     <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="#FFFFFF">
-        <tr><td><img src="../../files/images/header.jpg" width="100%" height="149" /></td></tr>
-        <tr><td><?php include('menu.php'); ?></td></tr>
+        <tr>
+            <td><img src="../../files/images/header.jpg" width="100%" height="149" /></td>
+        </tr>
+        <tr>
+            <td><?php include('menu.php'); ?></td>
+        </tr>
         <tr>
             <td>
                 <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="#FFFFFF">
@@ -126,7 +235,8 @@ $ostans = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <td width="840">
                             <?php include('top.php'); ?>
                             <span class="style8">ثبت برش الگوی کشت محصولات باغی مراکز جهاد کشاورزی</span><br />
-
+                            
+                            <!-- فرم جستجو -->
                             <form id="reg-form" method="post" action="#1" onsubmit="return validateForm()">
                                 <div style="width: 350px; padding: 5px; border: 2px solid #09C; margin: auto; text-align: left; border-radius: 15px">
                                     <table width="100%" height="279" border="0" align="center" cellpadding="0" cellspacing="0">
@@ -198,17 +308,23 @@ $ostans = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                     </table>
                                 </div>
                             </form>
-
+                            
                             <p>
                             <?php
                             if (isset($_POST['action']) && $id_city > 0 && $id_mar > 0 && $id_ostan1 != '') {
+                                
                                 try {
-                                    // 1. کپی داده‌های شهرستان به مرکز (باغی)
                                     $query = "
                                         INSERT INTO Garden_ab_mar (id_ostan, id_city, id_mar, z_sal, group_cod, group_name, product_cod, product_name)
                                         SELECT
-                                            c.id_ostan, c.id_city, :id_mar, c.z_sal,
-                                            c.group_cod, c.group_name, c.product_cod, c.product_name
+                                            c.id_ostan,
+                                            c.id_city,
+                                            :id_mar,
+                                            c.z_sal,
+                                            c.group_cod,
+                                            c.group_name,
+                                            c.product_cod,
+                                            c.product_name
                                         FROM Garden_ab_city c
                                         LEFT JOIN Garden_ab_mar m
                                             ON c.product_cod = m.product_cod
@@ -223,7 +339,7 @@ $ostans = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                             AND m.product_cod IS NULL
                                             AND (c.s_bar_abi > 0 OR c.s_bar_dem > 0 
                                                  OR c.s_nobar_abi > 0 OR c.s_nobar_dem > 0)";
-
+                                    
                                     $q = $dbh->prepare($query);
                                     $q->execute(array(
                                         ':id_ostan1' => $id_ostan1,
@@ -231,8 +347,7 @@ $ostans = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                         ':id_mar' => $id_mar,
                                         ':z_sal' => $z_sal
                                     ));
-
-                                    // 2. دریافت داده‌ها با صفحه‌بندی
+                                    
                                     $query = "SELECT * FROM Garden_ab_mar 
                                               WHERE z_sal = :z_sal 
                                               AND id_ostan = :id_ostan 
@@ -240,13 +355,13 @@ $ostans = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                               AND id_mar = :id_mar 
                                               GROUP BY group_cod, product_cod 
                                               LIMIT :start, :limit";
-
+                                    
                                     $query_count = "SELECT COUNT(*) FROM Garden_ab_mar 
                                                     WHERE z_sal = :z_sal 
                                                     AND id_ostan = :id_ostan 
                                                     AND id_city = :id_city 
                                                     AND id_mar = :id_mar";
-
+                                    
                                     $stmt = $dbh->prepare($query);
                                     $stmt->bindParam(':z_sal', $z_sal, PDO::PARAM_STR);
                                     $stmt->bindParam(':id_ostan', $id_ostan1, PDO::PARAM_INT);
@@ -256,22 +371,24 @@ $ostans = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                     $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
                                     $stmt->execute();
                                     $t_row = $stmt->rowCount();
-
+                                    
                                     if ($t_row > 0) {
                             ?>
-
+                            
                             <table width="122" height="56" border="0" align="center">
-                                <tr><td>
-                                    <form action="Sab_L2_xls.php" method="post">
-                                        <input type="hidden" name="id_ostan" value="<?php echo htmlspecialchars($id_ostan1, ENT_QUOTES, 'UTF-8'); ?>" />
-                                        <input type="hidden" name="id_city" value="<?php echo htmlspecialchars($id_city, ENT_QUOTES, 'UTF-8'); ?>" />
-                                        <input type="hidden" name="id_mar" value="<?php echo htmlspecialchars($id_mar, ENT_QUOTES, 'UTF-8'); ?>" />
-                                        <input type="hidden" name="z_sal" value="<?php echo htmlspecialchars($z_sal, ENT_QUOTES, 'UTF-8'); ?>" />
-                                        <button><img src="../../files/xls.png" title="دانلود نتایج با فرمت فایل اکسل" width="44" height="45" alt=""/></button>
-                                    </form>
-                                </td></tr>
+                                <tr>
+                                    <td>
+                                        <form action="Sab_L2_xls.php" method="post">
+                                            <input type="hidden" name="id_ostan" value="<?php echo htmlspecialchars($id_ostan1, ENT_QUOTES, 'UTF-8'); ?>" />
+                                            <input type="hidden" name="id_city" value="<?php echo htmlspecialchars($id_city, ENT_QUOTES, 'UTF-8'); ?>" />
+                                            <input type="hidden" name="id_mar" value="<?php echo htmlspecialchars($id_mar, ENT_QUOTES, 'UTF-8'); ?>" />
+                                            <input type="hidden" name="z_sal" value="<?php echo htmlspecialchars($z_sal, ENT_QUOTES, 'UTF-8'); ?>" />
+                                            <button><img src="../../files/xls.png" title="دانلود نتایج با فرمت فایل اکسل" width="44" height="45" alt=""/></button>
+                                        </form>
+                                    </td>
+                                </tr>
                             </table>
-
+                            
                             <table class="agri-table" id="main-table">
                                 <tr class="text1">
                                     <td width="6%" rowspan="2" bgcolor="#006699">عملیات</td>
@@ -312,41 +429,41 @@ $ostans = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                             <span class="success<?php echo $r; ?>" style="display:none"><img src="../../files/Tick.png" width="15" height="15" alt=""/></span>
                                         </form>
                                     </td>
-
+                                    
                                     <td class="normalTextSmall" <?php if($r%2 == 0) echo 'bgcolor=#FFFFCC'; ?>>
-                                        <input name="a_dem" type="text" class="style8" id="a_dem<?php echo $r; ?>" style="width:80px; height:30px;" tabindex="<?php echo ($r*10+10); ?>" dir="rtl" lang="fa" value="" maxlength="12" readonly />
+                                        <input name="a_dem" type="text" class="style8" id="a_dem<?php echo $r; ?>" style="width:80px; height:30px;" tabindex="<?php echo ($r*10+10); ?>" dir="rtl" lang="fa" value="" maxlength="12" align="baseline" xml:lang="fa" readonly />
                                     </td>
                                     <td class="normalTextSmall" <?php if($r%2 == 0) echo 'bgcolor=#FFFFCC'; ?>>
-                                        <input name="a_abi" type="text" class="style8" id="a_abi<?php echo $r; ?>" style="width:80px; height:30px;" tabindex="<?php echo ($r*10+9); ?>" dir="rtl" lang="fa" value="" maxlength="12" readonly />
+                                        <input name="a_abi" type="text" class="style8" id="a_abi<?php echo $r; ?>" style="width:80px; height:30px;" tabindex="<?php echo ($r*10+9); ?>" dir="rtl" lang="fa" value="" maxlength="12" align="baseline" xml:lang="fa" readonly />
                                     </td>
-
+                                    
                                     <td class="normalTextSmall" <?php if($r%2 == 0) echo 'bgcolor=#FFFFCC'; ?>>
-                                        <input name="t_dem" type="text" inputmode="decimal" class="input-field t_dem<?php echo $r; ?> required number" id="t_dem<?php echo $r; ?>" style="width:80px; height:30px;" tabindex="<?php echo ($r*10+8); ?>" dir="rtl" lang="fa" value="<?php echo htmlspecialchars($row['t_dem'] * 1, ENT_QUOTES, 'UTF-8'); ?>" maxlength="12" />
+                                        <input name="t_dem" type="text" inputmode="decimal" class="input-field t_dem<?php echo $r; ?> required number" id="t_dem<?php echo $r; ?>" style="width:80px; height:30px;" tabindex="<?php echo ($r*10+8); ?>" dir="rtl" lang="fa" value="<?php echo htmlspecialchars($row['t_dem'] * 1, ENT_QUOTES, 'UTF-8'); ?>" maxlength="12" align="baseline" xml:lang="fa" />
                                         <div class="balance-info" id="info_t_dem_<?php echo $r; ?>"></div>
                                     </td>
                                     <td class="normalTextSmall" <?php if($r%2 == 0) echo 'bgcolor=#FFFFCC'; ?>>
-                                        <input name="t_abi" type="text" inputmode="decimal" class="input-field t_abi<?php echo $r; ?> required number" id="t_abi<?php echo $r; ?>" style="width:80px; height:30px;" tabindex="<?php echo ($r*10+7); ?>" dir="rtl" lang="fa" value="<?php echo htmlspecialchars($row['t_abi'] * 1, ENT_QUOTES, 'UTF-8'); ?>" maxlength="12" />
+                                        <input name="t_abi" type="text" inputmode="decimal" class="input-field t_abi<?php echo $r; ?> required number" id="t_abi<?php echo $r; ?>" style="width:80px; height:30px;" tabindex="<?php echo ($r*10+7); ?>" dir="rtl" lang="fa" value="<?php echo htmlspecialchars($row['t_abi'] * 1, ENT_QUOTES, 'UTF-8'); ?>" maxlength="12" align="baseline" xml:lang="fa" />
                                         <div class="balance-info" id="info_t_abi_<?php echo $r; ?>"></div>
                                     </td>
-
+                                    
                                     <td class="normalTextSmall" <?php if($r%2 == 0) echo 'bgcolor=#FFFFCC'; ?>>
-                                        <input name="s_bar_dem" type="text" inputmode="decimal" class="input-field s_bar_dem<?php echo $r; ?> required digits" id="s_bar_dem<?php echo $r; ?>" style="width:80px; height:30px;" tabindex="<?php echo ($r*10+6); ?>" dir="rtl" lang="fa" value="<?php echo htmlspecialchars($row['s_bar_dem'] * 1, ENT_QUOTES, 'UTF-8'); ?>" maxlength="12" />
+                                        <input name="s_bar_dem" type="text" inputmode="decimal" class="input-field s_bar_dem<?php echo $r; ?> required digits" id="s_bar_dem<?php echo $r; ?>" style="width:80px; height:30px;" tabindex="<?php echo ($r*10+6); ?>" dir="rtl" lang="fa" value="<?php echo htmlspecialchars($row['s_bar_dem'] * 1, ENT_QUOTES, 'UTF-8'); ?>" maxlength="12" align="baseline" xml:lang="fa" />
                                         <div class="balance-info" id="info_s_bar_dem_<?php echo $r; ?>"></div>
                                     </td>
                                     <td class="normalTextSmall" <?php if($r%2 == 0) echo 'bgcolor=#FFFFCC'; ?>>
-                                        <input name="s_bar_abi" type="text" inputmode="decimal" class="input-field s_bar_abi<?php echo $r; ?> required digits" id="s_bar_abi<?php echo $r; ?>" style="width:80px; height:30px;" tabindex="<?php echo ($r*10+5); ?>" dir="rtl" lang="fa" value="<?php echo htmlspecialchars($row['s_bar_abi'] * 1, ENT_QUOTES, 'UTF-8'); ?>" maxlength="12" />
+                                        <input name="s_bar_abi" type="text" inputmode="decimal" class="input-field s_bar_abi<?php echo $r; ?> required digits" id="s_bar_abi<?php echo $r; ?>" style="width:80px; height:30px;" tabindex="<?php echo ($r*10+5); ?>" dir="rtl" lang="fa" value="<?php echo htmlspecialchars($row['s_bar_abi'] * 1, ENT_QUOTES, 'UTF-8'); ?>" maxlength="12" align="baseline" xml:lang="fa" />
                                         <div class="balance-info" id="info_s_bar_abi_<?php echo $r; ?>"></div>
                                     </td>
-
+                                    
                                     <td class="normalTextSmall" <?php if($r%2 == 0) echo 'bgcolor=#FFFFCC'; ?>>
-                                        <input name="s_nobar_dem" type="text" inputmode="decimal" class="input-field s_nobar_dem<?php echo $r; ?> required digits" id="s_nobar_dem<?php echo $r; ?>" style="width:80px; height:30px;" tabindex="<?php echo ($r*10+4); ?>" dir="rtl" lang="fa" value="<?php echo htmlspecialchars($row['s_nobar_dem'] * 1, ENT_QUOTES, 'UTF-8'); ?>" maxlength="12" />
+                                        <input name="s_nobar_dem" type="text" inputmode="decimal" class="input-field s_nobar_dem<?php echo $r; ?> required digits" id="s_nobar_dem<?php echo $r; ?>" style="width:80px; height:30px;" tabindex="<?php echo ($r*10+4); ?>" dir="rtl" lang="fa" value="<?php echo htmlspecialchars($row['s_nobar_dem'] * 1, ENT_QUOTES, 'UTF-8'); ?>" maxlength="12" align="baseline" xml:lang="fa" />
                                         <div class="balance-info" id="info_s_nobar_dem_<?php echo $r; ?>"></div>
                                     </td>
                                     <td class="normalTextSmall" <?php if($r%2 == 0) echo 'bgcolor=#FFFFCC'; ?>>
-                                        <input name="s_nobar_abi" type="text" inputmode="decimal" class="input-field s_nobar_abi<?php echo $r; ?> required digits" id="s_nobar_abi<?php echo $r; ?>" style="width:80px; height:30px;" tabindex="<?php echo ($r*10+3); ?>" dir="rtl" lang="fa" value="<?php echo htmlspecialchars($row['s_nobar_abi'] * 1, ENT_QUOTES, 'UTF-8'); ?>" maxlength="12" />
+                                        <input name="s_nobar_abi" type="text" inputmode="decimal" class="input-field s_nobar_abi<?php echo $r; ?> required digits" id="s_nobar_abi<?php echo $r; ?>" style="width:80px; height:30px;" tabindex="<?php echo ($r*10+3); ?>" dir="rtl" lang="fa" value="<?php echo htmlspecialchars($row['s_nobar_abi'] * 1, ENT_QUOTES, 'UTF-8'); ?>" maxlength="12" align="baseline" xml:lang="fa" />
                                         <div class="balance-info" id="info_s_nobar_abi_<?php echo $r; ?>"></div>
                                     </td>
-
+                                    
                                     <td class="normalTextSmall" <?php if($r%2 == 0) echo 'bgcolor=#FFFFCC'; ?>>
                                         <?php echo htmlspecialchars($row['product_name'], ENT_QUOTES, 'UTF-8'); ?>
                                     </td>
@@ -357,24 +474,24 @@ $ostans = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                 }
                                 ?>
                             </table>
-
+                            
                             <?php
                                     } else {
                                         echo '<p class="style8">اطلاعاتی یافت نشد</p>';
                                     }
-
+                                    
                                     $stmt_count = $dbh->prepare($query_count);
                                     $stmt_count->execute(array(':z_sal' => $z_sal, ':id_ostan' => $id_ostan1, ':id_city' => $id_city, ':id_mar' => $id_mar));
                                     $rows = $stmt_count->fetchColumn();
                                     $total = ceil($rows / $limit);
                                     $t_row = ($rows > 25) ? 25 : $rows;
-
+                                    
                                     if ($total > 1) {
                             ?>
-
+                            
                             <div dir="rtl" class="pagination-container" style="text-align:center; margin: 20px auto;">
                                 <ul class="pagination" style="display: flex; list-style: none; justify-content: center; flex-wrap: wrap; gap: 5px; padding: 0;">
-
+                                    
                                     <?php if ($id > 1): ?>
                                     <li>
                                         <form action="Garden_s_ab.php?id=<?php echo $id - 1; ?>#1" method="post">
@@ -387,12 +504,12 @@ $ostans = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                         </form>
                                     </li>
                                     <?php endif; ?>
-
+                                    
                                     <?php
                                     $visible_pages = 5;
                                     $start_page = max(1, $id - $visible_pages);
                                     $end_page = min($total, $id + $visible_pages);
-
+                                    
                                     if ($start_page > 1): ?>
                                     <li>
                                         <form action="Garden_s_ab.php?id=1#1" method="post">
@@ -408,7 +525,7 @@ $ostans = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                         <li style="padding: 6px 10px; color: #999;">...</li>
                                     <?php endif; ?>
                                     <?php endif; ?>
-
+                                    
                                     <?php for ($i = $start_page; $i <= $end_page; $i++): ?>
                                     <li>
                                         <?php if ($i == $id): ?>
@@ -425,7 +542,7 @@ $ostans = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                         <?php endif; ?>
                                     </li>
                                     <?php endfor; ?>
-
+                                    
                                     <?php if ($end_page < $total): ?>
                                         <?php if ($end_page < $total - 1): ?>
                                             <li style="padding: 6px 10px; color: #999;">...</li>
@@ -441,7 +558,7 @@ $ostans = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                             </form>
                                         </li>
                                     <?php endif; ?>
-
+                                    
                                     <?php if ($id < $total): ?>
                                     <li>
                                         <form action="Garden_s_ab.php?id=<?php echo $id + 1; ?>#1" method="post">
@@ -455,7 +572,7 @@ $ostans = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                     </li>
                                     <?php endif; ?>
                                 </ul>
-
+                                
                                 <div style="margin-top: 15px;">
                                     <form method="post" action="Garden_s_ab.php" style="display: inline-flex; align-items: center; gap: 10px;">
                                         <input type="hidden" name="action" value="1" />
@@ -469,7 +586,7 @@ $ostans = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                     </form>
                                 </div>
                             </div>
-
+                            
                             <script>
                                 document.querySelector('.pagination-container form[action="Garden_s_ab.php"]').addEventListener('submit', function(e) {
                                     var input = this.querySelector('input[name="page_input"]');
@@ -482,7 +599,7 @@ $ostans = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                     }
                                 });
                             </script>
-
+                            
                             <?php
                                     }
                                 } catch (PDOException $e) {
@@ -490,7 +607,7 @@ $ostans = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                 }
                             }
                             ?>
-
+                            
                             <p><a href="Pattern.php" title="برگشت به صفحه قبل"><img src="../../files/goback.jpg" width="118" height="47" alt=""/></a></p>
                         </td>
                     </tr>
@@ -503,7 +620,7 @@ $ostans = $stmt->fetchAll(PDO::FETCH_ASSOC);
             </td>
         </tr>
     </table>
-
+    
     <?php
     $no = isset($t_row) ? $t_row : 0;
     while ($no > 0){
@@ -534,6 +651,7 @@ $ostans = $stmt->fetchAll(PDO::FETCH_ASSOC);
         if (num === '' || num === null || num === undefined) return "";
         var str = normalizeDigits(String(num)).replace(/٬/g, '');
         if (str === '') return "";
+
         if (str.indexOf('.') !== -1) {
             var parts = str.split('.');
             var intPart = parts[0] === '' ? '0' : parts[0];
@@ -541,6 +659,7 @@ $ostans = $stmt->fetchAll(PDO::FETCH_ASSOC);
             if (decPart.length > 4) decPart = decPart.substring(0, 4);
             return addThousandSeparator(intPart) + '.' + decPart;
         }
+
         var number = parseFloat(str);
         if (isNaN(number)) return "";
         if (number === 0) return "0";
@@ -567,17 +686,19 @@ $ostans = $stmt->fetchAll(PDO::FETCH_ASSOC);
         var s_bar_abi = parseFloat(unformatNumber($('#s_bar_abi' + row).val())) || 0;
         var t_dem     = parseFloat(unformatNumber($('#t_dem' + row).val())) || 0;
         var s_bar_dem = parseFloat(unformatNumber($('#s_bar_dem' + row).val())) || 0;
+        
         var a_abi = (s_bar_abi > 0) ? ((t_abi / s_bar_abi) * 1000) : 0;
         var a_dem = (s_bar_dem > 0) ? ((t_dem / s_bar_dem) * 1000) : 0;
+        
         $('#a_abi' + row).val(a_abi > 0 ? formatNumberWithSeparator(a_abi.toFixed(2)) : '');
         $('#a_dem' + row).val(a_dem > 0 ? formatNumberWithSeparator(a_dem.toFixed(2)) : '');
     }
-
+    
     // ============================================================
     // کش و اعتبارسنجی
     // ============================================================
     var validationCache<?php echo $no ?> = {};
-
+    
     function validateField<?php echo $no ?>(field, value) {
         var row = <?php echo $no ?>;
         if (value === '' || value === null || parseFloat(value) === 0) {
@@ -587,11 +708,13 @@ $ostans = $stmt->fetchAll(PDO::FETCH_ASSOC);
             $('#' + field + row).removeClass('error success');
             return;
         }
+        
         var cacheKey = row + '_' + field + '_' + value;
         if (validationCache<?php echo $no ?>[cacheKey] && (Date.now() - validationCache<?php echo $no ?>[cacheKey].timestamp < 2000)) {
             updateUI<?php echo $no ?>(field, validationCache<?php echo $no ?>[cacheKey].result);
             return;
         }
+        
         $.post('check_garden.php', {
             [field]: value,
             z_sal: $('#z_sal' + row).val(),
@@ -605,86 +728,111 @@ $ostans = $stmt->fetchAll(PDO::FETCH_ASSOC);
             validationCache<?php echo $no ?>[cacheKey] = { result: response, timestamp: Date.now() };
             updateUI<?php echo $no ?>(field, response);
         }, 'json').fail(function() {
-            $('#info_' + field + '_' + row).html('⚠️ خطا در ارتباط با سرور').addClass('balance-error');
+            var infoDiv = $('#info_' + field + '_' + row);
+            infoDiv.html('⚠️ خطا در ارتباط با سرور').addClass('balance-error');
         });
     }
-
+    
     function updateUI<?php echo $no ?>(field, response) {
         var row = <?php echo $no ?>;
         var infoDiv = $('#info_' + field + '_' + row);
         var input = $('#' + field + row);
         var submitBtn = $('#submit' + row);
+        
         infoDiv.removeClass('balance-valid balance-warning balance-error');
         input.removeClass('error success');
-
-        var d = (response && response.data) ? response.data : {};
-
+        
         if (response.valid) {
-            var city_limit = d.city_limit || 0;
-            var total_current = d.total_current || 0;
-            var other_cities_sum = d.other_cities_sum || 0;
-            var new_remaining = d.new_remaining || 0;
-            var max_allowed = d.max_allowed || 0;
-            var expert_value = d.expert_value || 0;
-
+            var city_limit = response.data.city_limit || 0;
+            var total_current = response.data.total_current || 0;
+            var other_cities_sum = response.data.other_cities_sum || 0;
+            var new_remaining = response.data.new_remaining || 0;
+            var max_allowed = response.data.max_allowed || 0;
+            var expert_value = response.data.expert_value || 0;
+            
             var statusText = '✅ مجاز';
             var statusClass = 'balance-valid';
-            if (new_remaining < 0) { statusText = '⚠️ بیش از سقف'; statusClass = 'balance-warning'; }
-            else if (new_remaining === 0) { statusText = '⚠️ تکمیل شده'; statusClass = 'balance-warning'; }
-
+            if (new_remaining < 0) {
+                statusText = '⚠️ بیش از سقف';
+                statusClass = 'balance-warning';
+            } else if (new_remaining === 0) {
+                statusText = '⚠️ تکمیل شده';
+                statusClass = 'balance-warning';
+            }
+            
             var infoHtml = '<span style="color: #2e7d32; font-weight:bold;">' + statusText + '</span><br>';
             infoHtml += '📊 سقف شهرستان: ' + formatNumberWithSeparator(city_limit) + '<br>';
             infoHtml += '📌 مجموع کل فعلی: ' + formatNumberWithSeparator(total_current) + '<br>';
             infoHtml += '📌 سایر مراکز: ' + formatNumberWithSeparator(other_cities_sum) + '<br>';
             infoHtml += '💡 حداکثر مجاز برای این مرکز: ' + formatNumberWithSeparator(max_allowed) + '<br>';
             infoHtml += '💰 موجودی جدید: ' + formatNumberWithSeparator(new_remaining);
-            if (expert_value > 0) infoHtml += '<br>👨‍🌾 ثبت کارشناسان پهنه: ' + formatNumberWithSeparator(expert_value);
-
+            
+            if (expert_value > 0) {
+                infoHtml += '<br>👨‍🌾 ثبت کارشناسان پهنه: ' + formatNumberWithSeparator(expert_value);
+            }
+            
             infoDiv.html(infoHtml).addClass(statusClass);
             input.addClass('success');
             submitBtn.prop('disabled', false);
         } else {
             var message = response.message || 'مقدار وارد شده مجاز نیست';
-            var displayMessage = String(message).replace(/\n/g, '<br>');
-            if (d.max_allowed !== undefined) displayMessage += '<br>💡 حداکثر مجاز: ' + formatNumberWithSeparator(d.max_allowed);
-            if (d.expert_value !== undefined && d.expert_value > 0) displayMessage += '<br>👨‍🌾 ثبت کارشناسان پهنه: ' + formatNumberWithSeparator(d.expert_value);
-
-            infoDiv.html('<div style="font-family:Tahoma; direction:rtl; text-align:right; font-size:13px;">❌ ' + displayMessage + '</div>').addClass('balance-error');
+            var displayMessage = message.replace(/\n/g, '<br>');
+            
+            if (response.data && response.data.max_allowed !== undefined) {
+                displayMessage += '<br>💡 حداکثر مجاز: ' + formatNumberWithSeparator(response.data.max_allowed);
+            }
+            if (response.data && response.data.expert_value !== undefined && response.data.expert_value > 0) {
+                displayMessage += '<br>👨‍🌾 ثبت کارشناسان پهنه: ' + formatNumberWithSeparator(response.data.expert_value);
+            }
+            
+            infoDiv.html(
+                '<div style="font-family:Tahoma; direction:rtl; text-align:right; font-size:13px;">❌ ' + displayMessage + '</div>'
+            ).addClass('balance-error');
             input.addClass('error');
             submitBtn.prop('disabled', true);
-
-            if (d.max_allowed !== undefined && d.max_allowed > 0) {
+            
+            if (response.data && response.data.max_allowed !== undefined && response.data.max_allowed > 0) {
                 infoDiv.append(
-                    '<br><button onclick="setMaxValue<?php echo $no ?>(\'' + field + '\', ' + d.max_allowed + ')" ' +
+                    '<br><button onclick="setMaxValue<?php echo $no ?>(\'' + field + '\', ' + response.data.max_allowed + ')" ' +
                     'style="background: #1565c0; color: white; border: none; padding: 2px 8px; border-radius: 3px; ' +
                     'cursor: pointer; font-size: 11px; margin-top: 3px; font-family:Tahoma;">' +
-                    '🔄 جایگزینی با حداکثر مجاز (' + formatNumberWithSeparator(d.max_allowed) + ')</button>'
+                    '🔄 جایگزینی با حداکثر مجاز (' + formatNumberWithSeparator(response.data.max_allowed) + ')' +
+                    '</button>'
                 );
             }
         }
     }
-
+    
     function setMaxValue<?php echo $no ?>(field, maxValue) {
         var row = <?php echo $no ?>;
         $('#' + field + row).val(formatNumberWithSeparator(maxValue));
         $('#' + field + row).trigger('change');
         $('#' + field + row).focus();
     }
-
+    
     // ============================================================
-    // مدیریت رویدادها - بدون keypress
+    // ★★★ مدیریت رویدادها - نسخه نهایی ★★★
     // ============================================================
     $(document).ready(function() {
         var row = <?php echo $no ?>;
-
+        
         ['s_bar_abi', 's_bar_dem', 's_nobar_abi', 's_nobar_dem', 't_abi', 't_dem'].forEach(function(field) {
             var input = $('#' + field + row);
-
+            
+            // ==================================================
+            // input: نرمال‌سازی + فیلتر (بدون فرمت‌دهی زنده)
+            // ==================================================
             input.on('input', function() {
                 var el = this;
                 var val = el.value;
+                
+                // ➊ نرمال‌سازی: ارقام فارسی/عربی → لاتین، ممیز → نقطه
                 var normalized = normalizeDigits(val);
+                
+                // ➋ حذف هر چیزی جز ارقام و نقطه
                 var cleaned = normalized.replace(/[^\d.]/g, '');
+                
+                // ➌ فقط یک نقطه + حداکثر ۴ رقم اعشار
                 var firstDot = cleaned.indexOf('.');
                 if (firstDot !== -1) {
                     var before = cleaned.substring(0, firstDot + 1);
@@ -692,17 +840,24 @@ $ostans = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     if (after.length > 4) after = after.substring(0, 4);
                     cleaned = before + after;
                 }
+                
+                // ➍ فقط اگر تغییر کرد، مقدار را ست کن (حفظ caret)
                 if (val !== cleaned) {
                     var caret = el.selectionStart;
                     var diff  = val.length - cleaned.length;
                     el.value = cleaned;
-                    try { el.setSelectionRange(Math.max(0, caret - diff), Math.max(0, caret - diff)); } catch (ex) {}
+                    try {
+                        el.setSelectionRange(Math.max(0, caret - diff), Math.max(0, caret - diff));
+                    } catch (ex) {}
                 }
+                
                 calcRow<?php echo $no ?>(row);
-
+                
+                // ➎ اعتبارسنجی با تاخیر
                 clearTimeout(el._timer);
                 el._timer = setTimeout(function() {
-                    var cleanV = unformatNumber($(input).val());
+                    var v = $(input).val();
+                    var cleanV = unformatNumber(v);
                     if (parseFloat(cleanV) > 0) {
                         validateField<?php echo $no ?>(field, cleanV);
                     } else {
@@ -713,65 +868,101 @@ $ostans = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     }
                 }, 600);
             });
-
-            // blur: فقط خالی → '0' | > 0 → فرمت | بقیه دست‌نخورده
+            
+            // ==================================================
+            // ★ blur: فقط خالی → '0'  |  مقدار > 0 → فرمت  |  بقیه دست‌نخورده ★
+            //   مقادیر "0.0", "0.00", "0.0085" دست‌نخورده می‌مانند
+            // ==================================================
             input.on('blur', function() {
                 var el = this;
                 var raw = String(el.value).trim();
                 var val = unformatNumber(raw);
+                
                 if (raw === '' || raw === '.') {
                     el.value = '0';
                 } else if (parseFloat(val) > 0) {
                     el.value = formatNumberWithSeparator(val);
                 }
+                // ★ مقادیر "0"، "0.0"، "0.00"، "0." دست‌نخورده می‌مانند ★
+                
                 calcRow<?php echo $no ?>(row);
             });
-
+            
+            // ==================================================
+            // change: اعتبارسنجی
+            // ==================================================
             input.on('change', function() {
-                var cleanValue = unformatNumber($(this).val());
+                var value = $(this).val();
+                var cleanValue = unformatNumber(value);
                 if (parseFloat(cleanValue) > 0) {
                     validateField<?php echo $no ?>(field, cleanValue);
                 } else {
-                    $('#info_' + field + '_' + row).html('').removeClass('balance-valid balance-warning balance-error');
+                    var infoDiv = $('#info_' + field + '_' + row);
+                    infoDiv.html('').removeClass('balance-valid balance-warning balance-error');
                     $('#' + field + row).removeClass('error success');
                     $('#submit' + row).prop('disabled', false);
                 }
                 calcRow<?php echo $no ?>(row);
             });
-
-            input.on('focus', function() { $(this).select(); });
+            
+            // ==================================================
+            // focus: انتخاب کامل
+            // ==================================================
+            input.on('focus', function() {
+                $(this).select();
+            });
         });
-
+        
+        // مقداردهی اولیه
         calcRow<?php echo $no ?>(row);
+        
         ['s_bar_abi', 's_bar_dem', 's_nobar_abi', 's_nobar_dem', 't_abi', 't_dem'].forEach(function(field) {
             var value = unformatNumber($('#' + field + row).val());
-            if (parseFloat(value) > 0) validateField<?php echo $no ?>(field, value);
+            if (parseFloat(value) > 0) {
+                validateField<?php echo $no ?>(field, value);
+            }
         });
     });
-
+    
     // ============================================================
     // ثبت داده‌ها
     // ============================================================
     $(function() {
         $(".submit<?php echo $no ?>").click(function(e) {
             e.preventDefault();
+            
             var row = <?php echo $no ?>;
+            var s_bar_abi = unformatNumber($("#s_bar_abi" + row).val());
+            var s_bar_dem = unformatNumber($("#s_bar_dem" + row).val());
+            var s_nobar_abi = unformatNumber($("#s_nobar_abi" + row).val());
+            var s_nobar_dem = unformatNumber($("#s_nobar_dem" + row).val());
+            var t_abi = unformatNumber($("#t_abi" + row).val());
+            var t_dem = unformatNumber($("#t_dem" + row).val());
+            var a_abi = unformatNumber($("#a_abi" + row).val());
+            var a_dem = unformatNumber($("#a_dem" + row).val());
+            var id = $("#id" + row).val();
+            var id_ostan = '<?php echo $id_ostan1; ?>';
+            var id_city = $("#id_city" + row).val();
+            var id_mar = $("#id_mar" + row).val();
+            var z_sal = $("#z_sal" + row).val();
+            var id_product = $("#product_cod" + row).val();
+            
             $.post('sabt_garden.php', {
-                s_bar_abi:   unformatNumber($("#s_bar_abi" + row).val()),
-                s_bar_dem:   unformatNumber($("#s_bar_dem" + row).val()),
-                s_nobar_abi: unformatNumber($("#s_nobar_abi" + row).val()),
-                s_nobar_dem: unformatNumber($("#s_nobar_dem" + row).val()),
-                t_abi:       unformatNumber($("#t_abi" + row).val()),
-                t_dem:       unformatNumber($("#t_dem" + row).val()),
-                a_abi:       unformatNumber($("#a_abi" + row).val()),
-                a_dem:       unformatNumber($("#a_dem" + row).val()),
-                id:          $("#id" + row).val(),
-                id_ostan:    '<?php echo $id_ostan1; ?>',
-                id_city:     $("#id_city" + row).val(),
-                id_mar:      $("#id_mar" + row).val(),
-                z_sal:       $("#z_sal" + row).val(),
-                id_product:  $("#product_cod" + row).val(),
-                table_type:  'mar'
+                s_bar_abi: s_bar_abi,
+                s_bar_dem: s_bar_dem,
+                s_nobar_abi: s_nobar_abi,
+                s_nobar_dem: s_nobar_dem,
+                t_abi: t_abi,
+                t_dem: t_dem,
+                a_abi: a_abi,
+                a_dem: a_dem,
+                id: id,
+                id_ostan: id_ostan,
+                id_city: id_city,
+                id_mar: id_mar,
+                z_sal: z_sal,
+                id_product: id_product,
+                table_type: 'mar'
             }, function(response) {
                 if (response.valid) {
                     $('.success' + row).fadeIn(200).show();
@@ -785,10 +976,11 @@ $ostans = $stmt->fetchAll(PDO::FETCH_ASSOC);
             }, 'json').fail(function() {
                 alert('⚠️ خطا در ارتباط با سرور');
             });
+            
             return false;
         });
     });
-
+    
     // ============================================================
     // به‌روزرسانی خودکار
     // ============================================================
@@ -804,7 +996,7 @@ $ostans = $stmt->fetchAll(PDO::FETCH_ASSOC);
         });
         calcRow<?php echo $no ?>(row);
     }
-
+    
     var autoRefreshInterval<?php echo $no ?>;
     $(document).on('mousemove keydown', function() {
         clearInterval(autoRefreshInterval<?php echo $no ?>);

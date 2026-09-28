@@ -1,9 +1,16 @@
 <?php 
-header("Content-type: application/vnd.ms-excel;charset=UTF-8");
-header("Content-Disposition: attachment;Filename=محصولات باغی.xls");
 include("../../lock_oce.php");
 include("../../event.php");
-include('../../login/config.php') ;
+include_once('../../login/config.php') ;
+
+$allowed_sal = array('1404', '1403', '1402');
+$z_sal = isset($_GET['z_sal']) ? trim($_GET['z_sal']) : (isset($_POST['z_sal']) ? trim($_POST['z_sal']) : '1404');
+if (!in_array($z_sal, $allowed_sal, true)) {
+	$z_sal = '1404';
+}
+
+header("Content-type: application/vnd.ms-excel;charset=UTF-8");
+header("Content-Disposition: attachment;Filename=محصولات باغی " . $z_sal . ".xls");
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US" xml:lang="en">
@@ -42,10 +49,10 @@ INNER JOIN cityname ON cityname.id_ostan = Garden_prod.id_ostan
 AND cityname.id_city = Garden_prod.id_city
 INNER JOIN product_b ON product_b.group_cod = Garden_prod.cod_qroup
 AND product_b.product_cod = Garden_prod.cod_mah
-WHERE Garden_prod.z_sal = '1400'
-GROUP BY Garden_prod.id_ostan , Garden_prod.id_city , Garden_prod.cod_mah , Garden_prod.no_kesh "  ;
+WHERE Garden_prod.z_sal = :z_sal 
+GROUP BY  Garden_prod.id_city , Garden_prod.cod_mah , Garden_prod.no_kesh "  ;
 $stmt = $dbh->prepare($query);
-$stmt->execute(); 
+$stmt->execute(array(':z_sal' => $z_sal)); 
 $r = 1 ;
  foreach($stmt as $row){
 	 if($row['no_kesh'] == '') $v_no_kesh = 'کشت پراکنده' ;

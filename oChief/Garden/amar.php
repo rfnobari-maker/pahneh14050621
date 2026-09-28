@@ -47,34 +47,64 @@
   <?php include('top.php'); ?>
            <p align="center" class="style8"  >گزارشات باغبانی ویژه آمارنامه </p>
            <p align="center"  ><img src="../../files/horizontal-line-700x223.png" width="700" height="19"  alt=""/></p>
-      
-            <div style="margin-right:25px ; direction:rtl">
-              <p align="right"> <a href="Garden_amar_1.php" class="style9"> الف- گزارش سطح و ميزان توليد محصولات باغباني </a></p>
-              <p align="right" class="style8">  شامل هر سه بخش باغ ، گلخانه و قارچ های خوراکی با امکان گزارش گیری : </p>
-              <p align="right">  1- گزارش کل کشور به تفکیک استان</p>
-              <p align="right">2-  گزارش استان به تفکیک شهرستان  </p>
-              <p align="right">3-  قابلیت محدود سازی دامنه گزارش به مرکز ، آبادی و شهر </p>
-              <p align="right">4- گزارش گیری بر حسب گروه محصولات </p>
-              <p align="right">5- گزارش گیری ریر مجموعه یک گروه </p>
-              <p align="right">6- گرارش گیری یک محصول خاص </p>
-              <p></p>
-              <p align="right"> <a href="Garden_amar_2.php" class="style9"> ب - گزارش سطح ، میزان تولید و عملکرد محصولات باغبانی به تفکیک نوع محصول </a></p>
-              <p></p>
-              <p align="right" class="style8">  شامل هر سه بخش باغ ، گلخانه و قارچ های خوراکی با امکان گزارش گیری :</p>
-              <p align="right"> 1- گزارش سطح ، میزان تولید و عملکرد محصولات کل کشور </p>
-              <p align="right">2-  گزارش سطح ، میزان تولید و عملکرد محصولات  شهرستان </p>
-              <p align="right">3-  قابلیت محدود سازی دامنه گزارش به مرکز ، آبادی و شهر </p>
-              <p align="right">5- گزارش گیری  یک گروه </p>
-              <p align="right">6- گرارش گیری یک محصول خاص </p>
-              <p align="right"><a href="Garden_dash_xls.php" class="style9">ج - خروجی اکسل داشبورد محصولات باغی 1400 </a></p>
-              <p align="right"><a href="Garden_dash_1401_xls.php" class="style9"> خروجی اکسل داشبورد محصولات باغی 1401 </a></p>
-              <p align="right"><a href="Garden_dash_1402_xls.php" class="style9">خروجی اکسل داشبورد محصولات باغی 1402 </a></p>
-              <p align="right"><a href="Garden_dash_1402_xls.php" class="style9">خروجی اکسل داشبورد محصولات باغی 1403 </a></p>
-              <p align="right"><a href="Garden_dash_Greenhous_xls.php" class="style9">چ - خروجی اکسل داشبورد محصولات گلخانه  </a></p>
-              <p align="right"><a href="Mush_dash_xls.php" class="style9">ح - خروجی اکسل داشبورد محصولات قارچ خوراکی</a></p>
-
-            </div>
-            <p>&nbsp;</p>
+           <div style="margin-right:25px ; direction:rtl">
+             <p align="right"> <a href="Garden_amar_1.php" class="style9"> الف- گزارش سطح و ميزان توليد محصولات باغباني </a></p>
+             <p align="right" class="style8"> شامل هر سه بخش باغ ، گلخانه و قارچ های خوراکی با امکان گزارش گیری : </p>
+             <p align="right"> 1- گزارش کل کشور به تفکیک استان</p>
+             <p align="right">2-  گزارش استان به تفکیک شهرستان </p>
+             <p align="right">3-  قابلیت محدود سازی دامنه گزارش به مرکز ، آبادی و شهر </p>
+             <p align="right">4- گزارش گیری بر حسب گروه محصولات </p>
+             <p align="right">5- گزارش گیری ریر مجموعه یک گروه </p>
+             <p align="right">6- گرارش گیری یک محصول خاص </p>
+             <p></p>
+             <p align="right"> <a href="Garden_amar_2.php" class="style9"> ب - گزارش سطح ، میزان تولید و عملکرد محصولات باغبانی به تفکیک نوع محصول </a></p>
+             <p></p>
+             <p align="right" class="style8"> شامل هر سه بخش باغ ، گلخانه و قارچ های خوراکی با امکان گزارش گیری :</p>
+             <p align="right"> 1- گزارش سطح ، میزان تولید و عملکرد محصولات کل کشور </p>
+             <p align="right">2-  گزارش سطح ، میزان تولید و عملکرد محصولات  شهرستان </p>
+             <p align="right">3-  قابلیت محدود سازی دامنه گزارش به مرکز ، آبادی و شهر </p>
+             <p align="right">5- گزارش گیری  یک گروه </p>
+             <p align="right">6- گرارش گیری یک محصول خاص </p>
+             <p align="right" class="style9"> ج - خروجی اکسل داشبورد محصولات باغی
+               <select name="z_sal" id="garden_dash_sal" class="style9" style="margin:0 8px; direction:ltr;">
+                 <option value="1404">1404</option>
+                 <option value="1403">1403</option>
+                 <option value="1402">1402</option>
+               </select>
+               <a href="Garden_dash_xls.php?z_sal=1405" id="garden_dash_xls_link" class="style9">دانلود اکسل</a> </p>
+             <p align="right" class="style9"> چ - خروجی اکسل داشبورد محصولات گلخانه
+               <select name="y_prod" id="greenhous_dash_sal" class="style9" style="margin:0 8px; direction:ltr;">
+                 <option value="1404">1404</option>
+                 <option value="1403">1403</option>
+                 <option value="1402">1402</option>
+               </select>
+               <a href="Garden_dash_Greenhous_xls.php?y_prod=1405" id="greenhous_dash_xls_link" class="style9">دانلود اکسل</a> </p>
+             <p align="right" class="style9"> ح - خروجی اکسل داشبورد محصولات قارچ خوراکی
+               <select name="y_prod" id="mush_dash_sal" class="style9" style="margin:0 8px; direction:ltr;">
+                 <option value="1404">1404</option>
+                 <option value="1403">1403</option>
+                 <option value="1402">1402</option>
+               </select>
+               <a href="Mush_dash_xls.php?y_prod=1405" id="mush_dash_xls_link" class="style9">دانلود اکسل</a> </p>
+             <script type="text/javascript">
+              (function () {
+                function bindYearLink(selId, linkId, baseUrl, param) {
+                  var sel = document.getElementById(selId);
+                  var link = document.getElementById(linkId);
+                  if (!sel || !link) return;
+                  function syncLink() {
+                    link.href = baseUrl + '?' + param + '=' + encodeURIComponent(sel.value);
+                  }
+                  sel.onchange = syncLink;
+                  syncLink();
+                }
+                bindYearLink('garden_dash_sal', 'garden_dash_xls_link', 'Garden_dash_xls.php', 'z_sal');
+                bindYearLink('greenhous_dash_sal', 'greenhous_dash_xls_link', 'Garden_dash_Greenhous_xls.php', 'y_prod');
+                bindYearLink('mush_dash_sal', 'mush_dash_xls_link', 'Mush_dash_xls.php', 'y_prod');
+              })();
+              </script>
+           </div>
+           <p>&nbsp;</p>
             <p>&nbsp;</p></td>
           </tr>
           <tr>

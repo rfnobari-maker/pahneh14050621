@@ -349,6 +349,10 @@ if (!$is_save && isset($_POST['action'])) {
     if ($nah_kesh == '') {
         $mess .= 'نحوه کاشت را انتخاب کنید' . '<p>';
         $field_errors['nah_kesh'] = 'نحوه کاشت را انتخاب کنید';
+    } elseif ($nah_kesh != '1' && $nah_kesh != '2') {
+        $mess .= 'نحوه کاشت نامعتبر است' . '<p>';
+        $field_errors['nah_kesh'] = 'نحوه کاشت نامعتبر است';
+        $nah_kesh = '';
     }
     $no_kesh = isset($_POST['no_kesh']) ? $_POST['no_kesh'] : '';
     $no_mal = isset($_POST['no_mal']) ? $_POST['no_mal'] : '';
@@ -1646,14 +1650,13 @@ $agri_ro_class = ($show_step2 && $no_mal <> 7 && $no_mal != '-') ? ' agri-lock' 
 
                 <fieldset class="agri1-fieldset" id="field-nah_kesh">
                     <legend class="agri1-legend">نحوه کاشت</legend>
-                    <label class="agri1-label" for="nah_kesh">ساده، مخلوط یا درختان پراکنده</label>
+                    <label class="agri1-label" for="nah_kesh">ساده یا مخلوط</label>
                     <select name="nah_kesh" id="nah_kesh" dir="rtl"
                             aria-invalid="<?php echo $err_nah ? 'true' : 'false'; ?>"
                             aria-describedby="<?php echo $err_nah ? 'error-nah_kesh' : ''; ?>">
                         <option value="">انتخاب کنید</option>
                         <option value="1" <?php if ($nah_kesh == '1') echo 'selected="selected"'; ?>>ساده</option>
                         <option value="2" <?php if ($nah_kesh == '2') echo 'selected="selected"'; ?>>مخلوط</option>
-                        <option value="3" <?php if ($nah_kesh == '3') echo 'selected="selected"'; ?>>درختان پراکنده</option>
                     </select>
                     <?php if ($err_nah) { ?>
                         <p class="agri1-error" id="error-nah_kesh"><?php echo agri2_h($field_errors['nah_kesh']); ?></p>

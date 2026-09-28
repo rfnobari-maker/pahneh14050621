@@ -696,7 +696,7 @@ $mah_name  = isset($_POST['mah_name']) ? $_POST['mah_name'] : '';
                     </div>
                     <div class="agri1-field">
                         <label class="agri1-label" for="mor_cod_m">کد ملی مروج</label>
-                        <input name="mor_cod_m" id="mor_cod_m" type="text" dir="ltr" inputmode="numeric" value="<?php echo agri2_h($login_session); ?>" readonly="readonly"/>
+                        <input name="mor_cod_m" id="mor_cod_m" type="text" dir="ltr" inputmode="numeric" value="<?php echo agri2_h($login_session); ?>" readonly/>
                     </div>
                     <div class="agri1-field">
                         <label class="agri1-label" for="bah_cod_m">کد ملی بهره‌بردار</label>
@@ -772,7 +772,7 @@ $mah_name  = isset($_POST['mah_name']) ? $_POST['mah_name'] : '';
             if ($dis == '1') {
                 $v_dis = 1;
             } else {
-                $v_dis = "mah_tol = 0 and mah_kh !='1' ";
+               $v_dis = "mah_tol = 0 and mah_kh !='1' AND (COALESCE(zer_kesht_a, 0) + COALESCE(zer_kesht_b, 0)) > 0";
             }
 
             $start = 0;

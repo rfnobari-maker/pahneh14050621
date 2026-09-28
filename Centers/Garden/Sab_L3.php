@@ -223,6 +223,7 @@ float: left;
             <tr bgcolor='#f1f1f1' >
               <td height="56" align="right" bgcolor="#FFFFFF" class="input_text" ><div align="right">
                 <select name="z_sal" class="input_text required" id="z_sal2" style="height:40px ; width:170px ; direction:rtl">
+                  <option value="1405" <?php if (isset($z_sal) && $z_sal=='1405') echo 'selected=selected'?>>1405</option>
                   <option value="1404" <?php if (isset($z_sal) && $z_sal=='1404') echo 'selected=selected'?>>1404</option>
                 </select>
               </div></td>
@@ -345,7 +346,7 @@ float: left;
     }
 } 
 ?>
-          <p><a href="Pattern.php" title="برگشت به صفحه قبل"><img src="../../files/goback.jpg" width="118" height="47"  alt=""/> </a></p>    
+          <p><a href="index.php" title="برگشت به صفحه قبل"><img src="../../files/goback.jpg" width="118" height="47"  alt=""/> </a></p>    
           </p></td>
   </tr>
   <tr>

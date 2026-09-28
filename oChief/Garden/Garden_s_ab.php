@@ -4,7 +4,7 @@
  * با نمایش لحظه‌ای موجودی (Real-time) و اعتبارسنجی کامل
  * سازگار با PHP 5.3.3
  * 
- * اصلاح: پشتیبانی کامل از اعداد اعشاری (ممیز)
+ * نسخه نهایی: پشتیبانی کامل از ۴ رقم اعشار + حفظ صفر انتهایی + حفظ مکان‌نما
  */
 
 include('../../lock_oce.php');
@@ -110,118 +110,40 @@ function copyOstanToCityBaghi($dbh, $id_ostan, $id_city, $z_sal) {
         .row { width: 100% }
         .row::after { content: ""; clear: both; display: table; }
         
-/* جدول نتایج مدرن و واکنش‌گرا */
-.agri-table {
-    width: 100%;
-    margin: 24px auto;
-    border-collapse: collapse;
-    font-family: Tahoma, Arial, sans-serif;
-    font-size: 14px;
-    background: #fff;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
-    border-radius: 12px;
-    overflow: hidden;
-}
-.agri-table th, .agri-table td {
-    padding: 8px 6px;
-    text-align: center;
-    border: 1px solid #e0e0e0;
-}
-.agri-table th:last-child, .agri-table td:last-child {
-    border-right: 1px solid #e0e0e0;
-}
-.agri-table th:first-child, .agri-table td:first-child {
-    border-left: 1px solid #e0e0e0;
-}
-.agri-table th {
-    background: #006699;
-    color: #fff;
-    font-weight: bold;
-    font-size: 15px;
-}
-.agri-table tr:nth-child(even) {
-    background: #f9f9f9;
-}
-.agri-table tr:nth-child(odd) {
-    background: #fff;
-}
-.agri-table tr:hover {
-    background: #e6f2ff;
-}        
-        .balance-info {
-            font-size: 9px;
-            padding: 2px 4px;
-            margin-top: 2px;
-            border-radius: 3px;
-            text-align: right;
-            line-height: 1.4;
-            direction: rtl;
-            max-width: 150px;
-            font-family: Tahoma;
-        }
+.agri-table { width:100%; margin:24px auto; border-collapse:collapse; font-family:Tahoma, Arial, sans-serif; font-size:14px; background:#fff; box-shadow:0 2px 8px rgba(0,0,0,0.07); border-radius:12px; overflow:hidden; }
+.agri-table th, .agri-table td { padding:8px 6px; text-align:center; border:1px solid #e0e0e0; }
+.agri-table th:last-child, .agri-table td:last-child { border-right:1px solid #e0e0e0; }
+.agri-table th:first-child, .agri-table td:first-child { border-left:1px solid #e0e0e0; }
+.agri-table th { background:#006699; color:#fff; font-weight:bold; font-size:15px; }
+.agri-table tr:nth-child(even) { background:#f9f9f9; }
+.agri-table tr:nth-child(odd) { background:#fff; }
+.agri-table tr:hover { background:#e6f2ff; }
+        .balance-info { font-size:9px; padding:2px 4px; margin-top:2px; border-radius:3px; text-align:right; line-height:1.4; direction:rtl; max-width:150px; font-family:Tahoma; }
         .balance-valid { background: #e8f5e9; color: #2e7d32; }
         .balance-warning { background: #fff3e0; color: #e65100; }
         .balance-error { background: #ffebee; color: #c62828; }
         
-        .input-field {
-            width: 60px;
-            height: 26px;
-            font-family: Tahoma;
-            font-size: 12px;
-            text-align: center;
-        }
-        .input-field:focus { border-color: #006699; box-shadow: 0 0 5px rgba(0,102,153,0.3); }
+        .input-field { width: 72px; height: 26px; font-family: Tahoma; font-size: 12px; text-align: center; border: 1px solid #ccc; border-radius: 3px; }
+        .input-field:focus { border-color: #006699; box-shadow: 0 0 5px rgba(0,102,153,0.3); outline: none; }
         .input-field.error { border-color: #c62828; background: #ffebee; }
         .input-field.success { border-color: #2e7d32; background: #e8f5e9; }
         
-        .submit-btn {
-            width: 36px;
-            height: 30px;
-            font-size: 12px;
-            color: #900;
-            font-family: tahoma;
-            text-align: center;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            cursor: pointer;
-            background: #fff;
-        }
+        .submit-btn { width: 36px; height: 30px; font-size: 12px; color: #900; font-family: tahoma; text-align: center; border: 1px solid #ccc; border-radius: 4px; cursor: pointer; background: #fff; }
         .submit-btn:hover:not(:disabled) { background: #006699; color: #fff; }
         .submit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
         
         .pagination-container { text-align: center; margin: 20px auto; }
-        .pagination {
-            display: flex;
-            list-style: none;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 5px;
-            padding: 0;
-        }
-        .pagination .page-btn {
-            padding: 6px 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            background: #f8f8f8;
-            color: #999;
-            cursor: pointer;
-        }
+        .pagination { display: flex; list-style: none; justify-content: center; flex-wrap: wrap; gap: 5px; padding: 0; }
+        .pagination .page-btn { padding: 6px 10px; border: 1px solid #ccc; border-radius: 4px; background: #f8f8f8; color: #999; cursor: pointer; }
         .pagination .page-btn:hover { background: #e0e0e0; }
         .pagination .page-btn.active { background: #4CAF50; color: white; border-color: #4CAF50; }
-        .pagination .nav-btn {
-            background: #4CAF50;
-            color: white;
-            padding: 8px 12px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
+        .pagination .nav-btn { background: #4CAF50; color: white; padding: 8px 12px; border: none; border-radius: 4px; cursor: pointer; }
         .pagination .nav-btn:hover { background: #388E3C; }
         
         @media (max-width: 900px) {
             .agri-table { font-size: 11px; }
             .agri-table th, .agri-table td { padding: 5px 2px; }
-            .input-field { width: 45px; height: 22px; font-size: 10px; }
+            .input-field { width: 58px; height: 22px; font-size: 10px; }
             .balance-info { font-size: 8px; max-width: 100px; }
         }
     </style>
@@ -239,7 +161,6 @@ function copyOstanToCityBaghi($dbh, $id_ostan, $id_city, $z_sal) {
                             <?php include('top.php'); ?>
                             <span class="style8">برنامه الگوی کشت ابلاغی محصولات باغی</span><br />
                             
-                            <!-- فرم جستجو -->
                             <form id="reg-form" method="post" action="#1">
                                 <div style="width: 350px; padding: 5px; border: 2px solid #09C; margin: auto; border-radius: 15px">
                                     <table width="100%" height="284" border="0" align="center" cellpadding="0" cellspacing="0">
@@ -314,7 +235,6 @@ function copyOstanToCityBaghi($dbh, $id_ostan, $id_city, $z_sal) {
                                     if ($t_row > 0) {
                             ?>
                             
-                            <!-- دکمه خروجی اکسل -->
                             <table width="122" height="56" border="0" align="center">
                                 <tr>
                                     <td>
@@ -328,7 +248,6 @@ function copyOstanToCityBaghi($dbh, $id_ostan, $id_city, $z_sal) {
                                 </tr>
                             </table>
                             
-                            <!-- جدول اصلی -->
                             <table class="agri-table" id="main-table">
                                 <thead>
                                     <tr class="text1">
@@ -375,29 +294,29 @@ function copyOstanToCityBaghi($dbh, $id_ostan, $id_city, $z_sal) {
                                         <td><input name="a_abi" type="text" class="style8" id="a_abi<?php echo $r; ?>" style="width:55px; height:26px;" readonly /></td>
                                         
                                         <td>
-                                            <input name="t_dem" type="text" class="input-field t_dem<?php echo $r; ?> required number" id="t_dem<?php echo $r; ?>" tabindex="<?php echo ($r * 10 + 6); ?>" value="<?php echo htmlspecialchars($row['t_dem'] * 1); ?>" maxlength="8" />
+                                            <input name="t_dem" type="text" class="input-field t_dem<?php echo $r; ?> required number" id="t_dem<?php echo $r; ?>" tabindex="<?php echo ($r * 10 + 6); ?>" value="<?php echo htmlspecialchars($row['t_dem'] * 1); ?>" maxlength="12" />
                                             <div class="balance-info" id="info_t_dem_<?php echo $r; ?>"></div>
                                         </td>
                                         <td>
-                                            <input name="t_abi" type="text" class="input-field t_abi<?php echo $r; ?> required number" id="t_abi<?php echo $r; ?>" tabindex="<?php echo ($r * 10 + 5); ?>" value="<?php echo htmlspecialchars($row['t_abi'] * 1); ?>" maxlength="8" />
+                                            <input name="t_abi" type="text" class="input-field t_abi<?php echo $r; ?> required number" id="t_abi<?php echo $r; ?>" tabindex="<?php echo ($r * 10 + 5); ?>" value="<?php echo htmlspecialchars($row['t_abi'] * 1); ?>" maxlength="12" />
                                             <div class="balance-info" id="info_t_abi_<?php echo $r; ?>"></div>
                                         </td>
                                         
                                         <td>
-                                            <input name="s_bar_dem" type="text" class="input-field s_bar_dem<?php echo $r; ?> required digits" id="s_bar_dem<?php echo $r; ?>" tabindex="<?php echo ($r * 10 + 4); ?>" value="<?php echo htmlspecialchars($row['s_bar_dem'] * 1); ?>" maxlength="8" />
+                                            <input name="s_bar_dem" type="text" class="input-field s_bar_dem<?php echo $r; ?> required digits" id="s_bar_dem<?php echo $r; ?>" tabindex="<?php echo ($r * 10 + 4); ?>" value="<?php echo htmlspecialchars($row['s_bar_dem'] * 1); ?>" maxlength="12" />
                                             <div class="balance-info" id="info_s_bar_dem_<?php echo $r; ?>"></div>
                                         </td>
                                         <td>
-                                            <input name="s_bar_abi" type="text" class="input-field s_bar_abi<?php echo $r; ?> required digits" id="s_bar_abi<?php echo $r; ?>" tabindex="<?php echo ($r * 10 + 3); ?>" value="<?php echo htmlspecialchars($row['s_bar_abi'] * 1); ?>" maxlength="8" />
+                                            <input name="s_bar_abi" type="text" class="input-field s_bar_abi<?php echo $r; ?> required digits" id="s_bar_abi<?php echo $r; ?>" tabindex="<?php echo ($r * 10 + 3); ?>" value="<?php echo htmlspecialchars($row['s_bar_abi'] * 1); ?>" maxlength="12" />
                                             <div class="balance-info" id="info_s_bar_abi_<?php echo $r; ?>"></div>
                                         </td>
                                         
                                         <td>
-                                            <input name="s_nobar_dem" type="text" class="input-field s_nobar_dem<?php echo $r; ?> required digits" id="s_nobar_dem<?php echo $r; ?>" tabindex="<?php echo ($r * 10 + 2); ?>" value="<?php echo htmlspecialchars($row['s_nobar_dem'] * 1); ?>" maxlength="8" />
+                                            <input name="s_nobar_dem" type="text" class="input-field s_nobar_dem<?php echo $r; ?> required digits" id="s_nobar_dem<?php echo $r; ?>" tabindex="<?php echo ($r * 10 + 2); ?>" value="<?php echo htmlspecialchars($row['s_nobar_dem'] * 1); ?>" maxlength="12" />
                                             <div class="balance-info" id="info_s_nobar_dem_<?php echo $r; ?>"></div>
                                         </td>
                                         <td>
-                                            <input name="s_nobar_abi" type="text" class="input-field s_nobar_abi<?php echo $r; ?> required digits" id="s_nobar_abi<?php echo $r; ?>" tabindex="<?php echo ($r * 10 + 1); ?>" value="<?php echo htmlspecialchars($row['s_nobar_abi'] * 1); ?>" maxlength="8" />
+                                            <input name="s_nobar_abi" type="text" class="input-field s_nobar_abi<?php echo $r; ?> required digits" id="s_nobar_abi<?php echo $r; ?>" tabindex="<?php echo ($r * 10 + 1); ?>" value="<?php echo htmlspecialchars($row['s_nobar_abi'] * 1); ?>" maxlength="12" />
                                             <div class="balance-info" id="info_s_nobar_abi_<?php echo $r; ?>"></div>
                                         </td>
                                         
@@ -551,7 +470,6 @@ function copyOstanToCityBaghi($dbh, $id_ostan, $id_city, $z_sal) {
         </tr>
     </table>
     
-    <!-- جاوااسکریپت‌های کامل - پشتیبانی کامل از اعداد اعشاری -->
     <script>
     // ============================================================
     // توابع کمکی - نسخه نهایی
@@ -703,13 +621,14 @@ function copyOstanToCityBaghi($dbh, $id_ostan, $id_city, $z_sal) {
     }
 
     // ============================================================
-    // مدیریت رویدادها - پشتیبانی کامل از ممیز
+    // مدیریت رویدادها - نسخه نهایی
+    //   ★ حفظ مکان‌نما + ۴ رقم اعشار + حفظ صفر انتهایی + حفظ ممیز انتهایی ★
     // ============================================================
     function attachFieldEvents(row) {
         ['s_bar_abi', 's_bar_dem', 's_nobar_abi', 's_nobar_dem', 't_abi', 't_dem'].forEach(function(field) {
             var input = $('#' + field + row);
 
-            // رویداد تغییر (برای اعتبارسنجی)
+            // ---- change (اعتبارسنجی) ----
             input.on('change', function() {
                 var value = $(this).val();
                 var cleanValue = unformatNumber(value);
@@ -724,17 +643,24 @@ function copyOstanToCityBaghi($dbh, $id_ostan, $id_city, $z_sal) {
                 calcRow(row);
             });
 
-            // رویداد تایپ (برای فرمت کردن اعداد) - نسخه نهایی با پشتیبانی کامل از ممیز
+            // ---- input: فرمت زنده با حفظ مکان‌نما و صفر انتهایی ----
             var timer;
             input.on('input', function() {
                 clearTimeout(timer);
 
-                var rawValue = $(this).val();
+                var el = this;
+                var oldValue = el.value;
+                var oldCaret = el.selectionStart;
 
-                // حذف جداکننده‌ها
-                var cleanValue = rawValue.replace(/٬/g, '').replace(/,/g, '');
-                // فقط اعداد و یک نقطه مجاز است
-                var numericValue = cleanValue.replace(/[^\d.]/g, '');
+                // تعداد کاراکترهای معنادار (رقم یا نقطه) قبل از مکان‌نما
+                var meaningfulBefore = 0;
+                for (var i = 0; i < oldCaret && i < oldValue.length; i++) {
+                    var ch = oldValue.charAt(i);
+                    if ((ch >= '0' && ch <= '9') || ch === '.') meaningfulBefore++;
+                }
+
+                // حذف جداکننده‌ها + فقط رقم و نقطه
+                var numericValue = oldValue.replace(/[٬,]/g, '').replace(/[^\d.]/g, '');
 
                 // جلوگیری از چند نقطه
                 var parts = numericValue.split('.');
@@ -742,20 +668,40 @@ function copyOstanToCityBaghi($dbh, $id_ostan, $id_city, $z_sal) {
                     numericValue = parts[0] + '.' + parts.slice(1).join('');
                 }
 
-                // بررسی اینکه آیا نقطه در انتها است (کاربر در حال تایپ اعشار است)
-                var hasTrailingDot = (numericValue.indexOf('.') === numericValue.length - 1 && numericValue.length > 0);
-
-                if (numericValue !== '') {
-                    // اگر نقطه در انتها است، فرمت نکن (فعلاً)
-                    if (hasTrailingDot) {
-                        $(this).val(numericValue);
-                    } else {
-                        var formatted = formatNumberWithSeparator(numericValue);
-                        $(this).val(formatted);
-                    }
-                } else {
-                    $(this).val('');
+                // ★ محدودیت ۴ رقم اعشار ★
+                parts = numericValue.split('.');
+                if (parts.length === 2 && parts[1].length > 4) {
+                    numericValue = parts[0] + '.' + parts[1].substring(0, 4);
                 }
+
+                // ★ ساخت فرمت نهایی: فقط قسمت صحیح جداکننده می‌گیرد،
+                //   قسمت اعشاری عیناً حفظ می‌شود (حتی صفر انتهایی) ★
+                var formatted;
+                if (numericValue === '') {
+                    formatted = '';
+                } else {
+                    parts = numericValue.split('.');
+                    var intPart = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, '٬');
+                    if (parts.length === 2) {
+                        formatted = intPart + '.' + parts[1];
+                    } else {
+                        formatted = intPart;
+                    }
+                }
+
+                el.value = formatted;
+
+                // ★ بازگرداندن مکان‌نما بر اساس کاراکترهای معنادار ★
+                var count = 0;
+                var newCaret = formatted.length;
+                for (var j = 0; j < formatted.length; j++) {
+                    var c = formatted.charAt(j);
+                    if ((c >= '0' && c <= '9') || c === '.') {
+                        count++;
+                        if (count >= meaningfulBefore) { newCaret = j + 1; break; }
+                    }
+                }
+                try { el.setSelectionRange(newCaret, newCaret); } catch (e) {}
 
                 // اعتبارسنجی با تاخیر
                 timer = setTimeout(function() {
@@ -773,12 +719,12 @@ function copyOstanToCityBaghi($dbh, $id_ostan, $id_city, $z_sal) {
                 }, 400);
             });
 
-            // رویداد فوکوس (برای انتخاب کامل متن)
+            // ---- focus: انتخاب کامل ----
             input.on('focus', function() {
                 $(this).select();
             });
 
-            // وقتی سطح بارور به صفر می‌رسد، تولید مربوطه را پاک کن
+            // ---- پاک کردن تولید وقتی سطح بارور صفر می‌شود ----
             if (field === 's_bar_abi') {
                 input.on('change', function() {
                     var val = parseFloat(unformatNumber($(this).val()));
@@ -828,7 +774,6 @@ function copyOstanToCityBaghi($dbh, $id_ostan, $id_city, $z_sal) {
             var isValid = true;
             var errorMessages = [];
 
-            // 1. اگر سطح بارور وجود دارد، تولید باید بزرگتر از 0 باشد
             if (parseFloat(s_bar_abi) > 0 && parseFloat(t_abi) <= 0) {
                 isValid = false;
                 errorMessages.push('برای سطح بارور آبی، تولید باید بزرگتر از 0 باشد');
@@ -838,7 +783,6 @@ function copyOstanToCityBaghi($dbh, $id_ostan, $id_city, $z_sal) {
                 errorMessages.push('برای سطح بارور دیم، تولید باید بزرگتر از 0 باشد');
             }
 
-            // 2. بررسی حداقل یکی از سطوح - فقط برای رکوردهای جدید (id=0)
             if (id == 0) {
                 var hasSurface = (
                     parseFloat(s_bar_abi) > 0 || 
@@ -890,7 +834,7 @@ function copyOstanToCityBaghi($dbh, $id_ostan, $id_city, $z_sal) {
     }
 
     // ============================================================
-    // مقداردهی اولیه و به‌روزرسانی خودکار
+    // مقداردهی اولیه
     // ============================================================
     $(document).ready(function() {
         var row = 1;
@@ -909,27 +853,56 @@ function copyOstanToCityBaghi($dbh, $id_ostan, $id_city, $z_sal) {
         setInterval(function() { validationCache = {}; }, 300000);
     });
 
-    function refreshAllBalances() {
+    // ============================================================
+    // به‌روزرسانی خودکار - نسخه صف‌بندی‌شده
+    // ============================================================
+    var refreshQueue = [];
+    var refreshBusy = false;
+    var refreshTimer = null;
+    var REFRESH_INTERVAL = 30000;
+    var REFRESH_BATCH_GAP = 200;
+    var FIELDS = ['s_bar_abi', 's_bar_dem', 's_nobar_abi', 's_nobar_dem', 't_abi', 't_dem'];
+
+    function buildRefreshQueue() {
+        refreshQueue = [];
         var row = 1;
         while ($('#s_bar_abi' + row).length > 0) {
-            ['s_bar_abi', 's_bar_dem', 's_nobar_abi', 's_nobar_dem', 't_abi', 't_dem'].forEach(function(field) {
+            for (var i = 0; i < FIELDS.length; i++) {
+                var field = FIELDS[i];
                 var value = unformatNumber($('#' + field + row).val());
                 if (parseFloat(value) > 0) {
-                    var cacheKey = row + '_' + field + '_' + value;
-                    delete validationCache[cacheKey];
-                    validateField(row, field, value);
+                    refreshQueue.push({ row: row, field: field, value: value });
                 }
-            });
+            }
             row++;
         }
     }
 
-    var autoRefreshInterval;
+    function processRefreshQueue() {
+        if (refreshQueue.length === 0) { refreshBusy = false; return; }
+        refreshBusy = true;
+        var item = refreshQueue.shift();
+        var cacheKey = item.row + '_' + item.field + '_' + item.value;
+        delete validationCache[cacheKey];
+        validateField(item.row, item.field, item.value);
+        setTimeout(processRefreshQueue, REFRESH_BATCH_GAP);
+    }
+
+    function tickRefresh() {
+        if (refreshBusy) return;
+        buildRefreshQueue();
+        processRefreshQueue();
+    }
+
+    function startRefreshTimer() {
+        if (refreshTimer) clearInterval(refreshTimer);
+        refreshTimer = setInterval(tickRefresh, REFRESH_INTERVAL);
+    }
+
+    startRefreshTimer();
     $(document).on('mousemove keydown', function() {
-        clearInterval(autoRefreshInterval);
-        autoRefreshInterval = setInterval(refreshAllBalances, 30000);
+        startRefreshTimer();
     });
-    autoRefreshInterval = setInterval(refreshAllBalances, 30000);
     </script>
 </body>
 </html>

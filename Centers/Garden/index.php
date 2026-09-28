@@ -267,10 +267,10 @@
 
             <div class="cards-container">
                 <div class="card">
-                    <a href="Pattern" title="لگوی کشت ابلاغی">
-                        <img src="../../files/add_new.png" alt="الگوی کشت ابلاغی" class="card-icon">
+                    <a href="Sab_L3" title="مشاهده برش مرکز جهاد کشاورزی ">
+                        <img src="../../files/region.png" alt="مشاهده برش مرکز جهاد کشاورزی " class="card-icon">
                     </a>
-                    <a href="Pattern" class="btn">الگوی کشت ابلاغی</a>
+                    <a href="Sab_L3" class="btn">مشاهده برش مرکز جهاد کشاورزی </a>
                 </div>
 
                 <div class="card">

@@ -1,9 +1,16 @@
 <?php 
-header("Content-type: application/vnd.ms-excel;charset=UTF-8");
-header("Content-Disposition: attachment;Filename=محصولات_قارچ.xls");
 include("../../lock_oce.php");
 include("../../event.php");
-include('../../login/config.php') ;
+include_once('../../login/config.php') ;
+
+$allowed_sal = array('1404', '1403', '1402');
+$y_prod = isset($_GET['y_prod']) ? trim($_GET['y_prod']) : (isset($_POST['y_prod']) ? trim($_POST['y_prod']) : '1405');
+if (!in_array($y_prod, $allowed_sal, true)) {
+	$y_prod = '1404';
+}
+
+header("Content-type: application/vnd.ms-excel;charset=UTF-8");
+header("Content-Disposition: attachment;Filename=محصولات_قارچ " . $y_prod . ".xls");
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US" xml:lang="en">
@@ -39,10 +46,10 @@ FROM Mushroom_prod
 INNER JOIN ostanname ON ostanname.id_ostan = Mushroom_prod.id_ostan
 INNER JOIN cityname ON cityname.id_ostan = Mushroom_prod.id_ostan
 AND cityname.id_city = Mushroom_prod.id_city
-WHERE Mushroom_prod.y_prod = '1400'
-GROUP BY Mushroom_prod.id_ostan , Mushroom_prod.id_city , Mushroom_prod.no_mush "  ;
+WHERE Mushroom_prod.y_prod = :y_prod 
+GROUP BY  Mushroom_prod.id_city , Mushroom_prod.no_mush "  ;
 $stmt = $dbh->prepare($query);
-$stmt->execute(); 
+$stmt->execute(array(':y_prod' => $y_prod)); 
 $r = 1 ;
  foreach($stmt as $row){
 if ($row['no_mush']=='1')  $v_no_mush='قارچ صدفی';

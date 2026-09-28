@@ -973,6 +973,15 @@ $add_city = isset($_POST['add_city']) ? garden_clean_code($_POST['add_city']) : 
 $sh_gat = isset($_POST['sh_gat']) ? $_POST['sh_gat'] : '';
 $no_kesh = isset($_POST['no_kesh']) ? $_POST['no_kesh'] : '';
 $nah_kesh = isset($_POST['nah_kesh']) ? $_POST['nah_kesh'] : '';
+$stored_nah_kesh = '';
+if ($id !== '') {
+    $stmt_stored_nah = $dbh->prepare('SELECT nah_kesh FROM Garden WHERE id = :id');
+    $stmt_stored_nah->execute(array(':id' => $id));
+    $row_stored_nah = $stmt_stored_nah->fetch(PDO::FETCH_ASSOC);
+    if ($row_stored_nah && isset($row_stored_nah['nah_kesh'])) {
+        $stored_nah_kesh = (string)$row_stored_nah['nah_kesh'];
+    }
+}
 $t_mah = isset($_POST['t_mah']) ? $_POST['t_mah'] : '';
 $check_cod = isset($_POST['check_cod']) ? $_POST['check_cod'] : 0;
 
@@ -1056,6 +1065,17 @@ if ($is_save) {
         $z_sal = isset($_POST['z_sal']) ? $_POST['z_sal'] : '';
         $page_id = isset($_POST['id_page']) ? $_POST['id_page'] : $id_page;
 
+        $query_current = "SELECT m_zamin, no_kesh, nah_kesh FROM Garden WHERE id = :id";
+        $stmt_current = $dbh->prepare($query_current);
+        $stmt_current->execute(array(':id' => $id));
+        $current = $stmt_current->fetch(PDO::FETCH_ASSOC);
+        if (!$current) {
+            throw new Exception('اطلاعات باغ یافت نشد.');
+        }
+        if ($nah_kesh == '3' && $current['nah_kesh'] != '3') {
+            throw new Exception('انتخاب درختان پراکنده مجاز نیست.');
+        }
+
         if ($no_mal != '7') $m_cod_m = $bah_cod_m;
 
         if ($no_kesh == '2') {
@@ -1088,14 +1108,6 @@ if ($is_save) {
             $no_sab = '';
             $no_ab = '';
             $es = '';
-        }
-
-        $query_current = "SELECT m_zamin, no_kesh, nah_kesh FROM Garden WHERE id = :id";
-        $stmt_current = $dbh->prepare($query_current);
-        $stmt_current->execute(array(':id' => $id));
-        $current = $stmt_current->fetch(PDO::FETCH_ASSOC);
-        if (!$current) {
-            throw new Exception('اطلاعات باغ یافت نشد.');
         }
 
         if ($current['nah_kesh'] == '3' && $nah_kesh != '3') {
@@ -1244,6 +1256,19 @@ if ($is_continue) {
     if ($nah_kesh == '') {
         $mess .= 'نحوه کاشت را انتخاب کنید';
         $field_errors['nah_kesh'] = 'نحوه کاشت را انتخاب کنید';
+    } elseif ($nah_kesh != '1' && $nah_kesh != '2') {
+        $allow_scatter = false;
+        if ($nah_kesh == '3' && $id != '') {
+            $stmt_nk = $dbh->prepare("SELECT nah_kesh FROM Garden WHERE id = :id");
+            $stmt_nk->execute(array(':id' => $id));
+            $row_nk = $stmt_nk->fetch(PDO::FETCH_ASSOC);
+            $allow_scatter = ($row_nk && $row_nk['nah_kesh'] == '3');
+        }
+        if (!$allow_scatter) {
+            $mess .= 'نحوه کاشت نامعتبر است';
+            $field_errors['nah_kesh'] = 'نحوه کاشت نامعتبر است';
+            $nah_kesh = '';
+        }
     }
     if ($nah_kesh == '3') {
         $no_kesh = '-';
@@ -2089,16 +2114,17 @@ $hide_kesh_mal = ($nah_kesh == '3');
                         </svg>
                         نحوه کاشت
                     </legend>
-                    <label class="agri1-label" for="nah_kesh">ساده، مخلوط یا درختان پراکنده</label>
+                    <label class="agri1-label" for="nah_kesh">ساده یا مخلوط</label>
                     <select name="nah_kesh" id="nah_kesh" dir="rtl"
                             aria-invalid="<?php echo $err_nah ? 'true' : 'false'; ?>"
-                            aria-describedby="hint-nah_kesh<?php echo $err_nah ? ' error-nah_kesh' : ''; ?>">
+                            aria-describedby="<?php echo $err_nah ? 'error-nah_kesh' : ''; ?>">
                         <option value="">انتخاب کنید</option>
                         <option value="1" <?php if ($nah_kesh == '1') echo 'selected="selected"'; ?>>ساده</option>
                         <option value="2" <?php if ($nah_kesh == '2') echo 'selected="selected"'; ?>>مخلوط</option>
-                        <option value="3" <?php if ($nah_kesh == '3') echo 'selected="selected"'; ?>>درختان پراکنده</option>
+                        <?php if ($nah_kesh == '3') { ?>
+                        <option value="3" selected="selected">درختان پراکنده</option>
+                        <?php } ?>
                     </select>
-                    <p class="agri1-hint" id="hint-nah_kesh">با انتخاب درختان پراکنده، نوع کشت و مالکیت لازم نیست.</p>
                     <?php if ($err_nah) { ?>
                         <p class="agri1-error" id="error-nah_kesh"><?php echo garden_h($field_errors['nah_kesh']); ?></p>
                     <?php } ?>

@@ -1,7 +1,7 @@
 <?php 
 header("Content-type: application/vnd.ms-excel;charset=UTF-8");
 header("Content-Disposition: attachment;Filename=االگوی_کشت_ابلاغی.xls");
-include('../../lock_ce.php');
+include('../../lock_oce.php');
 include('../../event.php');
  $id_ostan = isset($_POST['id_ostan']) ? $_POST['id_ostan'] : '';
  $id_city = isset($_POST['id_city']) ? $_POST['id_city'] : '';

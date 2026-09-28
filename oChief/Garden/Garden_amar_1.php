@@ -103,6 +103,7 @@ $(".mar<?php echo $num_t_mah ;?>").html(html);
       <tr bgcolor='#f1f1f1' >
         <td height="46" colspan="3" align="right" bgcolor="#DDDDDD" class="input_text" ><div align="right">
           <select name="z_sal" class="input_text  required" id="z_sal" style="height:40px ; width:170px ; direction:rtl">
+                     <option value="1404"<?php  if ($z_sal=='1404') echo 'selected=selected'?>>1404</option>
                      <option value="1403"<?php  if ($z_sal=='1403') echo 'selected=selected'?>>1403</option>
                      <option value="1402"<?php  if ($z_sal=='1402') echo 'selected=selected'?>>1402</option>
                      <option value="1401"<?php  if ($z_sal=='1401') echo 'selected=selected'?>>1401</option>

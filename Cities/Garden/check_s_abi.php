@@ -1,129 +1,155 @@
 <?php
-header('Content-Type: application/json');
-include('../../login/config.php'); // فرض بر این است که فایل config شامل اتصال PDO به $dbh است
+header('Content-Type: application/json; charset=utf-8');
 
+include('../../lock_p3.php');   // برای دسترسی به $dbh
+
+// ============================================================
+// تبدیل ارقام و ممیز فارسی/عربی به لاتین
+// ============================================================
 function clean_number($value) {
-    // حذف جداکننده‌های هزارگان فارسی و کاما
-    return str_replace(array('٬', ',', '،'), '', $value);
+    if ($value === null) return '0';
+    $value = str_replace(
+        array('۰','۱','۲','۳','۴','۵','۶','۷','۸','۹','٠','١','٢','٣','٤','٥','٦','٧','٨','٩','٫','،'),
+        array('0','1','2','3','4','5','6','7','8','9','0','1','2','3','4','5','6','7','8','9','.','.'),
+        (string)$value
+    );
+    return str_replace(array('٬', ',', ' '), '', $value);
 }
 
-// لیست فیلدهای مجاز
-// استفاده از array() برای سازگاری با PHP 5.3
+// پاسخ JSON استاندارد
+function json_response($valid, $message, $data = array()) {
+    echo json_encode(array(
+        'valid'   => (bool)$valid,
+        'message' => (string)$message,
+        'data'    => $data,
+    ));
+    exit;
+}
+
+// ============================================================
+// فیلدهای مجاز
+// ============================================================
 $fields = array(
-    's_bar_abi' => array('column' => 's_bar_abi'),
-    's_bar_dem' => array('column' => 's_bar_dem'),
-    't_abi' => array('column' => 't_abi'),
-    't_dem' => array('column' => 't_dem'),
-    's_nobar_abi' => array('column' => 's_nobar_abi'),
-    's_nobar_dem' => array('column' => 's_nobar_dem')
+    's_bar_abi'   => 's_bar_abi',
+    's_bar_dem'   => 's_bar_dem',
+    't_abi'       => 't_abi',
+    't_dem'       => 't_dem',
+    's_nobar_abi' => 's_nobar_abi',
+    's_nobar_dem' => 's_nobar_dem',
 );
 
-// تشخیص کدام فیلد ارسال شده
+// ============================================================
+// اعتبارسنجی ورودی‌ها
+// ============================================================
 $field = null;
-foreach ($fields as $key => $info) {
-    if (isset($_POST[$key])) {
+foreach ($fields as $key => $col) {
+    if (isset($_POST[$key]) && $_POST[$key] !== '') {
         $field = $key;
         break;
     }
 }
 
-if (!$field || !isset($_POST['z_sal'], $_POST['id_ostan'], $_POST['product_cod'], $_POST['id_city'], $_POST['id_mar'])) {
-    echo json_encode(array(
-        'valid' => false,
-        'message' => 'اطلاعات ناقص ارسال شده است.',
-    ));
-    exit;
+if (!$field) {
+    json_response(false, 'فیلد ارسالی نامعتبر است.');
 }
 
-// دریافت و پاکسازی ورودی‌ها
-$user_value  = floatval(clean_number($_POST[$field]));
-$z_sal       = $_POST['z_sal'];
-$id_ostan    = $_POST['id_ostan'];
-$id_city     = $_POST['id_city'];
-$id_     = $_POST['id_city'];
-$product_cod = $_POST['product_cod'];
+$required = array('z_sal', 'id_ostan', 'id_city', 'id_mar', 'product_cod');
+foreach ($required as $r) {
+    if (!isset($_POST[$r]) || $_POST[$r] === '') {
+        json_response(false, 'اطلاعات ناقص ارسال شده است. (' . $r . ')');
+    }
+}
 
-// تنظیم نام جداول
-$ostan_table = 'Garden_ab_ostan';
-$city_table = 'Garden_ab_city';
-$mar_table = 'Garden_ab_mar';
+// تبدیل و پاکسازی
+$user_value  = floatval(clean_number($_POST[$field]));
+$z_sal       = trim($_POST['z_sal']);
+$id_ostan    = intval($_POST['id_ostan']);
+$id_city     = intval($_POST['id_city']);
+$id_mar      = intval($_POST['id_mar']);
+$product_cod = trim($_POST['product_cod']);
+
+if ($user_value < 0) {
+    json_response(false, 'مقدار وارد شده نمی‌تواند منفی باشد.');
+}
+
+if ($id_ostan <= 0 || $id_city <= 0 || $id_mar <= 0 || $product_cod === '') {
+    json_response(false, 'شناسه‌های ارسالی نامعتبر هستند.');
+}
+
+$column      = $fields[$field];
+$city_table  = 'Garden_ab_city';
+$mar_table   = 'Garden_ab_mar';
 
 try {
-    // مرحله 1: دریافت مقدار برش شهرستانی (سقف)
-    $query1 = "SELECT {$fields[$field]['column']} FROM {$city_table} WHERE z_sal = ? AND id_ostan = ? AND id_city = ? AND product_cod = ?";
-    $stmt1 = $dbh->prepare($query1);
-    $stmt1->execute(array($z_sal, $id_ostan, $id_city,$product_cod));
-    $city_value = $stmt1->fetchColumn(); // این همان سقف شهرستانی است که باید رعایت شود
-    
-    // در صورت نبود مقدار ابلاغی شهرستان
-    if ($city_value === false) {
-        echo json_encode(array(
-            'valid' => false,
-            'message' => 'برش این محصول برای شهرستان ثبت نشده است.!'
-        ));
-        exit;
-    }
-    $mar_value = floatval($mar_value);
+    // ============================================================
+    // مرحله 1: سقف شهرستان (برش ابلاغی شهرستان برای این محصول)
+    // ============================================================
+    $stmt1 = $dbh->prepare("SELECT {$column} FROM {$city_table} 
+                            WHERE z_sal = ? AND id_ostan = ? AND id_city = ? AND product_cod = ?");
+    $stmt1->execute(array($z_sal, $id_ostan, $id_city, $product_cod));
+    $city_value = $stmt1->fetchColumn();
 
-    // مرحله 2: مجموع مقدار فعلی در جدول برش مراکز
-    // sum_mar_value: مجموع مقادیر ثبت شده تمام شهرستان‌ها (شامل خود این شهرستان)
-    // rec_mar_value: مجموع مقادیر ثبت شده این شهرستان (که قرار است با مقدار جدید جایگزین شود)
-    $query2 = "
+    if ($city_value === false) {
+        json_response(false, 'برش این محصول برای شهرستان ثبت نشده است!');
+    }
+    $city_value = floatval($city_value);
+
+    // ============================================================
+    // مرحله 2: مجموع مقادیر فعلی مراکز این شهرستان
+    //   sum_all: مجموع کل مراکز (شامل خود این مرکز)
+    //   rec_val: مقدار فعلی همین مرکز
+    // ============================================================
+    $stmt2 = $dbh->prepare("
         SELECT 
-            SUM({$fields[$field]['column']}) AS sum_all_city_value,
-            SUM(CASE WHEN id_mar = ? THEN {$fields[$field]['column']} ELSE 0 END) AS rec_city_value
-        FROM {$mar_table} 
-        WHERE z_sal = ? AND id_ostan = ? AND id_city =? AND product_cod = ?";
-    $stmt2 = $dbh->prepare($query2);
-    $stmt2->execute(array($id_mar, $z_sal, $id_ostan, $id_city,$product_cod));
+            COALESCE(SUM({$column}), 0) AS sum_all,
+            COALESCE(SUM(CASE WHEN id_mar = ? THEN {$column} ELSE 0 END), 0) AS rec_val
+        FROM {$mar_table}
+        WHERE z_sal = ? AND id_ostan = ? AND id_city = ? AND product_cod = ?");
+    $stmt2->execute(array($id_mar, $z_sal, $id_ostan, $id_city, $product_cod));
     $row = $stmt2->fetch(PDO::FETCH_ASSOC);
 
-    $sum_all_city_value = isset($row['sum_all_city_value']) ? floatval($row['sum_all_city_value']) : 0;
-    $rec_city_value = isset($row['rec_city_value']) ? floatval($row['rec_city_value']) : 0;
+    $sum_all = floatval($row['sum_all']);
+    $rec_val = floatval($row['rec_val']);
 
-    // کنترل سقف مراکز در صورت کاهش مقدار شهرستان
-    if ($user_value < $rec_city_value) {
-        $query3 = "SELECT SUM({$fields[$field]['column']}) FROM {$mar_table} WHERE z_sal = ? AND id_ostan = ? AND id_city = ? AND product_cod = ?";
-        $stmt3 = $dbh->prepare($query3);
-        $stmt3->execute(array($z_sal, $id_ostan, $id_city, $product_cod));
-        $sum_centers_value = $stmt3->fetchColumn();
-        
-        if ($sum_centers_value !== false && $user_value < floatval($sum_centers_value)) {
-            echo json_encode(array(
-                'valid' => false,
-                'message' => 'مجموع مقادیر فعلی مراکز شهرستان بیشتر از این مقدار هست، برای ادامه ابتدا باید مدیر شهرستان برش مراکز را تصحیح کنند!',
-                'stage1_value' => $city_value,
-            ));
-            exit;
-        }
+    // مجموع سایر مراکز (بدون این مرکز)
+    $other_cities_sum = $sum_all - $rec_val;
+    if ($other_cities_sum < 0) $other_cities_sum = 0;
+
+    // حداکثر مقداری که این مرکز می‌تواند داشته باشد
+    $max_allowed = $city_value - $other_cities_sum;
+    if ($max_allowed < 0) $max_allowed = 0;
+
+    // مجموع جدید بعد از اعمال مقدار کاربر
+    $new_total = $other_cities_sum + $user_value;
+    $new_remaining = $city_value - $new_total;
+
+    // ============================================================
+    // بررسی نهایی
+    // ============================================================
+    if ($new_total > $city_value + 0.0001) {  // تحمل خطای اعشاری کوچک
+        json_response(false, 
+            'مجموع مقادیر وارد شده بیش از میزان برش شهرستان می‌باشد!',
+            array(
+                'city_limit'       => $city_value,
+                'total_current'    => $sum_all,
+                'other_cities_sum' => $other_cities_sum,
+                'max_allowed'      => $max_allowed,
+                'new_remaining'    => $new_remaining,
+                'expert_value'     => 0,
+            )
+        );
     }
 
-    // بررسی نهایی: کنترل سقف استان
-    // مجموع فعلی تمام شهرستان‌ها (منهای مقدار فعلی این شهرستان) + مقدار جدید ردیف کاربر
-    $total = $sum_all_city_value + $user_value - $rec_city_value;
-
-    if ($city_value < $total) {
-        echo json_encode(array(
-            'valid' => false,
-            'message' => 'مجموع مقادیر وارد شده بیش از میزان برش شهرستان می‌باشد.!',
-            'stage1_value' => $city_value, // سقف ابلاغی استان
-            'stage2_value' => $sum_all_city_value, // مجموع کل ثبت شده قبل از تغییر
-            'final_value' => $total, // مجموع بعد از اعمال تغییرات
-        ));
-        exit;
-    }
-    
-    echo json_encode(array(
-        'valid' => true,
-        'stage1_value' => $city_value,
-        'stage2_value' => $sum_all_city_value,
-        'final_value' => $total,
+    // موفق
+    json_response(true, 'مقدار مجاز است.', array(
+        'city_limit'       => $city_value,
+        'total_current'    => $sum_all,
+        'other_cities_sum' => $other_cities_sum,
+        'max_allowed'      => $max_allowed,
+        'new_remaining'    => $new_remaining,
+        'expert_value'     => 0,
     ));
 
 } catch (PDOException $e) {
-    echo json_encode(array(
-        'valid' => false,
-        'message' => 'خطای پایگاه‌داده: ' . $e->getMessage()
-    ));
+    json_response(false, 'خطای پایگاه‌داده: ' . $e->getMessage());
 }
-?>

@@ -426,7 +426,7 @@ if (isset($query1)) {
 <?php
 }
 ?>
-          <p><a href="Pattern.php" title="برگشت به صفحه قبل"><img src="../../files/goback.jpg" width="118" height="47"  alt=""/> </a></p>    
+          <p><a href="index.php" title="برگشت به صفحه قبل"><img src="../../files/goback.jpg" width="118" height="47"  alt=""/> </a></p>    
           </p></td>
   </tr>
   <tr>

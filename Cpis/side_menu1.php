@@ -210,13 +210,13 @@ $base = $httpProtocol.'://'.$_SERVER['HTTP_HOST'].'/Cpis/';
                 <li><a href="<?php echo $base; ?>Agri/Sab_L2">مشاهده برش شهرستانی </a></li>                    
                 <li><a href="<?php echo $base; ?>Agri/Sab_L3">مشاهده برش مراکز جهاد</a></li>                    
                 <li><a href="<?php echo $base; ?>Agri/Sab_L2_csv">دریافت فایل برش شهرستانی</a></li>                    
-<?php if($id_ostan == -1) {  ?>
+<?php if($id_ostan == '39') {  ?>
                 <li><a href="<?php echo $base; ?>Agri/Sab_L3_csv">دریافت فایل برش مراکز 1404</a></li>                    
                 <li><a href="<?php echo $base; ?>Agri/Sab_L3_csv_05">دریافت فایل برش مراکز 1405</a></li>                    
+<?php } ?>
 <?php if($login_session =='1380066174' or $login_session =='1282356747'){ ?>
                 <li><a href="<?php echo $base; ?>Agri/Agri_ab_request_admin">بررسی درخواست های رسیده</a></li>                    
                 <li><a href="<?php echo $base; ?>Agri/Agri_ab_import_check">بارگذاری الگوی کشت</a></li>                    
-<?php } ?>
 <?php }?>
             </ul>
         </li>
