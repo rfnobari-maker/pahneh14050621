@@ -756,8 +756,8 @@ input.m_tolp {
                 var $input = $(this);
                 var row = $input.closest('tr');
                 if (row.hasClass('new-row')) {
-                    var zka = parseFloat($input.val()) || 0;
-                    var zkb = parseFloat(row.find('.zk_2').val()) || 0;
+                    var zka = getNumericValue($input.val()) || 0;
+                    var zkb = getNumericValue(row.find('.zk_2').val()) || 0;
                     row.find('input[class*="mah_tolp"]').val('');
                     row.find('input[class*="mah_tol"]').val('');
                     row.find('input[class*="s_bar_a"]').val('');
@@ -770,8 +770,8 @@ input.m_tolp {
                     updateAllBalancesAndButton();
                 } else {
                     var rowIndex = row.find('.item_edit').data('index') || row.attr('id').replace('row', '');
-                    var zka = parseFloat($input.val()) || 0;
-                    var zkb = parseFloat(row.find('.zk_2').val()) || 0;
+                    var zka = getNumericValue($input.val()) || 0;
+                    var zkb = getNumericValue(row.find('.zk_2').val()) || 0;
                     row.find('input[class*="mah_tolp"]').val('');
                     row.find('input[class*="mah_tol"]').val('');
                     row.find('input[class*="s_bar_a"]').val('');
@@ -790,8 +790,8 @@ input.m_tolp {
                 var $input = $(this);
                 var row = $input.closest('tr');
                 if (row.hasClass('new-row')) {
-                    var zka = parseFloat(row.find('.zk_1').val()) || 0;
-                    var zkb = parseFloat($input.val()) || 0;
+                    var zka = getNumericValue(row.find('.zk_1').val()) || 0;
+                    var zkb = getNumericValue($input.val()) || 0;
                     row.find('input[class*="mah_tolp"]').val('');
                     row.find('input[class*="mah_tol"]').val('');
                     row.find('input[class*="s_bar_a"]').val('');
@@ -804,8 +804,8 @@ input.m_tolp {
                     updateAllBalancesAndButton();
                 } else {
                     var rowIndex = row.find('.item_edit').data('index') || row.attr('id').replace('row', '');
-                    var zka = parseFloat(row.find('.zk_1').val()) || 0;
-                    var zkb = parseFloat($input.val()) || 0;
+                    var zka = getNumericValue(row.find('.zk_1').val()) || 0;
+                    var zkb = getNumericValue($input.val()) || 0;
                     row.find('input[class*="mah_tolp"]').val('');
                     row.find('input[class*="mah_tol"]').val('');
                     row.find('input[class*="s_bar_a"]').val('');
@@ -825,8 +825,8 @@ input.m_tolp {
                 var row = $input.closest('tr');
                 
                 // بررسی همزمان بودن سطح برداشت اول و دوم
-                var sb1 = parseFloat($input.val()) || 0;
-                var sb2 = parseFloat(row.find('.sb_2').val()) || 0;
+                var sb1 = getNumericValue($input.val()) || 0;
+                var sb2 = getNumericValue(row.find('.sb_2').val()) || 0;
                 
                 if (sb1 > 0 && sb2 > 0) {
                     showCustomAlert("امکان ثبت همزمان سطح برداشت اول و مجدد وجود ندارد ");
@@ -840,8 +840,8 @@ input.m_tolp {
                 }
                 
                 if (row.hasClass('new-row')) {
-                    var zka = parseFloat(row.find('.zk_1').val()) || 0;
-                    var sba = parseFloat($input.val()) || 0;
+                    var zka = getNumericValue(row.find('.zk_1').val()) || 0;
+                    var sba = getNumericValue($input.val()) || 0;
                     row.find('input[class*="mah_tol"]').val('');
                     if (zka < sba) {
                         showCustomAlert("سطح برداشت اول از سطح زیر کشت اول بزرگتر است");
@@ -850,8 +850,8 @@ input.m_tolp {
                     }
                 } else {
                     var rowIndex = row.find('.item_edit').data('index') || row.attr('id').replace('row', '');
-                    var zka = parseFloat(row.find('.zk_1').val()) || 0;
-                    var sba = parseFloat($input.val()) || 0;
+                    var zka = getNumericValue(row.find('.zk_1').val()) || 0;
+                    var sba = getNumericValue($input.val()) || 0;
                     row.find('input[class*="mah_tol"]').val('');
                     if (zka < sba) {
                         showCustomAlert("سطح برداشت اول از سطح زیر کشت اول بزرگتر است");
@@ -867,8 +867,8 @@ input.m_tolp {
                 var row = $input.closest('tr');
                 
                 // بررسی همزمان بودن سطح برداشت اول و دوم
-                var sb1 = parseFloat(row.find('.sb_1').val()) || 0;
-                var sb2 = parseFloat($input.val()) || 0;
+                var sb1 = getNumericValue(row.find('.sb_1').val()) || 0;
+                var sb2 = getNumericValue($input.val()) || 0;
                 
                 if (sb1 > 0 && sb2 > 0) {
                     showCustomAlert("امکان ثبت همزمان سطح برداشت اول و مجدد وجود ندارد ");
@@ -882,8 +882,8 @@ input.m_tolp {
                 }
                 
                 if (row.hasClass('new-row')) {
-                    var zkb = parseFloat(row.find('.zk_2').val()) || 0;
-                    var sbb = parseFloat($input.val()) || 0;
+                    var zkb = getNumericValue(row.find('.zk_2').val()) || 0;
+                    var sbb = getNumericValue($input.val()) || 0;
                     row.find('input[class*="mah_tol"]').val('');
                     if (zkb < sbb) {
                         showCustomAlert("سطح برداشت مجدد از سطح زیر کشت مجدد بزرگتر است");
@@ -892,8 +892,8 @@ input.m_tolp {
                     }
                 } else {
                     var rowIndex = row.find('.item_edit').data('index') || row.attr('id').replace('row', '');
-                    var zkb = parseFloat(row.find('.zk_2').val()) || 0;
-                    var sbb = parseFloat($input.val()) || 0;
+                    var zkb = getNumericValue(row.find('.zk_2').val()) || 0;
+                    var sbb = getNumericValue($input.val()) || 0;
                     row.find('input[class*="mah_tol"]').val('');
                     if (zkb < sbb) {
                         showCustomAlert("سطح برداشت مجدد از سطح زیر کشت مجدد بزرگتر است");
@@ -914,9 +914,9 @@ input.m_tolp {
                 var $input = $(this);
                 var row = $input.closest('tr');
                 var mcod = row.find('.cod_m').val();
-                var zka = parseFloat(row.find('.zk_1').val()) || 0;
-                var zkb = parseFloat(row.find('.zk_2').val()) || 0;
-                var mtolp = parseFloat($input.val());
+                var zka = getNumericValue(row.find('.zk_1').val()) || 0;
+                var zkb = getNumericValue(row.find('.zk_2').val()) || 0;
+                var mtolp = getNumericValue($input.val());
                 var no_kesh_js = <?php echo json_encode($no_kesh); ?>;
                 if ((zka > 0 || zkb > 0) && ($input.val() !== '' && (isNaN(mtolp) || mtolp === 0))) {
                     showCustomAlert('با توجه به سطح زیر کشت ، میزان پیش بینی تولید باید بزرگتر از صفر باشد');
@@ -971,9 +971,9 @@ input.m_tolp {
                 var $input = $(this);
                 var row = $input.closest('tr');
                 var mcod = row.find('.cod_m').val();
-                var sba = parseFloat(row.find('.sb_1').val()) || 0;
-                var sbb = parseFloat(row.find('.sb_2').val()) || 0;
-                var mtol = parseFloat($input.val());
+                var sba = getNumericValue(row.find('.sb_1').val()) || 0;
+                var sbb = getNumericValue(row.find('.sb_2').val()) || 0;
+                var mtol = getNumericValue($input.val());
                 var no_kesh_js = <?php echo json_encode($no_kesh); ?>;
                 if ((sba > 0 || sbb > 0) && ($input.val() !== '' && (isNaN(mtol) || mtol === 0))) {
                     showCustomAlert('با توجه به سطح برداشت ، میزان تولید قطعی باید بزرگتر از صفر باشد');
@@ -1036,12 +1036,12 @@ input.m_tolp {
                 var z_sal = <?php echo json_encode($z_sal); ?>;
                 var f_cod_qroup = row.find('.cod_q').val();
                 var f_cod_mah = row.find('.cod_m').val();
-                var f_zer_kesht_a = row.find('.zk_1').val();
-                var f_zer_kesht_b = row.find('.zk_2').val();
+                var f_zer_kesht_a = normalizeNumericString(row.find('.zk_1').val());
+                var f_zer_kesht_b = normalizeNumericString(row.find('.zk_2').val());
                 <?php if ($sabt_mah == 1) { ?>
-                    var f_s_bar_a = row.find('.sb_1').val();
-                    var f_s_bar_b = row.find('.sb_2').val();
-                    var f_mah_tol = row.find('.m_tol').val();
+                    var f_s_bar_a = normalizeNumericString(row.find('.sb_1').val());
+                    var f_s_bar_b = normalizeNumericString(row.find('.sb_2').val());
+                    var f_mah_tol = normalizeNumericString(row.find('.m_tol').val());
                     var f_mah_kh = row.find('.mah_kh').val();
                 <?php } else { ?>
                     var f_s_bar_a = 0;
@@ -1058,7 +1058,7 @@ input.m_tolp {
                 var id_ostan   = <?php echo json_encode($id_ostan); ?>;
                 var id_city    = <?php echo json_encode($id_city); ?>;
                 var id_mar     = <?php echo json_encode($id_mar); ?>;
-                var f_mah_tolp = row.find('.m_tolp').val();
+                var f_mah_tolp = normalizeNumericString(row.find('.m_tolp').val());
                 var f_mah_bem  = row.find('.mah_bem').val();
 
                 console.log('Sending edit request for ID:', id);
@@ -1147,7 +1147,7 @@ input.m_tolp {
                         }
                     });
                 } else {
-                    let check_message;
+                    var check_message;
                     if (check === 2) {
                         check_message = 'خطا! برای این محصول از طریق سامانه پایش نهاده اختصاص داده شده، حذف مقدور نیست.';
                     } else if (check === 0) {
@@ -1193,6 +1193,91 @@ input.m_tolp {
             });
         }
 
+        /* =========================================================
+         * توابع استاندارد کار با اعداد اعشاری
+         *
+         * هدف:
+         * 1) پشتیبانی از 0.0085 و اعداد اعشاری کوچک
+         * 2) پشتیبانی از جداکننده هزارگان مثل 1,234.5678
+         * 3) پشتیبانی از ارقام فارسی و عربی
+         * 4) جلوگیری از نمایش -0.0000
+         * 5) عدم تغییر مقدار input هنگام تایپ
+         * ========================================================= */
+
+        function normalizeNumericString(value) {
+            if (value === null || typeof value === 'undefined') {
+                return '';
+            }
+
+            value = String(value);
+
+            /* ارقام فارسی */
+            value = value.replace(/[۰-۹]/g, function(ch) {
+                return '۰۱۲۳۴۵۶۷۸۹'.indexOf(ch);
+            });
+
+            /* ارقام عربی */
+            value = value.replace(/[٠-٩]/g, function(ch) {
+                return '٠١٢٣٤٥٦٧٨٩'.indexOf(ch);
+            });
+
+            /* جداکننده اعشاری فارسی */
+            value = value.replace(/٫/g, '.');
+
+            /* جداکننده هزارگان */
+            value = value.replace(/,/g, '');
+
+            /* فاصله */
+            value = value.replace(/\s/g, '');
+
+            return value;
+        }
+
+        function getNumericValue(value) {
+            var normalized = normalizeNumericString(value);
+
+            if (normalized === '' || normalized === '-' || normalized === '.') {
+                return 0;
+            }
+
+            var numberValue = Number(normalized);
+
+            if (!isFinite(numberValue)) {
+                return 0;
+            }
+
+            return numberValue;
+        }
+
+        /*
+         * گرد کردن نتیجه محاسبه بدون تولید -0
+         */
+        function cleanDecimal(value, decimals) {
+            var factor = Math.pow(10, decimals);
+            var rounded = Math.round(value * factor) / factor;
+
+            /*
+             * JavaScript ممکن است نتیجه‌ای مانند
+             * -0.000000000000000444 ایجاد کند.
+             * در دقت مورد نیاز سامانه این مقدار صفر است.
+             */
+            if (Math.abs(rounded) < (1 / factor)) {
+                rounded = 0;
+            }
+
+            return rounded;
+        }
+
+        function formatBalance(value) {
+            var cleaned = cleanDecimal(value, 4);
+
+            if (cleaned === 0) {
+                return '0.0000';
+            }
+
+            return cleaned.toFixed(4);
+        }
+
         // Function to check if a row is fully filled with valid data
         function isRowFullyFilled(row) {
             var sabt_mah_js = <?php echo json_encode($sabt_mah); ?>;
@@ -1203,8 +1288,8 @@ input.m_tolp {
             }
 
             // Check cultivated area (at least one of zk_1 or zk_2 must be > 0)
-            var zk1 = parseFloat(row.find('.zk_1').val()) || 0;
-            var zk2 = parseFloat(row.find('.zk_2').val()) || 0;
+            var zk1 = getNumericValue(row.find('.zk_1').val()) || 0;
+            var zk2 = getNumericValue(row.find('.zk_2').val()) || 0;
             
             // اگر هر دو صفر باشند OR هر دو بزرگتر از صفر باشند => نامعتبر
             if ((zk1 <= 0 && zk2 <= 0) || (zk1 > 0 && zk2 > 0)) {
@@ -1212,7 +1297,7 @@ input.m_tolp {
             }
 
             // Check predicted production
-            var mtolp = parseFloat(row.find('.m_tolp').val()) || 0;
+            var mtolp = getNumericValue(row.find('.m_tolp').val()) || 0;
             if (mtolp <= 0) {
                 return false;
             }
@@ -1224,9 +1309,9 @@ input.m_tolp {
 
             // Conditional checks based on $sabt_mah
             if (sabt_mah_js === 1) {
-                var sb1 = parseFloat(row.find('.sb_1').val()) || 0;
-                var sb2 = parseFloat(row.find('.sb_2').val()) || 0;
-                var mtol = parseFloat(row.find('.m_tol').val()) || 0;
+                var sb1 = getNumericValue(row.find('.sb_1').val()) || 0;
+                var sb2 = getNumericValue(row.find('.sb_2').val()) || 0;
+                var mtol = getNumericValue(row.find('.m_tol').val()) || 0;
 
                 // اگر هر دو سطح برداشت بزرگتر از صفر باشند => نامعتبر
                 if (sb1 > 0 && sb2 > 0) {
@@ -1274,8 +1359,8 @@ input.m_tolp {
                 }
             }
 
-            var traz1 = parseFloat($('#traz1').val()) || 0;
-            var traz2 = parseFloat($('#traz2').val()) || 0;
+            var traz1 = getNumericValue($('#traz1').val()) || 0;
+            var traz2 = getNumericValue($('#traz2').val()) || 0;
             var balancesOk = (traz1 >= 0 && traz2 >= 0);
 
             var allRequiredFieldsFilled = isRowFullyFilled(row);
@@ -1328,57 +1413,87 @@ input.m_tolp {
 
         // تابع یکپارچه برای محاسبه ترازها و کنترل دکمه ثبت
         function updateAllBalancesAndButton() {
-            var kol = parseFloat($("#m_zamin").val()) || 0;
 
-            // محاسبه تراز کشت اول
+            /* -----------------------------------------------------
+             * مساحت کل زمین
+             * ----------------------------------------------------- */
+            var kol = getNumericValue($('#m_zamin').val());
+
+
+            /* -----------------------------------------------------
+             * تراز کشت اول
+             *
+             * تراز کشت اول = مساحت زمین - (سطح آیش + مجموع کشت اول)
+             *
+             * .mashat شامل سطح آیش و سطح زیر کشت اول است.
+             * ----------------------------------------------------- */
             var sum1 = 0;
+
             $('.mashat').each(function() {
-                sum1 += Number($(this).val());
+                sum1 += getNumericValue($(this).val());
             });
+
             var def1 = kol - sum1;
-            $('#traz1').val(def1.toFixed(4));
-            $('#traz1').css('backgroundColor', (def1 < 0 || isNaN(def1)) ? 'red' : 'green');
-         
-            // محاسبه تراز کشت مجدد
+            def1 = cleanDecimal(def1, 4);
+
+            $('#traz1').val(formatBalance(def1));
+            $('#traz1').css('backgroundColor', def1 < 0 ? 'red' : 'green');
+
+
+            /* -----------------------------------------------------
+             * تراز کشت مجدد
+             * ----------------------------------------------------- */
             var id_ostan = '<?php echo $id_ostan; ?>';
             var sum2 = 0;
+
             $('.zk_2').each(function() {
-                sum2 += parseFloat($(this).val()) || 0;
+                sum2 += getNumericValue($(this).val());
             });
 
-            var ayesh = parseFloat($("#s_ayesh").val()) || 0;
+            var ayesh = getNumericValue($('#s_ayesh').val());
             var baseArea = kol - ayesh;
+            baseArea = cleanDecimal(baseArea, 4);
+
             var maxAllowed2 = baseArea;
-            if (typeof id_ostan !== "undefined" && id_ostan === '06') {
+
+            /* استان خوزستان: سقف کشت مجدد دو برابر */
+            if (id_ostan === '06') {
                 maxAllowed2 = baseArea * 2;
             }
 
-            var def2 = maxAllowed2 - sum2;
-            $('#traz2').val(def2.toFixed(4));
-            $('#traz2').css('backgroundColor', (def2 < 0 || isNaN(def2)) ? 'red' : 'green');
+            maxAllowed2 = cleanDecimal(maxAllowed2, 4);
 
-            // کنترل نمایش و فعالسازی دکمه ثبت محصولات جدید
+            var def2 = maxAllowed2 - sum2;
+            def2 = cleanDecimal(def2, 4);
+
+            $('#traz2').val(formatBalance(def2));
+            $('#traz2').css('backgroundColor', def2 < 0 ? 'red' : 'green');
+
+
+            /* -----------------------------------------------------
+             * کنترل دکمه ثبت محصولات جدید
+             * ----------------------------------------------------- */
             var newRowsExist = $('tr.new-row').length > 0;
             var balancesAreValid = (def1 >= 0 && def2 >= 0);
             var existingRowNotBeingEdited = !anyExistingRowHasUnsavedChanges();
 
-            // شرط اصلاح‌شده: بررسی ردیف‌های جدید
             var cultivationAreaIsValid = true;
+
             if (newRowsExist) {
                 $('tr.new-row').each(function() {
-                    var zk1 = parseFloat($(this).find('.zk_1').val()) || 0;
-                    var zk2 = parseFloat($(this).find('.zk_2').val()) || 0;
-                    
-                    // اگر هر دو صفر باشند OR هر دو بزرگتر از صفر باشند => نامعتبر
-                    if ((zk1 === 0 && zk2 === 0) || (zk1 > 0 && zk2 > 0)) {
+                    var zk1 = getNumericValue($(this).find('.zk_1').val());
+                    var zk2 = getNumericValue($(this).find('.zk_2').val());
+
+                    /* فقط یکی از کشت اول یا کشت مجدد باید مقدار داشته باشد */
+                    if ((zk1 <= 0 && zk2 <= 0) || (zk1 > 0 && zk2 > 0)) {
                         cultivationAreaIsValid = false;
                         return false;
                     }
-                    
-                    // بررسی سطح برداشت همزمان برای ردیف‌های جدید
+
                     <?php if ($sabt_mah == 1) { ?>
-                    var sb1 = parseFloat($(this).find('.sb_1').val()) || 0;
-                    var sb2 = parseFloat($(this).find('.sb_2').val()) || 0;
+                    var sb1 = getNumericValue($(this).find('.sb_1').val());
+                    var sb2 = getNumericValue($(this).find('.sb_2').val());
+
                     if (sb1 > 0 && sb2 > 0) {
                         cultivationAreaIsValid = false;
                         return false;
@@ -1388,13 +1503,15 @@ input.m_tolp {
             }
 
             if (newRowsExist) {
-                $('#save_btn').show(); 
-                $('#save1').prop('disabled', !(balancesAreValid && existingRowNotBeingEdited && cultivationAreaIsValid));
+                $('#save_btn').show();
+                $('#save1').prop(
+                    'disabled',
+                    !(balancesAreValid && existingRowNotBeingEdited && cultivationAreaIsValid)
+                );
             } else {
-                $('#save_btn').hide(); 
+                $('#save_btn').hide();
             }
 
-            // بررسی دکمه‌های ویرایش برای ردیف‌های موجود
             checkAllEditButtons();
         }
 
@@ -1477,13 +1594,13 @@ input.m_tolp {
                     var row = $(this);
                     f_cod_qroup.push(row.find('.cod_q').val());
                     f_cod_mah.push(row.find('.cod_m').val());
-                    f_zer_kesht_a.push(row.find('.zk_1').val());
-                    f_zer_kesht_b.push(row.find('.zk_2').val());
-                    f_s_bar_a.push(row.find('.sb_1').val() || 0);
-                    f_s_bar_b.push(row.find('.sb_2').val() || 0);
-                    f_mah_tolp.push(row.find('.m_tolp').val());
+                    f_zer_kesht_a.push(normalizeNumericString(row.find('.zk_1').val()));
+                    f_zer_kesht_b.push(normalizeNumericString(row.find('.zk_2').val()));
+                    f_s_bar_a.push(normalizeNumericString(row.find('.sb_1').val() || 0));
+                    f_s_bar_b.push(normalizeNumericString(row.find('.sb_2').val() || 0));
+                    f_mah_tolp.push(normalizeNumericString(row.find('.m_tolp').val()));
                     <?php if ($sabt_mah == 1) { ?>
-                        f_mah_tol.push(row.find('.m_tol').val());
+                        f_mah_tol.push(normalizeNumericString(row.find('.m_tol').val()));
                         f_mah_kh.push(row.find('.mah_kh').val());
                     <?php } else { ?>
                         f_mah_tol.push(0);
@@ -1536,6 +1653,44 @@ input.m_tolp {
                 });
             });
             
+            /*
+             * ورودی‌های عددی:
+             * - نقطه اعشار حفظ می‌شود.
+             * - 0.0085 بدون تبدیل شدن به 0 پذیرفته می‌شود.
+             * - کاما به عنوان جداکننده هزارگان پذیرفته می‌شود.
+             * - هنگام تایپ مقدار input دستکاری نمی‌شود.
+             */
+            $(document).on('input', '.number', function() {
+                var value = $(this).val();
+
+                /* تبدیل ارقام فارسی و عربی */
+                value = value.replace(/[۰-۹]/g, function(ch) {
+                    return '۰۱۲۳۴۵۶۷۸۹'.indexOf(ch);
+                });
+                value = value.replace(/[٠-٩]/g, function(ch) {
+                    return '٠١٢٣٤٥٦٧٨٩'.indexOf(ch);
+                });
+
+                /* جداکننده اعشاری فارسی */
+                value = value.replace(/٫/g, '.');
+
+                /* فقط عدد، منفی، کاما و یک نقطه اعشار */
+                value = value.replace(/[^0-9.,-]/g, '');
+
+                /* فقط یک علامت منفی و فقط در ابتدای مقدار */
+                value = value.replace(/(?!^)-/g, '');
+
+                /* فقط اولین نقطه اعشار باقی بماند */
+                var firstDot = value.indexOf('.');
+                if (firstDot !== -1) {
+                    var beforeDot = value.substring(0, firstDot + 1);
+                    var afterDot = value.substring(firstDot + 1).replace(/\./g, '');
+                    value = beforeDot + afterDot;
+                }
+
+                $(this).val(value);
+            });
+
             // محاسبه اولیه در زمان بارگذاری صفحه
             updateAllBalancesAndButton();
         });

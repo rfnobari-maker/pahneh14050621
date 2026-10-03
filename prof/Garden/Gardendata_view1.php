@@ -306,8 +306,8 @@ while ($prod = $q->fetch(PDO::FETCH_ASSOC)) {
                         <td><?php echo agri_h($group_name); ?></td>
                         <td><?php echo agri_h($product_name); ?></td>
                         <?php if ($nah_kesh != '3') { ?>
-                        <td><?php echo agri_h($prod['s_kesht_gb']); ?></td>
                         <td><?php echo agri_h($prod['s_kesht_b']); ?></td>
+                        <td><?php echo agri_h($prod['s_kesht_gb']); ?></td>
                         <?php } ?>
                         <td><?php echo agri_h($prod['tree_gb']); ?></td>
                         <td><?php echo agri_h($prod['tree_b']); ?></td>

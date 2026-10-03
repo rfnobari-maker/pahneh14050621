@@ -74,7 +74,7 @@ if ($id_mar != '0') $mar = ' مرکز ' . mar_name($id_mar);
                <?php
 include('../../login/config.php') ;
  $query = "SELECT 
-od_mah ,  
+cod_mah ,  
     sum(zer_kesht_a) zer_k1,
     sum(CASE WHEN no_kesh = '1' THEN zer_kesht_a ELSE 0 END) as zer_k1_abi,
     sum(CASE WHEN no_kesh = '2' THEN zer_kesht_a ELSE 0 END) as zer_k1_dim,

@@ -1,10 +1,19 @@
-<?php include("../../lock_p1.php"); ?>
+<?php include("../../lock_p1.php"); 
+$page_title = (isset($title) && $title !== '') ? $title : 'زراعت';
+$pahneh_crumb = array(
+    array('label' => 'خانه', 'href' => '../../indexbenef.php'),
+    array('label' => 'اطلاعات اختصاصی', 'href' => '../index.php'),
+    array('label' => 'زراعت'),
+);
+
+
+?>
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo htmlspecialchars($title, ENT_QUOTES, 'UTF-8'); ?></title>
+    <title><?php echo htmlspecialchars($page_title, ENT_QUOTES, 'UTF-8'); ?></title>
     <link href="../../FA.css" rel="stylesheet">
     <style>
         :root {

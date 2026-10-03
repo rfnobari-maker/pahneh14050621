@@ -31,18 +31,30 @@ function sendSMS($recipient, $message, $uid) {
 
     // اجرای درخواست و دریافت نتیجه
     $response = curl_exec($ch);
-    if (curl_errno($ch)) {
+    $curlFailed = ($response === false || curl_errno($ch));
+    if ($curlFailed) {
         echo 'Error:' . curl_error($ch);
     }
     curl_close($ch);
 
-    // پردازش نتیجه
-    $result = json_decode($response, true);
-    if ($result['result']['status']['statusCode'] == 200) {
-       // echo "پیام با موفقیت ارسال شد.";
-    } else {
-        echo "خطا در ارسال پیام: " . $result['result']['status']['message'];
+    $result = is_string($response) ? json_decode($response, true) : null;
+    $statusCode = '';
+    $statusMessage = '';
+    if (is_array($result) && isset($result['result']['status']) && is_array($result['result']['status'])) {
+        if (isset($result['result']['status']['statusCode'])) {
+            $statusCode = (string) $result['result']['status']['statusCode'];
+        }
+        if (isset($result['result']['status']['message'])) {
+            $statusMessage = (string) $result['result']['status']['message'];
+        }
     }
+
+    if (!$curlFailed && $statusCode === '200') {
+        return true;
+    }
+
+    echo 'خطا در ارسال پیام: ' . $statusMessage;
+    return false;
 }
 
 // استفاده از تابع

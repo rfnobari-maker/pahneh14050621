@@ -5,7 +5,19 @@
 if (session_id() === '') {
     // تنظیم زمان انقضا
     ini_set('session.gc_maxlifetime', 7200);
-    session_set_cookie_params(7200);
+    $pahnehSecureCookie = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off')
+        || (isset($_SERVER['SERVER_PORT']) && (string) $_SERVER['SERVER_PORT'] === '443');
+    if (PHP_VERSION_ID >= 70300) {
+        session_set_cookie_params(array(
+            'lifetime' => 7200,
+            'path' => '/',
+            'secure' => $pahnehSecureCookie,
+            'httponly' => true,
+            'samesite' => 'Lax',
+        ));
+    } else {
+        session_set_cookie_params(7200, '/', '', $pahnehSecureCookie, true);
+    }
     session_start();
 }
 
